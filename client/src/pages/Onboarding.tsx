@@ -399,8 +399,8 @@ export default function Onboarding() {
           </motion.div>
         )}
 
-        {/* Screen 7.5: Video Player - Only for Chocodar */}
-        {currentStep === 7.5 && src === 'chocodar' && (
+        {/* Screen 8: Video Player - Only for Chocodar */}
+        {currentStep === 8 && src === 'chocodar' && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -448,8 +448,8 @@ export default function Onboarding() {
           </motion.div>
         )}
 
-        {/* Screen 8: Country Selection - MODERN DROPDOWN */}
-        {currentStep === 8 && (
+        {/* Screen 9: Country Selection - MODERN DROPDOWN */}
+        {currentStep === 9 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -545,8 +545,8 @@ export default function Onboarding() {
           </motion.div>
         )}
 
-        {/* Screen 9: Pricing */}
-        {currentStep === 9 && (
+        {/* Screen 10: Pricing */}
+        {currentStep === 10 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
