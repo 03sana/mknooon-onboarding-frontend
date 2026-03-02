@@ -385,6 +385,37 @@ export default function Onboarding() {
                 خليني أفرجيكي كيف نحول هذه الجاهزية إلى مشروع حقيقي خلال 30 يوم.
               </p>
             </div>
+            {/* Video Player */}
+            <motion.div
+              className="mb-4"
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2 }}
+              style={{
+                borderRadius: '12px',
+                overflow: 'hidden',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+              }}
+            >
+              <div style={{ position: 'relative', paddingBottom: '177.78%', height: 0 }}>
+                <iframe
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    border: 'none',
+                    borderRadius: '12px',
+                  }}
+                  src="https://www.youtube.com/embed/dJjFfRiy6E4?autoplay=0&rel=0&modestbranding=1"
+                  title="Chocodar Journey"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </motion.div>
+            
             <motion.button
               onClick={handleContinue}
               className="btn btn-dark w-100 py-3 fw-bold"
@@ -392,7 +423,7 @@ export default function Onboarding() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              ▶ مشاهدة الفيديو
+              متابعة الرحلة
             </motion.button>
           </motion.div>
         )}
