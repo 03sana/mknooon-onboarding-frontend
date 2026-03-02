@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { normalizeSrc } from '@/lib/api';
 import Loading from './Loading';
 import InvalidLink from './InvalidLink';
@@ -36,6 +37,7 @@ export default function Onboarding() {
   const [error, setError] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // Parse src from query string on mount
   useEffect(() => {
@@ -159,27 +161,37 @@ export default function Onboarding() {
 
         {/* Screen 1: Entry */}
         {currentStep === 1 && brand && (
-          <div className="text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center"
+          >
             <h1 className="h3 fw-bold mb-2 text-dark">{brand.title}</h1>
             <p className="text-muted mb-4">{brand.subtitle}</p>
-            <button
+            <motion.button
               onClick={handleContinue}
               className="btn btn-dark w-100 py-3 fw-bold"
+              style={{ borderRadius: '12px' }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               تعرّفي الآن
-            </button>
+            </motion.button>
             <p className="text-muted small mt-3">أكثر من 11000 امرأة بدأت رحلتهن معنا</p>
-          </div>
+          </motion.div>
         )}
 
         {/* Screen 2: Launch Timing */}
         {currentStep === 2 && (
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             <h2 className="h5 fw-bold text-dark mb-2">لو كل شيء كان واضح وسهل…</h2>
             <p className="text-muted mb-4">متى حابة تطلقي مشروعك؟</p>
             <div className="d-flex flex-column gap-2">
-              {['خلال 30 يوم 🌟', 'خلال 2–3 أشهر', 'ما زلت أستكشف الفكرة'].map((option) => (
-                <button
+              {['خلال 30 يوم 🌟', 'خلال 2–3 أشهر', 'ما زلت أستكشف الفكرة'].map((option, idx) => (
+                <motion.button
                   key={option}
                   onClick={() => {
                     handleAnswer(2, option);
@@ -188,22 +200,31 @@ export default function Onboarding() {
                   className={`btn btn-outline-dark text-end py-3 ${
                     answers[2] === option ? 'btn-dark text-white' : ''
                   }`}
+                  style={{ borderRadius: '12px' }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
                 >
                   {option}
-                </button>
+                </motion.button>
               ))}
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* Screen 3: Income Vision */}
         {currentStep === 3 && (
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             <h2 className="h5 fw-bold text-dark mb-2">لما يبدأ مشروعك ينجح…</h2>
             <p className="text-muted mb-4">كيف حابة يكون دخله بالنسبة لك؟</p>
             <div className="d-flex flex-column gap-2">
-              {['يغطي مصاريفي الشخصية', 'يساعدني وأدعم عائلتي', 'يكون مشروع العمر'].map((option) => (
-                <button
+              {['يغطي مصاريفي الشخصية', 'يساعدني وأدعم عائلتي', 'يكون مشروع العمر'].map((option, idx) => (
+                <motion.button
                   key={option}
                   onClick={() => {
                     handleAnswer(3, option);
@@ -212,17 +233,26 @@ export default function Onboarding() {
                   className={`btn btn-outline-dark text-end py-3 ${
                     answers[3] === option ? 'btn-dark text-white' : ''
                   }`}
+                  style={{ borderRadius: '12px' }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
                 >
                   {option}
-                </button>
+                </motion.button>
               ))}
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* Screen 4: Main Obstacle */}
         {currentStep === 4 && (
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             <h2 className="h5 fw-bold text-dark mb-3">أكثر شيء مقلقك لما تفكري تبدئي مشروعك؟</h2>
             <div className="d-flex flex-column gap-2">
               {[
@@ -231,8 +261,8 @@ export default function Onboarding() {
                 'ما أعرف أسعّر وأسوّق صح',
                 'ما أعرف أبيع وأحقق أرباح',
                 'جميع ما ذُكر',
-              ].map((option) => (
-                <button
+              ].map((option, idx) => (
+                <motion.button
                   key={option}
                   onClick={() => {
                     handleAnswer(4, option);
@@ -241,20 +271,30 @@ export default function Onboarding() {
                   className={`btn btn-outline-dark text-end py-3 ${
                     answers[4] === option ? 'btn-dark text-white' : ''
                   }`}
+                  style={{ borderRadius: '12px' }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
                 >
                   {option}
-                </button>
+                </motion.button>
               ))}
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* Screen 5: Reassurance */}
         {currentStep === 5 && (
-          <div className="text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center"
+          >
             <h2 className="h5 fw-bold text-dark mb-2">طبيعي يكون عندك هاي المخاوف 🤍</h2>
             <p className="text-muted mb-4">لذلك فريق شوكودار بيكون معك خطوة بخطوة في:</p>
-            <div className="bg-white p-4 rounded mb-4 text-end">
+            <div className="bg-white p-4 rounded mb-4 text-end" style={{ borderRadius: '12px' }}>
               {[
                 'كيف تبدئي',
                 'من وين توفري المواد الخام',
@@ -262,30 +302,42 @@ export default function Onboarding() {
                 'كيف تصوريهم باحترافية',
                 'كيف تسوّقي على السوشال ميديا',
                 'كيف تجيبي أول طلبية فعلية',
-              ].map((item) => (
-                <div key={item} className="mb-2">
+              ].map((item, idx) => (
+                <motion.div
+                  key={item}
+                  className="mb-2"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                >
                   <i className="bi bi-check-circle-fill text-success me-2"></i>
                   <span className="text-dark">{item}</span>
-                </div>
+                </motion.div>
               ))}
             </div>
-            <button
+            <motion.button
               onClick={handleContinue}
               className="btn btn-dark w-100 py-3 fw-bold"
+              style={{ borderRadius: '12px' }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               تابعي الرحلة
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         )}
 
         {/* Screen 6: Brand Identity */}
         {currentStep === 6 && (
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             <h2 className="h5 fw-bold text-dark mb-2">تخيّلي شكل علامتك الخاصة…</h2>
             <p className="text-muted mb-4">أي ستايل أقرب لشخصيتك؟</p>
             <div className="d-flex flex-column gap-2">
-              {['فاخرة ومرتبة', 'عصرية وملونة', 'منزلية دافئة'].map((option) => (
-                <button
+              {['فاخرة ومرتبة', 'عصرية وملونة', 'منزلية دافئة'].map((option, idx) => (
+                <motion.button
                   key={option}
                   onClick={() => {
                     handleAnswer(6, option);
@@ -294,21 +346,38 @@ export default function Onboarding() {
                   className={`btn btn-outline-dark text-end py-3 ${
                     answers[6] === option ? 'btn-dark text-white' : ''
                   }`}
+                  style={{ borderRadius: '12px' }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
                 >
                   {option}
-                </button>
+                </motion.button>
               ))}
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* Screen 7: Readiness Result */}
         {currentStep === 7 && (
-          <div className="text-center">
-            <div className="display-1 fw-bold text-dark mb-2">78%</div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center"
+          >
+            <motion.div
+              className="display-1 fw-bold text-dark mb-2"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', stiffness: 100 }}
+            >
+              78%
+            </motion.div>
             <h2 className="h5 fw-bold text-dark mb-2">جاهزيتك ممتازة 👏</h2>
             <p className="text-muted mb-4">جاهزيتك لإطلاق مشروعك:</p>
-            <div className="bg-white p-4 rounded mb-4">
+            <div className="bg-white p-4 rounded mb-4" style={{ borderRadius: '12px' }}>
               <p className="text-dark mb-3">
                 أنتِ قريبة جداً من إطلاق مشروعك وأول طلبية فعلية 🍫
               </p>
@@ -316,92 +385,162 @@ export default function Onboarding() {
                 خليني أفرجيكي كيف نحول هذه الجاهزية إلى مشروع حقيقي خلال 30 يوم.
               </p>
             </div>
-            <button
+            <motion.button
               onClick={handleContinue}
               className="btn btn-dark w-100 py-3 fw-bold"
+              style={{ borderRadius: '12px' }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               ▶ مشاهدة الفيديو
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         )}
 
-        {/* Screen 8: Country Selection */}
+        {/* Screen 8: Country Selection - MODERN DROPDOWN */}
         {currentStep === 8 && (
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             <h2 className="h5 fw-bold text-dark mb-2">وحتى تقدري تعطيكي السعر حسب عملتك المحلية…</h2>
             <p className="text-muted mb-4">من أي دولة تتواصلي معنا؟</p>
             
-            {/* Dropdown */}
-            <select
-              value={selectedCountry || ''}
-              onChange={(e) => handleCountrySelect(e.target.value)}
-              className="form-select form-select-lg mb-4 text-end"
-            >
-              <option value="">اختاري دولتك</option>
-              {countries.map((country) => (
-                <option key={country} value={country}>
-                  {countryData[country]?.flag} {countryData[country]?.name}
-                </option>
-              ))}
-            </select>
+            {/* Modern Dropdown */}
+            <div className="position-relative mb-4">
+              <motion.button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="w-100 btn btn-outline-dark text-end d-flex justify-content-between align-items-center py-3 px-4"
+                style={{
+                  borderRadius: '12px',
+                  borderWidth: '2px',
+                  fontSize: '16px',
+                  fontWeight: '500',
+                }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <motion.i
+                  className="bi bi-chevron-down"
+                  animate={{ rotate: isDropdownOpen ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+                <span>
+                  {selectedCountry
+                    ? `${countryData[selectedCountry]?.flag} ${countryData[selectedCountry]?.name}`
+                    : 'اختاري دولتك'}
+                </span>
+              </motion.button>
 
-            {/* Countries List */}
-            {selectedCountry && (
-              <div className="list-group mb-4">
-                {countries.map((country) => {
-                  const data = countryData[country];
-                  const isSelected = selectedCountry === country;
-                  
-                  return (
-                    <button
-                      key={country}
-                      onClick={() => handleCountrySelect(country)}
-                      className={`list-group-item list-group-item-action text-end d-flex justify-content-between align-items-center ${
-                        isSelected ? 'active' : ''
-                      }`}
-                    >
-                      <span>{data?.name}</span>
-                      <span className="fs-5">{data?.flag}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
+              {/* Dropdown Menu */}
+              <AnimatePresence>
+                {isDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="position-absolute w-100 bg-white border-2 border-dark mt-2 rounded-3 shadow-lg"
+                    style={{
+                      zIndex: 1000,
+                      maxHeight: '300px',
+                      overflowY: 'auto',
+                      borderRadius: '12px',
+                    }}
+                  >
+                    {countries.map((country, index) => {
+                      const data = countryData[country];
+                      const isSelected = selectedCountry === country;
 
-            <button
+                      return (
+                        <motion.button
+                          key={country}
+                          onClick={() => {
+                            handleCountrySelect(country);
+                            setIsDropdownOpen(false);
+                          }}
+                          className="w-100 btn btn-link text-end d-flex justify-content-between align-items-center p-3 text-decoration-none"
+                          style={{
+                            borderBottom: index < countries.length - 1 ? '1px solid #e0e0e0' : 'none',
+                            color: isSelected ? '#000' : '#666',
+                            fontWeight: isSelected ? '600' : '500',
+                            backgroundColor: isSelected ? '#f8f9fa' : 'transparent',
+                          }}
+                          whileHover={{ backgroundColor: '#f8f9fa' }}
+                          initial={{ opacity: 0, x: 10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.05 }}
+                        >
+                          <span className="fs-5">{data?.flag}</span>
+                          <span>{data?.name}</span>
+                        </motion.button>
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <motion.button
               onClick={handleContinue}
               disabled={isContinueDisabled()}
               className="btn btn-dark w-100 py-3 fw-bold"
+              style={{ borderRadius: '12px' }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               متابعة
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         )}
 
         {/* Screen 9: Pricing */}
         {currentStep === 9 && (
-          <div className="text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center"
+          >
             <h2 className="h5 fw-bold text-dark mb-4">سعر الاشتراك:</h2>
-            <div className="bg-white p-4 rounded mb-4">
+            <motion.div
+              className="bg-white p-4 rounded mb-4"
+              style={{ borderRadius: '12px' }}
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+            >
               <div className="display-4 fw-bold text-dark">497</div>
               <p className="text-muted small mt-2">ريال سعودي</p>
               <p className="text-muted small mt-3">يشمل التدريب الكامل + الدعم</p>
-            </div>
+            </motion.div>
             <div className="d-flex flex-column gap-2">
-              <button className="btn btn-dark py-3 fw-bold">
+              <motion.button
+                className="btn btn-dark py-3 fw-bold"
+                style={{ borderRadius: '12px' }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
                 ابدأ مشروعي الآن 🚀
-              </button>
-              <button className="btn btn-outline-dark py-2 fw-bold">
+              </motion.button>
+              <motion.button
+                className="btn btn-outline-dark py-2 fw-bold"
+                style={{ borderRadius: '12px' }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
                 عندي سؤال قبل الاشتراك
-              </button>
-              <button className="btn btn-link text-muted text-decoration-none py-2">
+              </motion.button>
+              <motion.button
+                className="btn btn-link text-muted text-decoration-none py-2"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
                 غير مستعدة حالياً، سأتابع معكم على الواتساب
-              </button>
+              </motion.button>
             </div>
             <p className="text-muted small mt-4">
               انضمي لأكثر من 11000 امرأة بدأت رحلتهن معنا
             </p>
-          </div>
+          </motion.div>
         )}
       </div>
     </div>
