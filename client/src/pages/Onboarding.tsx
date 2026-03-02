@@ -340,31 +340,72 @@ export default function Onboarding() {
         {currentStep === 8 && (
           <div className="space-y-6">
             <div>
-              <h2 className="text-lg font-bold text-foreground">وحتى أقدر أحدد لك السعر بعملتك المحلية…</h2>
+              <h2 className="text-lg font-bold text-foreground">وحتى تقدري تعطيكي السعر حسب عملتك المحلية…</h2>
               <p className="text-muted-foreground mt-2">من أي دولة تتواصلي معنا؟</p>
             </div>
-            <div className="space-y-2">
-              {countries.map((country) => (
-                <button
-                  key={country}
-                  onClick={() => handleCountrySelect(country)}
-                  className={`w-full p-3 rounded-lg border-2 transition-all text-right text-sm ${
-                    selectedCountry === country
-                      ? 'border-primary bg-primary bg-opacity-10'
-                      : 'border-border hover:border-primary'
-                  }`}
-                >
-                  {country}
-                </button>
-              ))}
+            
+            {/* Dropdown */}
+            <div className="relative">
+              <select
+                value={selectedCountry || ''}
+                onChange={(e) => handleCountrySelect(e.target.value)}
+                className="w-full p-4 rounded-lg border-2 border-border bg-white text-right appearance-none cursor-pointer font-medium text-foreground focus:outline-none focus:border-primary transition-colors"
+              >
+                <option value="">اختاري دولتك</option>
+                {countries.map((country) => (
+                  <option key={country} value={country}>
+                    {country}
+                  </option>
+                ))}
+              </select>
+              <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
             </div>
+
+            {/* Countries List */}
+            {selectedCountry && (
+              <div className="bg-white rounded-xl border-2 border-border overflow-hidden">
+                {countries.map((country, index) => {
+                  const countryData: Record<string, { name: string; flag: string }> = {
+                    'SA': { name: 'المملكة العربية السعودية', flag: '🇸🇦' },
+                    'AE': { name: 'الإمارات', flag: '🇦🇪' },
+                    'KW': { name: 'الكويت', flag: '🇰🇼' },
+                    'QA': { name: 'قطر', flag: '🇶🇦' },
+                    'BH': { name: 'البحرين', flag: '🇧🇭' },
+                    'OM': { name: 'عمان', flag: '🇴🇲' },
+                    'EG': { name: 'مصر', flag: '🇪🇬' },
+                    'JO': { name: 'الأردن', flag: '🇯🇴' },
+                    'LB': { name: 'لبنان', flag: '🇱🇧' },
+                  };
+                  const data = countryData[country];
+                  const isSelected = selectedCountry === country;
+                  
+                  return (
+                    <button
+                      key={country}
+                      onClick={() => handleCountrySelect(country)}
+                      className={`w-full p-4 text-right flex items-center justify-between transition-colors ${
+                        index !== countries.length - 1 ? 'border-b border-border' : ''
+                      } ${
+                        isSelected ? 'bg-blue-50' : 'hover:bg-gray-50'
+                      }`}
+                    >
+                      <span className="text-2xl">{data?.flag}</span>
+                      <span className="font-medium text-foreground">{data?.name}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
             <button
               onClick={handleContinue}
               disabled={isContinueDisabled()}
               className={`w-full py-3 rounded-lg font-medium transition-opacity ${
                 isContinueDisabled()
-                  ? 'bg-border text-muted-foreground cursor-not-allowed'
-                  : 'bg-primary text-primary-foreground hover:opacity-90'
+                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  : 'bg-gray-800 text-white hover:bg-gray-900'
               }`}
             >
               متابعة
