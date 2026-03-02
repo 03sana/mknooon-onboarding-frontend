@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { normalizeSrc } from '@/lib/api';
 import Loading from './Loading';
 import InvalidLink from './InvalidLink';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 interface Brand {
   src: string;
@@ -14,6 +16,18 @@ interface Brand {
   logo: string;
   video_url: string;
 }
+
+const countryData: Record<string, { name: string; flag: string }> = {
+  'SA': { name: 'المملكة العربية السعودية', flag: '🇸🇦' },
+  'AE': { name: 'الإمارات', flag: '🇦🇪' },
+  'KW': { name: 'الكويت', flag: '🇰🇼' },
+  'QA': { name: 'قطر', flag: '🇶🇦' },
+  'BH': { name: 'البحرين', flag: '🇧🇭' },
+  'OM': { name: 'عمان', flag: '🇴🇲' },
+  'EG': { name: 'مصر', flag: '🇪🇬' },
+  'JO': { name: 'الأردن', flag: '🇯🇴' },
+  'LB': { name: 'لبنان', flag: '🇱🇧' },
+};
 
 export default function Onboarding() {
   const [src, setSrc] = useState<string | null>(null);
@@ -113,7 +127,7 @@ export default function Onboarding() {
   };
 
   const handleContinue = async () => {
-    if (currentStep < 10) {
+    if (currentStep < 9) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -129,48 +143,43 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="min-h-screen bg-background" dir="rtl">
-      <div className="max-w-md mx-auto px-4 py-8">
+    <div className="min-vh-100 d-flex align-items-center justify-content-center p-3" style={{ backgroundColor: '#f5f1ed' }} dir="rtl">
+      <div className="w-100" style={{ maxWidth: '500px' }}>
         {/* Progress Bar */}
-        <div className="mb-8">
-          <div className="flex gap-1">
+        <div className="mb-4">
+          <div className="progress mb-2" style={{ height: '4px' }}>
             {Array.from({ length: 7 }).map((_, i) => (
               <div
                 key={i}
-                className={`h-1 flex-1 rounded-full transition-colors ${
-                  i < currentStep ? 'bg-primary' : 'bg-border'
-                }`}
+                className={`progress-bar ${i < currentStep ? 'bg-dark' : 'bg-secondary'}`}
+                style={{ width: `${100 / 7}%` }}
               />
             ))}
           </div>
-          <p className="text-sm text-muted-foreground mt-2">{currentStep}/7</p>
+          <small className="text-muted">{currentStep}/7</small>
         </div>
 
         {/* Screen 1: Entry */}
         {currentStep === 1 && brand && (
-          <div className="text-center space-y-6">
-            <div>
-              <h1 className="text-2xl font-bold text-foreground mb-2">{brand.title}</h1>
-              <p className="text-muted-foreground">{brand.subtitle}</p>
-            </div>
+          <div className="text-center">
+            <h1 className="h3 fw-bold mb-2 text-dark">{brand.title}</h1>
+            <p className="text-muted mb-4">{brand.subtitle}</p>
             <button
               onClick={handleContinue}
-              className="w-full py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition-opacity"
+              className="btn btn-dark w-100 py-3 fw-bold"
             >
               تعرّفي الآن
             </button>
-            <p className="text-xs text-muted-foreground">أكثر من 11000 امرأة بدأت رحلتهن معنا</p>
+            <p className="text-muted small mt-3">أكثر من 11000 امرأة بدأت رحلتهن معنا</p>
           </div>
         )}
 
         {/* Screen 2: Launch Timing */}
         {currentStep === 2 && (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-xl font-bold text-foreground">لو كل شيء كان واضح وسهل…</h2>
-              <p className="text-muted-foreground mt-2">متى حابة تطلقي مشروعك؟</p>
-            </div>
-            <div className="space-y-3">
+          <div>
+            <h2 className="h5 fw-bold text-dark mb-2">لو كل شيء كان واضح وسهل…</h2>
+            <p className="text-muted mb-4">متى حابة تطلقي مشروعك؟</p>
+            <div className="d-flex flex-column gap-2">
               {['خلال 30 يوم 🌟', 'خلال 2–3 أشهر', 'ما زلت أستكشف الفكرة'].map((option) => (
                 <button
                   key={option}
@@ -178,10 +187,8 @@ export default function Onboarding() {
                     handleAnswer(2, option);
                     handleContinue();
                   }}
-                  className={`w-full p-4 rounded-lg border-2 transition-all text-right ${
-                    answers[2] === option
-                      ? 'border-primary bg-primary bg-opacity-10'
-                      : 'border-border hover:border-primary'
+                  className={`btn btn-outline-dark text-end py-3 ${
+                    answers[2] === option ? 'btn-dark text-white' : ''
                   }`}
                 >
                   {option}
@@ -193,12 +200,10 @@ export default function Onboarding() {
 
         {/* Screen 3: Income Vision */}
         {currentStep === 3 && (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-xl font-bold text-foreground">لما يبدأ مشروعك ينجح…</h2>
-              <p className="text-muted-foreground mt-2">كيف حابة يكون دخله بالنسبة لك؟</p>
-            </div>
-            <div className="space-y-3">
+          <div>
+            <h2 className="h5 fw-bold text-dark mb-2">لما يبدأ مشروعك ينجح…</h2>
+            <p className="text-muted mb-4">كيف حابة يكون دخله بالنسبة لك؟</p>
+            <div className="d-flex flex-column gap-2">
               {['يغطي مصاريفي الشخصية', 'يساعدني وأدعم عائلتي', 'يكون مشروع العمر'].map((option) => (
                 <button
                   key={option}
@@ -206,10 +211,8 @@ export default function Onboarding() {
                     handleAnswer(3, option);
                     handleContinue();
                   }}
-                  className={`w-full p-4 rounded-lg border-2 transition-all text-right ${
-                    answers[3] === option
-                      ? 'border-primary bg-primary bg-opacity-10'
-                      : 'border-border hover:border-primary'
+                  className={`btn btn-outline-dark text-end py-3 ${
+                    answers[3] === option ? 'btn-dark text-white' : ''
                   }`}
                 >
                   {option}
@@ -221,11 +224,9 @@ export default function Onboarding() {
 
         {/* Screen 4: Main Obstacle */}
         {currentStep === 4 && (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-xl font-bold text-foreground">أكثر شيء مقلقك لما تفكري تبدئي مشروعك؟</h2>
-            </div>
-            <div className="space-y-3">
+          <div>
+            <h2 className="h5 fw-bold text-dark mb-3">أكثر شيء مقلقك لما تفكري تبدئي مشروعك؟</h2>
+            <div className="d-flex flex-column gap-2">
               {[
                 'ما أعرف من وين أبدأ',
                 'ما أعرف أماكن بيع المواد الخام',
@@ -239,10 +240,8 @@ export default function Onboarding() {
                     handleAnswer(4, option);
                     handleContinue();
                   }}
-                  className={`w-full p-4 rounded-lg border-2 transition-all text-right ${
-                    answers[4] === option
-                      ? 'border-primary bg-primary bg-opacity-10'
-                      : 'border-border hover:border-primary'
+                  className={`btn btn-outline-dark text-end py-3 ${
+                    answers[4] === option ? 'btn-dark text-white' : ''
                   }`}
                 >
                   {option}
@@ -254,12 +253,10 @@ export default function Onboarding() {
 
         {/* Screen 5: Reassurance */}
         {currentStep === 5 && (
-          <div className="space-y-6">
-            <div className="text-center">
-              <h2 className="text-xl font-bold text-foreground mb-2">طبيعي يكون عندك هاي المخاوف 🤍</h2>
-              <p className="text-muted-foreground">لذلك فريق شوكودار بيكون معك خطوة بخطوة في:</p>
-            </div>
-            <div className="space-y-2 bg-card p-4 rounded-lg border border-border">
+          <div className="text-center">
+            <h2 className="h5 fw-bold text-dark mb-2">طبيعي يكون عندك هاي المخاوف 🤍</h2>
+            <p className="text-muted mb-4">لذلك فريق شوكودار بيكون معك خطوة بخطوة في:</p>
+            <div className="bg-white p-4 rounded mb-4 text-end">
               {[
                 'كيف تبدئي',
                 'من وين توفري المواد الخام',
@@ -268,15 +265,15 @@ export default function Onboarding() {
                 'كيف تسوّقي على السوشال ميديا',
                 'كيف تجيبي أول طلبية فعلية',
               ].map((item) => (
-                <div key={item} className="flex items-center gap-2">
-                  <span className="text-primary">✔</span>
-                  <span className="text-foreground">{item}</span>
+                <div key={item} className="mb-2">
+                  <i className="bi bi-check-circle-fill text-success me-2"></i>
+                  <span className="text-dark">{item}</span>
                 </div>
               ))}
             </div>
             <button
               onClick={handleContinue}
-              className="w-full py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition-opacity"
+              className="btn btn-dark w-100 py-3 fw-bold"
             >
               تابعي الرحلة
             </button>
@@ -285,12 +282,10 @@ export default function Onboarding() {
 
         {/* Screen 6: Brand Identity */}
         {currentStep === 6 && (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-xl font-bold text-foreground">تخيّلي شكل علامتك الخاصة…</h2>
-              <p className="text-muted-foreground mt-2">أي ستايل أقرب لشخصيتك؟</p>
-            </div>
-            <div className="space-y-3">
+          <div>
+            <h2 className="h5 fw-bold text-dark mb-2">تخيّلي شكل علامتك الخاصة…</h2>
+            <p className="text-muted mb-4">أي ستايل أقرب لشخصيتك؟</p>
+            <div className="d-flex flex-column gap-2">
               {['فاخرة ومرتبة', 'عصرية وملونة', 'منزلية دافئة'].map((option) => (
                 <button
                   key={option}
@@ -298,10 +293,8 @@ export default function Onboarding() {
                     handleAnswer(6, option);
                     handleContinue();
                   }}
-                  className={`w-full p-4 rounded-lg border-2 transition-all text-right ${
-                    answers[6] === option
-                      ? 'border-primary bg-primary bg-opacity-10'
-                      : 'border-border hover:border-primary'
+                  className={`btn btn-outline-dark text-end py-3 ${
+                    answers[6] === option ? 'btn-dark text-white' : ''
                   }`}
                 >
                   {option}
@@ -313,23 +306,21 @@ export default function Onboarding() {
 
         {/* Screen 7: Readiness Result */}
         {currentStep === 7 && (
-          <div className="space-y-6 text-center">
-            <div>
-              <div className="text-5xl font-bold text-primary mb-2">78%</div>
-              <h2 className="text-xl font-bold text-foreground mb-2">جاهزيتك ممتازة 👏</h2>
-              <p className="text-muted-foreground">جاهزيتك لإطلاق مشروعك:</p>
-            </div>
-            <div className="bg-card p-4 rounded-lg border border-border">
-              <p className="text-foreground mb-4">
+          <div className="text-center">
+            <div className="display-1 fw-bold text-dark mb-2">78%</div>
+            <h2 className="h5 fw-bold text-dark mb-2">جاهزيتك ممتازة 👏</h2>
+            <p className="text-muted mb-4">جاهزيتك لإطلاق مشروعك:</p>
+            <div className="bg-white p-4 rounded mb-4">
+              <p className="text-dark mb-3">
                 أنتِ قريبة جداً من إطلاق مشروعك وأول طلبية فعلية 🍫
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted small">
                 خليني أفرجيكي كيف نحول هذه الجاهزية إلى مشروع حقيقي خلال 30 يوم.
               </p>
             </div>
             <button
               onClick={handleContinue}
-              className="w-full py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition-opacity"
+              className="btn btn-dark w-100 py-3 fw-bold"
             >
               ▶ مشاهدة الفيديو
             </button>
@@ -338,46 +329,28 @@ export default function Onboarding() {
 
         {/* Screen 8: Country Selection */}
         {currentStep === 8 && (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-lg font-bold text-foreground">وحتى تقدري تعطيكي السعر حسب عملتك المحلية…</h2>
-              <p className="text-muted-foreground mt-2">من أي دولة تتواصلي معنا؟</p>
-            </div>
+          <div>
+            <h2 className="h5 fw-bold text-dark mb-2">وحتى تقدري تعطيكي السعر حسب عملتك المحلية…</h2>
+            <p className="text-muted mb-4">من أي دولة تتواصلي معنا؟</p>
             
             {/* Dropdown */}
-            <div className="relative">
-              <select
-                value={selectedCountry || ''}
-                onChange={(e) => handleCountrySelect(e.target.value)}
-                className="w-full p-4 rounded-lg border-2 border-border bg-white text-right appearance-none cursor-pointer font-medium text-foreground focus:outline-none focus:border-primary transition-colors"
-              >
-                <option value="">اختاري دولتك</option>
-                {countries.map((country) => (
-                  <option key={country} value={country}>
-                    {country}
-                  </option>
-                ))}
-              </select>
-              <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-            </div>
+            <select
+              value={selectedCountry || ''}
+              onChange={(e) => handleCountrySelect(e.target.value)}
+              className="form-select form-select-lg mb-4 text-end"
+            >
+              <option value="">اختاري دولتك</option>
+              {countries.map((country) => (
+                <option key={country} value={country}>
+                  {countryData[country]?.flag} {countryData[country]?.name}
+                </option>
+              ))}
+            </select>
 
             {/* Countries List */}
             {selectedCountry && (
-              <div className="bg-white rounded-xl border-2 border-border overflow-hidden">
-                {countries.map((country, index) => {
-                  const countryData: Record<string, { name: string; flag: string }> = {
-                    'SA': { name: 'المملكة العربية السعودية', flag: '🇸🇦' },
-                    'AE': { name: 'الإمارات', flag: '🇦🇪' },
-                    'KW': { name: 'الكويت', flag: '🇰🇼' },
-                    'QA': { name: 'قطر', flag: '🇶🇦' },
-                    'BH': { name: 'البحرين', flag: '🇧🇭' },
-                    'OM': { name: 'عمان', flag: '🇴🇲' },
-                    'EG': { name: 'مصر', flag: '🇪🇬' },
-                    'JO': { name: 'الأردن', flag: '🇯🇴' },
-                    'LB': { name: 'لبنان', flag: '🇱🇧' },
-                  };
+              <div className="list-group mb-4">
+                {countries.map((country) => {
                   const data = countryData[country];
                   const isSelected = selectedCountry === country;
                   
@@ -385,14 +358,12 @@ export default function Onboarding() {
                     <button
                       key={country}
                       onClick={() => handleCountrySelect(country)}
-                      className={`w-full p-4 text-right flex items-center justify-between transition-colors ${
-                        index !== countries.length - 1 ? 'border-b border-border' : ''
-                      } ${
-                        isSelected ? 'bg-blue-50' : 'hover:bg-gray-50'
+                      className={`list-group-item list-group-item-action text-end d-flex justify-content-between align-items-center ${
+                        isSelected ? 'active' : ''
                       }`}
                     >
-                      <span className="text-2xl">{data?.flag}</span>
-                      <span className="font-medium text-foreground">{data?.name}</span>
+                      <span>{data?.name}</span>
+                      <span className="fs-5">{data?.flag}</span>
                     </button>
                   );
                 })}
@@ -402,11 +373,7 @@ export default function Onboarding() {
             <button
               onClick={handleContinue}
               disabled={isContinueDisabled()}
-              className={`w-full py-3 rounded-lg font-medium transition-opacity ${
-                isContinueDisabled()
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  : 'bg-gray-800 text-white hover:bg-gray-900'
-              }`}
+              className="btn btn-dark w-100 py-3 fw-bold"
             >
               متابعة
             </button>
@@ -415,31 +382,25 @@ export default function Onboarding() {
 
         {/* Screen 9: Pricing */}
         {currentStep === 9 && (
-          <div className="space-y-6 text-center">
-            <div>
-              <h2 className="text-lg font-bold text-foreground mb-4">سعر الاشتراك:</h2>
-              <div className="bg-card p-6 rounded-lg border border-border mb-4">
-                <div className="text-4xl font-bold text-primary">
-                  497
-                </div>
-                <p className="text-muted-foreground text-sm mt-2">ريال سعودي</p>
-              </div>
-              <p className="text-sm text-muted-foreground mb-6">
-                يشمل التدريب الكامل + الدعم
-              </p>
+          <div className="text-center">
+            <h2 className="h5 fw-bold text-dark mb-4">سعر الاشتراك:</h2>
+            <div className="bg-white p-4 rounded mb-4">
+              <div className="display-4 fw-bold text-dark">497</div>
+              <p className="text-muted small mt-2">ريال سعودي</p>
+              <p className="text-muted small mt-3">يشمل التدريب الكامل + الدعم</p>
             </div>
-            <div className="space-y-3">
-              <button className="w-full py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition-opacity">
+            <div className="d-flex flex-column gap-2">
+              <button className="btn btn-dark py-3 fw-bold">
                 ابدأ مشروعي الآن 🚀
               </button>
-              <button className="w-full py-2 border-2 border-primary text-primary rounded-lg font-medium hover:bg-primary hover:bg-opacity-5 transition-colors">
+              <button className="btn btn-outline-dark py-2 fw-bold">
                 عندي سؤال قبل الاشتراك
               </button>
-              <button className="w-full py-2 text-muted-foreground text-sm hover:text-foreground transition-colors">
+              <button className="btn btn-link text-muted text-decoration-none py-2">
                 غير مستعدة حالياً، سأتابع معكم على الواتساب
               </button>
             </div>
-            <p className="text-xs text-muted-foreground mt-4">
+            <p className="text-muted small mt-4">
               انضمي لأكثر من 11000 امرأة بدأت رحلتهن معنا
             </p>
           </div>
