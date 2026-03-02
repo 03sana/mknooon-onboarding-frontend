@@ -1,37 +1,110 @@
-import { useState } from 'react';
-import { useQueryParam } from '@/hooks/useQueryParam';
-import { useOnboarding } from '@/hooks/useOnboarding';
-import { normalizeSrc, normalizeCountry } from '@/lib/api';
+import { useState, useEffect } from 'react';
+import { normalizeSrc } from '@/lib/api';
 import Loading from './Loading';
 import InvalidLink from './InvalidLink';
 
-export default function Onboarding() {
-  const srcParam = useQueryParam('src');
-  const normalizedSrc = srcParam ? normalizeSrc(srcParam) : null;
-  
-  const { brand, countries, selectedCountry, loading, error, selectCountry, fetchPricing } =
-    useOnboarding(normalizedSrc);
+interface Brand {
+  src: string;
+  name: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  color_primary: string;
+  color_accent: string;
+  logo: string;
+  video_url: string;
+}
 
+export default function Onboarding() {
+  const [src, setSrc] = useState<string | null>(null);
+  const [brand, setBrand] = useState<Brand | null>(null);
+  const [countries, setCountries] = useState<string[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [answers, setAnswers] = useState<Record<number, string>>({});
 
-  // Show loading while fetching brand data (but only if we have a src)
-  if (normalizedSrc && loading && currentStep === 1) {
+  // Parse src from query string on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const srcParam = params.get('src');
+    
+    console.log('=== DEBUG INFO ===');
+    console.log('window.location.href:', window.location.href);
+    console.log('window.location.search:', window.location.search);
+    console.log('srcParam from query:', srcParam);
+    console.log('import.meta.env.VITE_API_URL:', import.meta.env.VITE_API_URL);
+    console.log('==================');
+
+    if (!srcParam) {
+      setError('Missing src parameter');
+      return;
+    }
+
+    const normalizedSrc = normalizeSrc(srcParam);
+    setSrc(normalizedSrc);
+  }, []);
+
+  // Fetch brand and countries when src is available
+  useEffect(() => {
+    if (!src) return;
+
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api';
+        
+        console.log('Fetching brand from:', `${apiUrl}/brand?src=${src}`);
+
+        // Fetch brand
+        const brandResponse = await fetch(`${apiUrl}/brand?src=${src}`);
+        const brandData = await brandResponse.json();
+
+        console.log('Brand response:', brandData);
+
+        if (!brandData.success) {
+          setError(brandData.error || 'Failed to load brand data');
+          return;
+        }
+
+        setBrand(brandData.data);
+
+        // Fetch countries
+        const countriesResponse = await fetch(`${apiUrl}/countries?src=${src}`);
+        const countriesData = await countriesResponse.json();
+
+        console.log('Countries response:', countriesData);
+
+        if (countriesData.success) {
+          setCountries(countriesData.data?.countries || []);
+        }
+
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setError('Failed to fetch data from server');
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [src]);
+
+  // Show loading while fetching
+  if (loading && currentStep === 1) {
     return <Loading />;
   }
 
-  // Show error if brand is invalid (but only if we tried to load it)
-  if (normalizedSrc && error && currentStep === 1) {
+  // Show error if src is missing or API failed
+  if (!src || error) {
     return <InvalidLink />;
   }
 
-  // Show error if brand data is missing (but only if we tried to load it)
-  if (normalizedSrc && !brand && currentStep === 1 && !loading) {
-    return <InvalidLink />;
-  }
-
-  // Show error if no src parameter provided
-  if (!srcParam && currentStep === 1) {
+  // Show error if brand data is missing
+  if (!brand && currentStep === 1) {
     return <InvalidLink />;
   }
 
@@ -42,15 +115,11 @@ export default function Onboarding() {
   const handleContinue = async () => {
     if (currentStep < 10) {
       setCurrentStep(currentStep + 1);
-    } else if (currentStep === 8 && selectedCountry) {
-      // Fetch pricing when moving to pricing screen
-      await fetchPricing(selectedCountry);
-      setCurrentStep(currentStep + 1);
     }
   };
 
   const handleCountrySelect = (country: string) => {
-    selectCountry(country);
+    setSelectedCountry(country);
   };
 
   const isContinueDisabled = () => {
