@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import { normalizeSrc } from '@/lib/api';
 import Loading from './Loading';
 import InvalidLink from './InvalidLink';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 
 interface Brand {
   src: string;
