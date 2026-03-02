@@ -15,18 +15,23 @@ export default function Onboarding() {
   const [currentStep, setCurrentStep] = useState(1);
   const [answers, setAnswers] = useState<Record<number, string>>({});
 
-  // Show loading while fetching brand data
-  if (loading && currentStep === 1) {
+  // Show loading while fetching brand data (but only if we have a src)
+  if (normalizedSrc && loading && currentStep === 1) {
     return <Loading />;
   }
 
-  // Show error if brand is invalid
-  if (error && currentStep === 1) {
+  // Show error if brand is invalid (but only if we tried to load it)
+  if (normalizedSrc && error && currentStep === 1) {
     return <InvalidLink />;
   }
 
-  // Show error if brand data is missing
-  if (!brand && currentStep === 1) {
+  // Show error if brand data is missing (but only if we tried to load it)
+  if (normalizedSrc && !brand && currentStep === 1 && !loading) {
+    return <InvalidLink />;
+  }
+
+  // Show error if no src parameter provided
+  if (!srcParam && currentStep === 1) {
     return <InvalidLink />;
   }
 
@@ -73,11 +78,11 @@ export default function Onboarding() {
         </div>
 
         {/* Screen 1: Entry */}
-        {currentStep === 1 && (
+        {currentStep === 1 && brand && (
           <div className="text-center space-y-6">
             <div>
-              <h1 className="text-2xl font-bold text-foreground mb-2">{brand?.title}</h1>
-              <p className="text-muted-foreground">{brand?.subtitle}</p>
+              <h1 className="text-2xl font-bold text-foreground mb-2">{brand.title}</h1>
+              <p className="text-muted-foreground">{brand.subtitle}</p>
             </div>
             <button
               onClick={handleContinue}
@@ -305,7 +310,6 @@ export default function Onboarding() {
               <h2 className="text-lg font-bold text-foreground mb-4">سعر الاشتراك:</h2>
               <div className="bg-card p-6 rounded-lg border border-border mb-4">
                 <div className="text-4xl font-bold text-primary">
-                  {/* Pricing data will be displayed here */}
                   497
                 </div>
                 <p className="text-muted-foreground text-sm mt-2">ريال سعودي</p>
