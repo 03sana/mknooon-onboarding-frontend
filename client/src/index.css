@@ -130,9 +130,17 @@ html[dir="rtl"] * {
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    font-family: 'Noto Naskh Arabic', serif;
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Noto Naskh Arabic', serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Noto Naskh Arabic', serif;
+  }
+  p, span, div, button {
+    font-family: 'Noto Naskh Arabic', serif;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
