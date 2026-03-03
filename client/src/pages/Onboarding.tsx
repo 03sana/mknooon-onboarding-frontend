@@ -465,7 +465,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center d-flex flex-column justify-content-center"
-          style={{ minHeight: '100vh', paddingTop: '8px', paddingBottom: '8px' }}
+          style={{ paddingTop: '8px', paddingBottom: '8px' }}
         >
           <h2 className="fw-bold text-dark" style={{ fontSize: '26px', fontWeight: 700, textAlign: 'right', marginBottom: '8px' }}>سعر الاشتراك:</h2>
           
