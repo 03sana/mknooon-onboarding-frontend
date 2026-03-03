@@ -368,9 +368,8 @@ export default function Onboarding() {
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               style={{
                 width: '100%',
-                borderRadius: isDropdownOpen ? '10px 10px 0 0' : '10px',
-                border: '1.5px solid #D9D5CF',
-                borderBottom: isDropdownOpen ? 'none' : '1.5px solid #D9D5CF',
+                borderRadius: '10px',
+                border: isDropdownOpen ? '1.5px solid #7C6E5B' : '1.5px solid #D9D5CF',
                 padding: '14px 16px',
                 fontSize: '16px',
                 fontWeight: 500,
@@ -380,17 +379,18 @@ export default function Onboarding() {
                 textAlign: 'right',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'space-between',
+                justifyContent: 'flex-end',
+                gap: '8px',
                 transition: 'all 0.2s ease',
-                boxShadow: isDropdownOpen ? 'none' : '0 1px 3px rgba(0, 0, 0, 0.05)',
+                boxShadow: isDropdownOpen ? '0 0 0 3px rgba(124, 110, 91, 0.1)' : '0 1px 3px rgba(0, 0, 0, 0.05)',
                 cursor: 'pointer'
               }}
-              whileHover={{ backgroundColor: isDropdownOpen ? '#FFFFFF' : '#FAFAF8' }}
+              whileHover={{ backgroundColor: '#FAFAF8' }}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C6E5B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease' }}>
+              <span>{answers[9] || 'اختاري دولة'}</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C6E5B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
-              <span>{answers[9] || 'اختاري دولة'}</span>
             </motion.button>
             
             {isDropdownOpen && (
@@ -400,20 +400,21 @@ export default function Onboarding() {
                 exit={{ opacity: 0, y: -10 }}
                 style={{
                   position: 'absolute',
-                  top: 'calc(100% - 1px)',
+                  top: '100%',
                   left: 0,
                   right: 0,
                   backgroundColor: '#FFFFFF',
                   border: '1.5px solid #D9D5CF',
                   borderTop: 'none',
                   borderRadius: '0 0 10px 10px',
+                  marginTop: '-1px',
                   zIndex: 10,
                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                   maxHeight: '300px',
                   overflowY: 'auto'
                 }}
               >
-                {countries.map((country, index) => (
+                {countries.map((country) => (
                   <motion.button
                     key={country}
                     onClick={() => {
@@ -426,21 +427,16 @@ export default function Onboarding() {
                       textAlign: 'right',
                       direction: 'rtl',
                       border: 'none',
-                      borderBottom: index < countries.length - 1 ? '1px solid #F0EAE0' : 'none',
                       backgroundColor: answers[9] === country ? '#F0EAE0' : '#FFFFFF',
                       color: '#2D2D2D',
-                      fontSize: '15px',
+                      fontSize: '16px',
                       fontWeight: 500,
                       cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center'
+                      transition: 'all 0.2s ease'
                     }}
                     whileHover={{ backgroundColor: '#F0EAE0' }}
                   >
-                    <span style={{ fontSize: '13px', color: '#999', fontWeight: 400 }}>{countriesPricing[country]}</span>
-                    <span>{country}</span>
+                    {country}
                   </motion.button>
                 ))}
               </motion.div>
