@@ -56,7 +56,7 @@ export default function Onboarding() {
   return (
     <div className="container-fluid bg-light h-[100svh] overflow-y-auto" style={{ paddingBottom: '40px' }}>
       {/* Progress Bar - Hidden on Screen 1 */}
-      {currentStep > 1 && (
+      {currentStep > 1 && currentStep !== 11 && (
         <div style={{ paddingTop: '20px', paddingBottom: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
             <div style={{ flex: 1, height: '4px', backgroundColor: '#e0e0e0', borderRadius: '2px', marginRight: '10px' }}>
@@ -521,47 +521,92 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center d-flex flex-column justify-content-between h-[100svh]"
-          style={{ paddingTop: '40px', paddingBottom: '40px', display: 'flex', flexDirection: 'column' }}
+          className="text-center d-flex flex-column h-[100svh]"
+          style={{ paddingTop: '20px', paddingBottom: '40px', display: 'flex', flexDirection: 'column' }}
         >
-          {/* Main Content */}
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, lineHeight: '1.4', textAlign: 'right', direction: 'rtl' }}>
+          {/* Title at Top */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            style={{ marginBottom: '20px' }}
+          >
+            <h2 className="fw-bold text-dark" style={{ fontSize: '28px', fontWeight: 700, lineHeight: '1.4', textAlign: 'right', direction: 'rtl' }}>
               مشروعك أقرب مما تخيلي...<br />خلينا نبدأه صح.
             </h2>
-          </div>
+          </motion.div>
 
-          {/* Buttons Section */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
-            <motion.button
-              onClick={() => setCurrentStep(1)}
-              className="btn fw-bold py-3 px-5"
-              style={{ borderRadius: '12px', fontSize: '16px', width: '100%', backgroundColor: '#2D2D2D', color: '#fff', border: 'none' }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+          {/* Success Animation - Centered */}
+          <motion.div
+            style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '30px' }}
+          >
+            {/* Checkmark Animation */}
+            <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.6, type: 'spring', stiffness: 100 }}
+              style={{
+                width: '80px',
+                height: '80px',
+                borderRadius: '50%',
+                backgroundColor: '#7C6E5B',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
             >
-              ابدأ مشروعي الآن 🚀
-            </motion.button>
-            <motion.button
-              onClick={() => setCurrentStep(1)}
-              className="btn fw-bold py-3 px-5"
-              style={{ borderRadius: '12px', fontSize: '16px', width: '100%', backgroundColor: '#fff', color: '#2D2D2D', border: '1.5px solid #E8E4DC' }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              <motion.span
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.6, duration: 0.4 }}
+                style={{ fontSize: '40px', color: '#fff', fontWeight: 'bold' }}
+              >
+                ✓
+              </motion.span>
+            </motion.div>
+
+            {/* Buttons Section - Centered */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.5 }}
+              style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%' }}
             >
-              عندي سؤال قبل الاشتراك
-            </motion.button>
-          </div>
+              <motion.button
+                onClick={() => setCurrentStep(1)}
+                className="btn fw-bold py-3 px-5"
+                style={{ borderRadius: '12px', fontSize: '16px', width: '100%', backgroundColor: '#2D2D2D', color: '#fff', border: 'none' }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                ابدأ مشروعي الآن 🚀
+              </motion.button>
+              <motion.button
+                onClick={() => setCurrentStep(1)}
+                className="btn fw-bold py-3 px-5"
+                style={{ borderRadius: '12px', fontSize: '16px', width: '100%', backgroundColor: '#fff', color: '#2D2D2D', border: '1.5px solid #E8E4DC' }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                عندي سؤال قبل الاشتراك
+              </motion.button>
+            </motion.div>
+          </motion.div>
 
           {/* Footer Text */}
-          <div style={{ textAlign: 'center' }}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 0.5 }}
+            style={{ textAlign: 'center' }}
+          >
             <p style={{ fontSize: '13px', color: '#999', marginBottom: '12px', direction: 'rtl' }}>
               غير مستعدة حالياً؟ ستابعي معكم على الواتساب
             </p>
             <p style={{ fontSize: '12px', color: '#ccc', direction: 'rtl' }}>
               انضمي لأكثر من 4000 امرأة بدأت رحلتهن مع شوكودار<br />#COBAB2
             </p>
-          </div>
+          </motion.div>
         </motion.div>
       )}
 
