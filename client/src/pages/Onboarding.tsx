@@ -102,8 +102,8 @@ export default function Onboarding() {
             <div className="d-flex flex-column gap-2">
             <motion.button
               onClick={() => { handleAnswer(2, 'خلال 30 يوم'); handleContinue(); }}
-              className={`btn py-3 fw-bold d-flex justify-content-end ${answers[2] === 'خلال 30 يوم' ? 'btn-dark' : 'btn-outline-dark'}`}
-              style={{ borderRadius: '12px', textAlign: 'right', fontSize: '16px', direction: 'rtl' }}
+              className={`btn py-3 fw-bold text-end ${answers[2] === 'خلال 30 يوم' ? 'btn-dark' : 'btn-outline-dark'}`}
+              style={{ borderRadius: '12px', textAlign: 'right', fontSize: '16px', direction: 'rtl', display: 'block', width: '100%' }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -112,8 +112,8 @@ export default function Onboarding() {
             </motion.button>
             <motion.button
               onClick={() => { handleAnswer(2, 'خلال 2-3 أشهر'); handleContinue(); }}
-              className={`btn py-3 fw-bold d-flex justify-content-end ${answers[2] === 'خلال 2-3 أشهر' ? 'btn-dark' : 'btn-outline-dark'}`}
-              style={{ borderRadius: '12px', textAlign: 'right', fontSize: '16px', direction: 'rtl' }}
+              className={`btn py-3 fw-bold text-end ${answers[2] === 'خلال 2-3 أشهر' ? 'btn-dark' : 'btn-outline-dark'}`}
+              style={{ borderRadius: '12px', textAlign: 'right', fontSize: '16px', direction: 'rtl', display: 'block', width: '100%' }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -121,8 +121,8 @@ export default function Onboarding() {
             </motion.button>
             <motion.button
               onClick={() => { handleAnswer(2, 'ما زلت أستكشف الفكرة'); handleContinue(); }}
-              className={`btn py-3 fw-bold d-flex justify-content-end ${answers[2] === 'ما زلت أستكشف الفكرة' ? 'btn-dark' : 'btn-outline-dark'}`}
-              style={{ borderRadius: '12px', textAlign: 'right', fontSize: '16px', direction: 'rtl' }}
+              className={`btn py-3 fw-bold text-end ${answers[2] === 'ما زلت أستكشف الفكرة' ? 'btn-dark' : 'btn-outline-dark'}`}
+              style={{ borderRadius: '12px', textAlign: 'right', fontSize: '16px', direction: 'rtl', display: 'block', width: '100%' }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -146,8 +146,8 @@ export default function Onboarding() {
               <motion.button
                 key={option}
                 onClick={() => { handleAnswer(3, option); handleContinue(); }}
-                className={`btn py-3 fw-bold d-flex justify-content-end ${answers[3] === option ? 'btn-dark' : 'btn-outline-dark'}`}
-                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl' }}
+                className={`btn py-3 fw-bold text-end ${answers[3] === option ? 'btn-dark' : 'btn-outline-dark'}`}
+                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'block', width: '100%' }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -172,8 +172,8 @@ export default function Onboarding() {
               <motion.button
                 key={option}
                 onClick={() => { handleAnswer(4, option); handleContinue(); }}
-                className={`btn py-3 fw-bold d-flex justify-content-end ${answers[4] === option ? 'btn-dark' : 'btn-outline-dark'}`}
-                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl' }}
+                className={`btn py-3 fw-bold text-end ${answers[4] === option ? 'btn-dark' : 'btn-outline-dark'}`}
+                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'block', width: '100%' }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -198,8 +198,8 @@ export default function Onboarding() {
               <motion.button
                 key={option}
                 onClick={() => { handleAnswer(5, option); handleContinue(); }}
-                className={`btn py-3 fw-bold d-flex justify-content-end ${answers[5] === option ? 'btn-dark' : 'btn-outline-dark'}`}
-                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl' }}
+                className={`btn py-3 fw-bold text-end ${answers[5] === option ? 'btn-dark' : 'btn-outline-dark'}`}
+                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'block', width: '100%' }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -224,8 +224,8 @@ export default function Onboarding() {
               <motion.button
                 key={option}
                 onClick={() => { handleAnswer(6, option); handleContinue(); }}
-                className={`btn py-3 fw-bold d-flex justify-content-end ${answers[6] === option ? 'btn-dark' : 'btn-outline-dark'}`}
-                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl' }}
+                className={`btn py-3 fw-bold text-end ${answers[6] === option ? 'btn-dark' : 'btn-outline-dark'}`}
+                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'block', width: '100%' }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
