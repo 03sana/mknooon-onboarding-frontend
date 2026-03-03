@@ -166,8 +166,8 @@ export default function Onboarding() {
             className="text-center d-flex flex-column justify-content-between"
             style={{ minHeight: '100vh', paddingTop: '60px', paddingBottom: '60px' }}
           >
-            <div>
-              <h1 className="fw-bold text-dark mb-5" style={{ fontSize: '32px', fontWeight: 800 }}>Mknooon</h1>
+            <div className="mb-3">
+              <h1 className="fw-bold text-dark" style={{ fontSize: '18px', fontWeight: 800, marginBottom: '0' }}>Mknooon</h1>
             </div>
 
             <div className="flex-grow-1 d-flex flex-column justify-content-center">
