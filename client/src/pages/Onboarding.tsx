@@ -484,7 +484,7 @@ export default function Onboarding() {
           </p>
 
           {/* Courses Box */}
-          <div style={{ backgroundColor: '#F8F7F5', padding: '20px 16px', borderRadius: '14px', marginBottom: '8px', border: '1.5px solid #E8E4DC' }}>
+          <div style={{ backgroundColor: '#F8F7F5', padding: '28px 16px', borderRadius: '14px', marginBottom: '8px', border: '1.5px solid #E8E4DC' }}>
             <div style={{ textAlign: 'right' }}>
               {[
                 'الدورة الاحترافية',
