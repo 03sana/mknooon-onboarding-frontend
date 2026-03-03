@@ -309,17 +309,81 @@ export default function Onboarding() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center"
           >
-            <h2 className="display-5 fw-bold text-dark mb-3">78%</h2>
-            <h3 className="h5 fw-bold text-dark mb-3">جاهزتك ممتازة 👏</h3>
-            <p className="text-muted mb-4">جاهزتك لإطلاق مشروعك:</p>
+            {/* Large Circular Progress Indicator */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              style={{
+                width: '200px',
+                height: '200px',
+                margin: '0 auto 30px',
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <svg
+                width="200"
+                height="200"
+                style={{ position: 'absolute', top: 0, left: 0 }}
+              >
+                {/* Background circle */}
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="90"
+                  fill="none"
+                  stroke="#e0e0e0"
+                  strokeWidth="8"
+                />
+                {/* Progress circle */}
+                <motion.circle
+                  cx="100"
+                  cy="100"
+                  r="90"
+                  fill="none"
+                  stroke="#1a1a1a"
+                  strokeWidth="8"
+                  strokeDasharray={`${2 * Math.PI * 90}`}
+                  strokeDashoffset={`${2 * Math.PI * 90 * (1 - 0.78)}`}
+                  strokeLinecap="round"
+                  style={{ transform: 'rotate(-90deg)', transformOrigin: '100px 100px' }}
+                  initial={{ strokeDashoffset: 2 * Math.PI * 90 }}
+                  animate={{ strokeDashoffset: 2 * Math.PI * 90 * (1 - 0.78) }}
+                  transition={{ delay: 0.3, duration: 1 }}
+                />
+              </svg>
+              {/* Percentage text */}
+              <div style={{ position: 'relative', zIndex: 10 }}>
+                <div style={{ fontSize: '48px', fontWeight: 'bold', color: '#1a1a1a' }}>78%</div>
+              </div>
+            </motion.div>
+
+            {/* Text content */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <h3 className="h5 fw-bold text-dark mb-2">🎉 جاهزتك ممتازة</h3>
+              <p className="text-muted mb-4" style={{ fontSize: '14px', lineHeight: '1.6' }}>
+                جاهزتك لإطلاق مشروعك:
+              </p>
+              <p className="text-muted mb-4" style={{ fontSize: '13px', lineHeight: '1.8' }}>
+                إذا خليتي احكيلك الآن كيف تحول هذه الجاهزية إلى مشروع حقيقي خلال 30 يوم.
+              </p>
+            </motion.div>
+
             <motion.button
               onClick={handleContinue}
               className="btn btn-dark w-100 py-3 fw-bold"
-              style={{ borderRadius: '12px' }}
+              style={{ borderRadius: '12px', marginTop: '20px' }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              متابعة
+              اضغطي هنا
             </motion.button>
           </motion.div>
         )}
