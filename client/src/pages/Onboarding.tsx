@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Onboarding() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -99,7 +98,7 @@ export default function Onboarding() {
           className="text-end"
           style={{ minHeight: '100vh', paddingTop: '60px', paddingBottom: '60px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
         >
-          <h2 className="fw-bold text-dark mb-5" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>متى تريدين البدء ؟</h2>
+          <h2 className="fw-bold text-dark mb-5" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>لو كانت التفاصيل واضحة وسهلة<br />...متى حابة تطلقي مشروعك؟</h2>
           <div className="d-flex flex-column gap-3">
             <motion.button
               onClick={() => { handleAnswer(2, 'خلال 30 يوم'); handleContinue(); }}
