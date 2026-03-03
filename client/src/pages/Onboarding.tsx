@@ -305,7 +305,7 @@ export default function Onboarding() {
             <iframe
               width="100%"
               height="300"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              src="https://www.youtube.com/embed/dJjFfRiy6E4"
               title="Mknooon Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -337,7 +337,23 @@ export default function Onboarding() {
           <select
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { handleAnswer(9, e.target.value); }}
             className="form-select mb-3"
-            style={{ borderRadius: '12px' }}
+            style={{
+              borderRadius: '12px',
+              border: '2px solid #2D2D2D',
+              padding: '12px 16px',
+              fontSize: '16px',
+              fontWeight: 600,
+              backgroundColor: '#fff',
+              color: '#2D2D2D',
+              direction: 'rtl',
+              textAlign: 'right',
+              appearance: 'none',
+              backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%272D2D2D%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e")',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'left 12px center',
+              backgroundSize: '20px',
+              paddingLeft: '40px'
+            }}
           >
             <option value="">اختاري دولة</option>
             <option value="السعودية">السعودية</option>
