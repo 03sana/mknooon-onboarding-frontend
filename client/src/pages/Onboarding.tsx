@@ -145,35 +145,54 @@ export default function Onboarding() {
   return (
     <div className="min-vh-100 d-flex align-items-center justify-content-center p-3" style={{ backgroundColor: '#f5f1ed' }} dir="rtl">
       <div className="w-100" style={{ maxWidth: '500px' }}>
-        {/* Progress Bar */}
-        <div className="mb-4">
-          <div className="progress mb-2" style={{ height: '4px' }}>
-            <div
-              className="progress-bar bg-dark"
-              style={{ width: `${(currentStep / 11) * 100}%` }}
-            />
+        {/* Progress Bar - Only show from Screen 2 onwards */}
+        {currentStep > 1 && (
+          <div className="mb-4">
+            <div className="progress mb-2" style={{ height: '4px' }}>
+              <div
+                className="progress-bar bg-dark"
+                style={{ width: `${(currentStep / 11) * 100}%` }}
+              />
+            </div>
+            <div className="text-end text-muted small">{currentStep}/10</div>
           </div>
-          <div className="text-end text-muted small">{currentStep}/10</div>
-        </div>
+        )}
 
         {/* Screen 1: Entry */}
         {currentStep === 1 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center"
+            className="text-center d-flex flex-column justify-content-between"
+            style={{ minHeight: '100vh', paddingTop: '60px', paddingBottom: '60px' }}
           >
-            <h2 className="h4 fw-bold text-dark mb-3">{brand?.title}</h2>
-            <p className="text-muted mb-4">{brand?.subtitle}</p>
-            <motion.button
-              onClick={() => handleContinue()}
-              className="btn btn-dark w-100 py-3 fw-bold"
-              style={{ borderRadius: '12px' }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              تعرفي على الفرصة
-            </motion.button>
+            <div>
+              <h1 className="fw-bold text-dark mb-5" style={{ fontSize: '32px', fontWeight: 800 }}>Mknooon</h1>
+            </div>
+
+            <div className="flex-grow-1 d-flex flex-column justify-content-center">
+              <h2 className="fw-bold text-dark mb-3" style={{ fontSize: '28px', lineHeight: '1.4' }}>
+                رحلتك لإطلاق مشروعك تبدأ الآن 🎁
+              </h2>
+              <p className="text-muted mb-6" style={{ fontSize: '14px', lineHeight: '1.6', color: '#666' }}>
+                3 دقائق فقط... وتعرّفي فيها .. هل انت جاهزة لإطلاق مشروعك ؟
+              </p>
+            </div>
+
+            <div>
+              <motion.button
+                onClick={() => handleContinue()}
+                className="btn btn-dark w-100 py-3 fw-bold mb-4"
+                style={{ borderRadius: '12px', fontSize: '16px' }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                تعرفي على الفرصة
+              </motion.button>
+              <p className="text-muted small" style={{ fontSize: '13px', color: '#999' }}>
+                أكثر من 11000 امرأة بدأت رحلتها
+              </p>
+            </div>
           </motion.div>
         )}
 
