@@ -338,21 +338,31 @@ export default function Onboarding() {
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { handleAnswer(9, e.target.value); }}
             className="form-select mb-3"
             style={{
-              borderRadius: '12px',
-              border: '2px solid #2D2D2D',
-              padding: '12px 16px',
+              borderRadius: '10px',
+              border: '1.5px solid #D9D5CF',
+              padding: '14px 16px',
               fontSize: '16px',
-              fontWeight: 600,
-              backgroundColor: '#fff',
+              fontWeight: 500,
+              backgroundColor: '#FFFFFF',
               color: '#2D2D2D',
               direction: 'rtl',
               textAlign: 'right',
               appearance: 'none',
-              backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%272D2D2D%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e")',
+              backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%277C6E5B%27 stroke-width=%272.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e")',
               backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'left 12px center',
-              backgroundSize: '20px',
-              paddingLeft: '40px'
+              backgroundPosition: 'left 14px center',
+              backgroundSize: '18px',
+              paddingLeft: '42px',
+              transition: 'all 0.2s ease',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
+            }}
+            onFocus={(e) => {
+              e.currentTarget.style.borderColor = '#7C6E5B';
+              e.currentTarget.style.boxShadow = '0 0 0 3px rgba(124, 110, 91, 0.1)';
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.borderColor = '#D9D5CF';
+              e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.05)';
             }}
           >
             <option value="">اختاري دولة</option>
