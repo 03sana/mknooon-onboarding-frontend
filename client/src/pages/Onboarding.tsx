@@ -6,30 +6,30 @@ export default function Onboarding() {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
-  const countriesPricing: Record<string, number> = {
-    'السعودية': 320,
-    'الإمارات العربية المتحدة': 320,
-    'مصر': 1250,
-    'الأردن': 30,
-    'لبنان': 40,
-    'قطر': 290,
-    'الكويت': 29,
-    'سلطنة عُمان': 35,
-    'البحرين': 40,
-    'ليبيا': 295,
-    'المغرب': 290,
-    'تونس': 150,
-    'الجزائر': 7000,
-    'العراق': 60000,
-    'سوريا': 4500,
-    'السودان': 95000,
-    'اليمن': 50,
-    'فلسطين - الضفة الغربية': 280,
-    'فلسطين - الداخل والقدس': 390,
-    'بريطانيا': 100,
-    'كندا': 150,
-    'أمريكا': 130,
-    'باقي الدول': 130
+  const countriesPricing: Record<string, { price: number; flag: string }> = {
+    'السعودية': { price: 320, flag: '🇸🇦' },
+    'الإمارات العربية المتحدة': { price: 320, flag: '🇦🇪' },
+    'مصر': { price: 1250, flag: '🇪🇬' },
+    'الأردن': { price: 30, flag: '🇯🇴' },
+    'لبنان': { price: 40, flag: '🇱🇧' },
+    'قطر': { price: 290, flag: '🇶🇦' },
+    'الكويت': { price: 29, flag: '🇰🇼' },
+    'سلطنة عُمان': { price: 35, flag: '🇴🇲' },
+    'البحرين': { price: 40, flag: '🇧🇭' },
+    'ليبيا': { price: 295, flag: '🇱🇾' },
+    'المغرب': { price: 290, flag: '🇲🇦' },
+    'تونس': { price: 150, flag: '🇹🇳' },
+    'الجزائر': { price: 7000, flag: '🇩🇿' },
+    'العراق': { price: 60000, flag: '🇮🇶' },
+    'سوريا': { price: 4500, flag: '🇸🇾' },
+    'السودان': { price: 95000, flag: '🇸🇩' },
+    'اليمن': { price: 50, flag: '🇾🇪' },
+    'فلسطين - الضفة الغربية': { price: 280, flag: '🇵🇸' },
+    'فلسطين - الداخل والقدس': { price: 390, flag: '🇵🇸' },
+    'بريطانيا': { price: 100, flag: '🇬🇧' },
+    'كندا': { price: 150, flag: '🇨🇦' },
+    'أمريكا': { price: 130, flag: '🇺🇸' },
+    'باقي الدول': { price: 130, flag: '🌍' }
   };
   
   const countries = Object.keys(countriesPricing).sort();
@@ -427,16 +427,21 @@ export default function Onboarding() {
                       textAlign: 'right',
                       direction: 'rtl',
                       border: 'none',
+                      borderBottom: '1px solid #F0EAE0',
                       backgroundColor: answers[9] === country ? '#F0EAE0' : '#FFFFFF',
                       color: '#2D2D2D',
                       fontSize: '16px',
                       fontWeight: 500,
                       cursor: 'pointer',
-                      transition: 'all 0.2s ease'
+                      transition: 'all 0.2s ease',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
                     }}
                     whileHover={{ backgroundColor: '#F0EAE0' }}
                   >
-                    {country}
+                    <span style={{ fontSize: '18px' }}>{countriesPricing[country].flag}</span>
+                    <span>{country}</span>
                   </motion.button>
                 ))}
               </motion.div>
