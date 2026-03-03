@@ -137,9 +137,10 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center"
+          className="text-end"
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="h5 fw-bold text-dark mb-4">كم دخلك المستهدف شهرياً؟</h2>
+          <h2 className="h5 fw-bold text-dark mb-4" style={{ textAlign: 'right' }}>كم دخلك المستهدف شهرياً؟</h2>
           <div className="d-flex flex-column gap-2">
             {['أقل من 5000 ريال', '5000 - 10000 ريال', 'أكثر من 10000 ريال'].map((option) => (
               <motion.button
@@ -162,9 +163,10 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center"
+          className="text-end"
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="h5 fw-bold text-dark mb-4">ما خبرتك في مجال عملك؟</h2>
+          <h2 className="h5 fw-bold text-dark mb-4" style={{ textAlign: 'right' }}>ما خبرتك في مجال عملك؟</h2>
           <div className="d-flex flex-column gap-2">
             {['مبتدئة تماماً', 'لدي خبرة بسيطة', 'لدي خبرة جيدة'].map((option) => (
               <motion.button
@@ -187,9 +189,10 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center"
+          className="text-end"
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="h5 fw-bold text-dark mb-4">ما أكبر تحدي تواجهينه؟</h2>
+          <h2 className="h5 fw-bold text-dark mb-4" style={{ textAlign: 'right' }}>ما أكبر تحدي تواجهينه؟</h2>
           <div className="d-flex flex-column gap-2">
             {['عدم معرفة من أين أبدأ', 'صعوبة التسويق', 'إدارة الوقت والمشروع'].map((option) => (
               <motion.button
@@ -212,9 +215,10 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center"
+          className="text-end"
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="h5 fw-bold text-dark mb-4">كيف تفضلين التعلم؟</h2>
+          <h2 className="h5 fw-bold text-dark mb-4" style={{ textAlign: 'right' }}>كيف تفضلين التعلم؟</h2>
           <div className="d-flex flex-column gap-2">
             {['دورات تدريبية', 'ورش عمل حية', 'محتوى مكتوب'].map((option) => (
               <motion.button
@@ -291,9 +295,10 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center"
+          className="text-end"
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="h5 fw-bold text-dark mb-4">شاهدي هذا الفيديو</h2>
+          <h2 className="h5 fw-bold text-dark mb-4" style={{ textAlign: 'right' }}>شاهدي هذا الفيديو</h2>
           <div style={{ backgroundColor: '#e0e0e0', height: '300px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
             <p style={{ color: '#999' }}>فيديو توضيحي</p>
           </div>
@@ -314,9 +319,10 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center"
+          className="text-end"
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="h5 fw-bold text-dark mb-4">اختاري دولتك</h2>
+          <h2 className="h5 fw-bold text-dark mb-4" style={{ textAlign: 'right' }}>اختاري دولتك</h2>
           <select
             onChange={(e) => { handleAnswer(9, e.target.value); }}
             className="form-select mb-3"
