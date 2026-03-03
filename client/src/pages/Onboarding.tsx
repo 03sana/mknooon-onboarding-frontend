@@ -467,20 +467,27 @@ export default function Onboarding() {
           className="text-center d-flex flex-column justify-content-center"
           style={{ minHeight: '100vh', paddingTop: '60px', paddingBottom: '60px' }}
         >
-          <h2 className="fw-bold text-dark mb-5" style={{ fontSize: '32px', fontWeight: 700 }}>العرض الخاص</h2>
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>سعر الاشتراك:</h2>
           
-          <div style={{ backgroundColor: '#fff', padding: '40px', borderRadius: '12px', marginBottom: '30px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-            <p style={{ fontSize: '14px', color: '#999', margin: '0 0 10px 0' }}>
-              {answers[9]}
-            </p>
-            <p style={{ fontSize: '48px', fontWeight: 800, color: '#2D2D2D', margin: '0 0 10px 0' }}>
-              {countriesPricing[answers[9]]?.price || 0} {answers[9]?.includes('ريال') || answers[9]?.includes('دينار') || answers[9]?.includes('درهم') ? '' : 'ريال'}
-            </p>
-            <p style={{ fontSize: '16px', color: '#666', margin: '0 0 20px 0' }}>
-              وهذا السعر يشمل 5 دورات، وهي:
-            </p>
+          {/* Price Box - Horizontal */}
+          <div style={{ backgroundColor: '#F8F7F5', padding: '20px 24px', borderRadius: '16px', marginBottom: '24px', border: '1.5px solid #E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'space-between', direction: 'rtl' }}>
+            <div style={{ textAlign: 'right' }}>
+              <p style={{ fontSize: '14px', color: '#999', margin: '0 0 4px 0' }}>
+                {answers[9]}
+              </p>
+              <p style={{ fontSize: '32px', fontWeight: 800, color: '#2D2D2D', margin: '0' }}>
+                {countriesPricing[answers[9]]?.price || 0}
+              </p>
+            </div>
+          </div>
 
-            <div style={{ textAlign: 'right', marginBottom: '30px' }}>
+          <p style={{ fontSize: '16px', color: '#666', margin: '0 0 16px 0', textAlign: 'right' }}>
+            وهذا السعر يشمل 5 دورات، وهي:
+          </p>
+
+          {/* Courses Box */}
+          <div style={{ backgroundColor: '#F8F7F5', padding: '24px', borderRadius: '16px', marginBottom: '30px', border: '1.5px solid #E8E4DC' }}>
+            <div style={{ textAlign: 'right' }}>
               {[
                 'الدورة الاحترافية',
                 'دورة تسعير المنتجات',
@@ -489,10 +496,12 @@ export default function Onboarding() {
                 'دورة إدارة المشاريع',
                 'المتابعة مع الدعم الفني لمدة عام كامل'
               ].map((item, index) => (
-                <p key={index} style={{ fontSize: '14px', color: '#666', margin: '10px 0', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                  <span style={{ marginLeft: '10px' }}>✓</span>
-                  {item}
-                </p>
+                <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', margin: '12px 0', gap: '12px', direction: 'rtl' }}>
+                  <span style={{ fontSize: '14px', color: '#2D2D2D', fontWeight: 500 }}>{item}</span>
+                  <div style={{ width: '24px', height: '24px', borderRadius: '50%', backgroundColor: '#7C6E5B', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <span style={{ color: '#fff', fontSize: '14px', fontWeight: 'bold' }}>✓</span>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
