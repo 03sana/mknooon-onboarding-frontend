@@ -6,30 +6,30 @@ export default function Onboarding() {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
-  const countriesPricing: Record<string, { price: number; flag: string; currency: string }> = {
-    'السعودية': { price: 320, flag: '🇸🇦', currency: 'ريال' },
-    'الإمارات العربية المتحدة': { price: 320, flag: '🇦🇦', currency: 'درهم' },
-    'مصر': { price: 1250, flag: '🇦🇸', currency: 'جنيه' },
-    'الأردن': { price: 30, flag: '🇯🇴', currency: 'دينار' },
-    'لبنان': { price: 40, flag: '🇱🇧', currency: 'ليرة' },
-    'قطر': { price: 290, flag: '🇶🇦', currency: 'ريال' },
-    'الكويت': { price: 29, flag: '🇰🇷', currency: 'دينار' },
-    'سلطنة عُمان': { price: 35, flag: '🇴🇲', currency: 'ريال' },
-    'البحرين': { price: 40, flag: '🇧🇧', currency: 'دينار' },
-    'ليبيا': { price: 295, flag: '🇱🇸', currency: 'دينار' },
-    'المغرب': { price: 290, flag: '🇲🇦', currency: 'درهم' },
-    'تونس': { price: 150, flag: '🇹🇳', currency: 'دينار' },
-    'الجزائر': { price: 7000, flag: '🇩🇶', currency: 'دينار' },
-    'العراق': { price: 60000, flag: '🇯🇶', currency: 'دينار' },
-    'سوريا': { price: 4500, flag: '🇸🇸', currency: 'ليرة' },
-    'السودان': { price: 95000, flag: '🇸🇩', currency: 'جنيه' },
-    'اليمن': { price: 50, flag: '🇸🇩', currency: 'ريال' },
-    'فلسطين - الضفة الغربية': { price: 280, flag: '🇵🇸', currency: 'شاقل' },
-    'فلسطين - الداخل والقدس': { price: 390, flag: '🇵🇸', currency: 'شاقل' },
-    'بريطانيا': { price: 100, flag: '🇲🇴', currency: 'باوند' },
-    'كندا': { price: 150, flag: '🇨🇦', currency: 'دولار' },
-    'أمريكا': { price: 130, flag: '🇺🇸', currency: 'دولار' },
-    'باقي الدول': { price: 130, flag: '🌍', currency: 'دولار' }
+  const countriesPricing: Record<string, { price: number; flag: string }> = {
+    'السعودية': { price: 320, flag: '🇸🇦' },
+    'الإمارات العربية المتحدة': { price: 320, flag: '🇦🇪' },
+    'مصر': { price: 1250, flag: '🇪🇬' },
+    'الأردن': { price: 30, flag: '🇯🇴' },
+    'لبنان': { price: 40, flag: '🇱🇧' },
+    'قطر': { price: 290, flag: '🇶🇦' },
+    'الكويت': { price: 29, flag: '🇰🇼' },
+    'سلطنة عُمان': { price: 35, flag: '🇴🇲' },
+    'البحرين': { price: 40, flag: '🇧🇭' },
+    'ليبيا': { price: 295, flag: '🇱🇾' },
+    'المغرب': { price: 290, flag: '🇲🇦' },
+    'تونس': { price: 150, flag: '🇹🇳' },
+    'الجزائر': { price: 7000, flag: '🇩🇿' },
+    'العراق': { price: 60000, flag: '🇮🇶' },
+    'سوريا': { price: 4500, flag: '🇸🇾' },
+    'السودان': { price: 95000, flag: '🇸🇩' },
+    'اليمن': { price: 50, flag: '🇾🇪' },
+    'فلسطين - الضفة الغربية': { price: 280, flag: '🇵🇸' },
+    'فلسطين - الداخل والقدس': { price: 390, flag: '🇵🇸' },
+    'بريطانيا': { price: 100, flag: '🇬🇧' },
+    'كندا': { price: 150, flag: '🇨🇦' },
+    'أمريكا': { price: 130, flag: '🇺🇸' },
+    'باقي الدول': { price: 130, flag: '🌍' }
   };
   
   const countries = Object.keys(countriesPricing).sort();
@@ -464,24 +464,29 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center"
-          style={{ minHeight: '100vh', paddingTop: '40px', paddingBottom: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+          className="text-center d-flex flex-column justify-content-center"
+          style={{ minHeight: '100vh', paddingTop: '60px', paddingBottom: '60px' }}
         >
-          <h2 className="fw-bold text-dark mb-2" style={{ fontSize: '20px', fontWeight: 700, textAlign: 'right' }}>سعر الاشتراك:</h2>
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>سعر الاشتراك:</h2>
           
-          {/* Price Box */}
-          <div style={{ backgroundColor: '#F8F7F5', padding: '10px 20px', borderRadius: '12px', marginBottom: '12px', border: '1.5px solid #E8E4DC', textAlign: 'center' }}>
-            <p style={{ fontSize: '24px', fontWeight: 800, color: '#2D2D2D', margin: '0' }}>
-              {countriesPricing[answers[9]]?.price || 0} {countriesPricing[answers[9]]?.currency || 'ريال'}
-            </p>
+          {/* Price Box - Horizontal */}
+          <div style={{ backgroundColor: '#F8F7F5', padding: '20px 24px', borderRadius: '16px', marginBottom: '24px', border: '1.5px solid #E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'space-between', direction: 'rtl' }}>
+            <div style={{ textAlign: 'right' }}>
+              <p style={{ fontSize: '14px', color: '#999', margin: '0 0 4px 0' }}>
+                {answers[9]}
+              </p>
+              <p style={{ fontSize: '32px', fontWeight: 800, color: '#2D2D2D', margin: '0' }}>
+                {countriesPricing[answers[9]]?.price || 0}
+              </p>
+            </div>
           </div>
 
-          <p style={{ fontSize: '11px', color: '#666', margin: '0 0 8px 0', textAlign: 'right' }}>
+          <p style={{ fontSize: '16px', color: '#666', margin: '0 0 16px 0', textAlign: 'right' }}>
             وهذا السعر يشمل 5 دورات، وهي:
           </p>
 
           {/* Courses Box */}
-          <div style={{ backgroundColor: '#F8F7F5', padding: '12px', borderRadius: '12px', marginBottom: '12px', border: '1.5px solid #E8E4DC', maxHeight: '180px', overflowY: 'auto' }}>
+          <div style={{ backgroundColor: '#F8F7F5', padding: '24px', borderRadius: '16px', marginBottom: '30px', border: '1.5px solid #E8E4DC' }}>
             <div style={{ textAlign: 'right' }}>
               {[
                 'الدورة الاحترافية',
@@ -491,10 +496,10 @@ export default function Onboarding() {
                 'دورة إدارة المشاريع',
                 'المتابعة مع الدعم الفني لمدة عام كامل'
               ].map((item, index) => (
-                <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', margin: '5px 0', gap: '8px', direction: 'rtl' }}>
-                  <span style={{ fontSize: '12px', color: '#2D2D2D', fontWeight: 500 }}>{item}</span>
-                  <div style={{ width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#7C6E5B', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <span style={{ color: '#fff', fontSize: '11px', fontWeight: 'bold' }}>✓</span>
+                <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', margin: '12px 0', gap: '12px', direction: 'rtl' }}>
+                  <span style={{ fontSize: '14px', color: '#2D2D2D', fontWeight: 500 }}>{item}</span>
+                  <div style={{ width: '24px', height: '24px', borderRadius: '50%', backgroundColor: '#7C6E5B', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <span style={{ color: '#fff', fontSize: '14px', fontWeight: 'bold' }}>✓</span>
                   </div>
                 </div>
               ))}
@@ -503,8 +508,8 @@ export default function Onboarding() {
 
           <motion.button
             onClick={() => setCurrentStep(11)}
-            className="btn btn-dark fw-bold px-5"
-            style={{ borderRadius: '10px', fontSize: '13px', width: '100%', padding: '10px 20px' }}
+            className="btn btn-dark fw-bold py-3 px-5"
+            style={{ borderRadius: '12px', fontSize: '16px', width: '100%' }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
