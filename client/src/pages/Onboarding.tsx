@@ -368,8 +368,9 @@ export default function Onboarding() {
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               style={{
                 width: '100%',
-                borderRadius: '10px',
-                border: isDropdownOpen ? '1.5px solid #7C6E5B' : '1.5px solid #D9D5CF',
+                borderRadius: isDropdownOpen ? '10px 10px 0 0' : '10px',
+                border: '1.5px solid #D9D5CF',
+                borderBottom: isDropdownOpen ? 'none' : '1.5px solid #D9D5CF',
                 padding: '14px 16px',
                 fontSize: '16px',
                 fontWeight: 500,
@@ -400,14 +401,13 @@ export default function Onboarding() {
                 exit={{ opacity: 0, y: -10 }}
                 style={{
                   position: 'absolute',
-                  top: '100%',
+                  top: 'calc(100% - 1px)',
                   left: 0,
                   right: 0,
                   backgroundColor: '#FFFFFF',
                   border: '1.5px solid #D9D5CF',
                   borderTop: 'none',
                   borderRadius: '0 0 10px 10px',
-                  marginTop: '-1px',
                   zIndex: 10,
                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                   maxHeight: '300px',
