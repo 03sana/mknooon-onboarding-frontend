@@ -57,7 +57,7 @@ export default function Onboarding() {
 
             {/* Courses Box */}
             <div className="bg-white p-4 rounded-xl border border-gray-200 mb-4">
-              <div className="text-right space-y-2">
+              <div className="text-right space-y-2 rtl">
                 {[
                   'الدورة الاحترافية',
                   'دورة تسعير المنتجات',
@@ -80,7 +80,7 @@ export default function Onboarding() {
           {/* Bottom Button */}
           <motion.button
             onClick={() => setCurrentStep(11)}
-            className="mt-4 w-full h-12 rounded-xl bg-[#1F2328] text-white text-base font-semibold"
+            className="mt-4 w-full bg-foreground text-background font-bold py-3 rounded-lg"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
