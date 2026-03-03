@@ -6,30 +6,30 @@ export default function Onboarding() {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
-  const countriesPricing: Record<string, { price: number; flag: string }> = {
-    'السعودية': { price: 320, flag: '🇸🇦' },
-    'الإمارات العربية المتحدة': { price: 320, flag: '🇦🇪' },
-    'مصر': { price: 1250, flag: '🇪🇬' },
-    'الأردن': { price: 30, flag: '🇯🇴' },
-    'لبنان': { price: 40, flag: '🇱🇧' },
-    'قطر': { price: 290, flag: '🇶🇦' },
-    'الكويت': { price: 29, flag: '🇰🇼' },
-    'سلطنة عُمان': { price: 35, flag: '🇴🇲' },
-    'البحرين': { price: 40, flag: '🇧🇭' },
-    'ليبيا': { price: 295, flag: '🇱🇾' },
-    'المغرب': { price: 290, flag: '🇲🇦' },
-    'تونس': { price: 150, flag: '🇹🇳' },
-    'الجزائر': { price: 7000, flag: '🇩🇿' },
-    'العراق': { price: 60000, flag: '🇮🇶' },
-    'سوريا': { price: 4500, flag: '🇸🇾' },
-    'السودان': { price: 95000, flag: '🇸🇩' },
-    'اليمن': { price: 50, flag: '🇾🇪' },
-    'فلسطين - الضفة الغربية': { price: 280, flag: '🇵🇸' },
-    'فلسطين - الداخل والقدس': { price: 390, flag: '🇵🇸' },
-    'بريطانيا': { price: 100, flag: '🇬🇧' },
-    'كندا': { price: 150, flag: '🇨🇦' },
-    'أمريكا': { price: 130, flag: '🇺🇸' },
-    'باقي الدول': { price: 130, flag: '🌍' }
+  const countriesPricing: Record<string, { price: number; flag: string; currency: string }> = {
+    'السعودية': { price: 320, flag: '🇸🇦', currency: 'ريال' },
+    'الإمارات العربية المتحدة': { price: 320, flag: '🇦🇪', currency: 'درهم' },
+    'مصر': { price: 1250, flag: '🇪🇬', currency: 'جنيه' },
+    'الأردن': { price: 30, flag: '🇯🇴', currency: 'دينار' },
+    'لبنان': { price: 40, flag: '🇱🇧', currency: 'ليرة' },
+    'قطر': { price: 290, flag: '🇶🇦', currency: 'ريال' },
+    'الكويت': { price: 29, flag: '🇰🇼', currency: 'دينار' },
+    'سلطنة عُمان': { price: 35, flag: '🇴🇲', currency: 'ريال' },
+    'البحرين': { price: 40, flag: '🇧🇭', currency: 'دينار' },
+    'ليبيا': { price: 295, flag: '🇱🇾', currency: 'دينار' },
+    'المغرب': { price: 290, flag: '🇲🇦', currency: 'درهم' },
+    'تونس': { price: 150, flag: '🇹🇳', currency: 'دينار' },
+    'الجزائر': { price: 7000, flag: '🇩🇿', currency: 'دينار' },
+    'العراق': { price: 60000, flag: '🇮🇶', currency: 'دينار' },
+    'سوريا': { price: 4500, flag: '🇸🇾', currency: 'ليرة' },
+    'السودان': { price: 95000, flag: '🇸🇩', currency: 'جنيه' },
+    'اليمن': { price: 50, flag: '🇾🇪', currency: 'ريال' },
+    'فلسطين - الضفة الغربية': { price: 280, flag: '🇵🇸', currency: 'شيقل' },
+    'فلسطين - الداخل والقدس': { price: 390, flag: '🇵🇸', currency: 'شيقل' },
+    'بريطانيا': { price: 100, flag: '🇬🇧', currency: 'جنيه' },
+    'كندا': { price: 150, flag: '🇨🇦', currency: 'دولار' },
+    'أمريكا': { price: 130, flag: '🇺🇸', currency: 'دولار' },
+    'باقي الدول': { price: 130, flag: '🌍', currency: 'دولار' }
   };
   
   const countries = Object.keys(countriesPricing).sort();
@@ -470,13 +470,11 @@ export default function Onboarding() {
           <h2 className="fw-bold text-dark" style={{ fontSize: '26px', fontWeight: 700, textAlign: 'right', marginBottom: '8px' }}>سعر الاشتراك:</h2>
           
           {/* Price Box - Horizontal */}
-          <div style={{ backgroundColor: '#F8F7F5', padding: '12px 20px', borderRadius: '14px', marginBottom: '8px', border: '1.5px solid #E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'space-between', direction: 'rtl' }}>
-            <div style={{ textAlign: 'right' }}>
-              <p style={{ fontSize: '12px', color: '#999', margin: '0 0 2px 0' }}>
-                {answers[9]}
-              </p>
-              <p style={{ fontSize: '28px', fontWeight: 800, color: '#2D2D2D', margin: '0' }}>
-                {countriesPricing[answers[9]]?.price || 0}
+          <div style={{ backgroundColor: '#F8F7F5', padding: '12px 20px', borderRadius: '14px', marginBottom: '8px', border: '1.5px solid #E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', direction: 'rtl' }}>
+            <div style={{ textAlign: 'center' }}>
+              <p style={{ fontSize: '28px', fontWeight: 800, color: '#2D2D2D', margin: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
+                <span>{countriesPricing[answers[9]]?.price || 0}</span>
+                <span style={{ fontSize: '16px', color: '#666' }}>{countriesPricing[answers[9]]?.currency || 'عملة'}</span>
               </p>
             </div>
           </div>
