@@ -470,7 +470,34 @@ export default function Onboarding() {
             >
               <div style={{ fontSize: '56px', fontWeight: 'bold', color: '#1a1a1a' }}>497</div>
               <p className="text-muted mt-2" style={{ fontSize: '14px' }}>ريال سعودي</p>
-              <p className="text-muted mt-3" style={{ fontSize: '13px', lineHeight: '1.6' }}>يشمل التدريب الكامل + الدعم</p>
+              <p className="text-muted mt-3" style={{ fontSize: '13px', lineHeight: '1.6' }}>وهذا السعر يشمل 5 دورات، وهي:</p>
+              
+              <div className="text-start mt-4">
+                <div className="d-flex align-items-center mb-2">
+                  <span style={{ color: '#8b7355', marginLeft: '12px', fontSize: '18px' }}>✓</span>
+                  <span style={{ fontSize: '13px', color: '#333' }}>الدورة الاحترافية</span>
+                </div>
+                <div className="d-flex align-items-center mb-2">
+                  <span style={{ color: '#8b7355', marginLeft: '12px', fontSize: '18px' }}>✓</span>
+                  <span style={{ fontSize: '13px', color: '#333' }}>دورة تسعير المنتجات</span>
+                </div>
+                <div className="d-flex align-items-center mb-2">
+                  <span style={{ color: '#8b7355', marginLeft: '12px', fontSize: '18px' }}>✓</span>
+                  <span style={{ fontSize: '13px', color: '#333' }}>دورة تصوير المنتجات بالموبايل</span>
+                </div>
+                <div className="d-flex align-items-center mb-2">
+                  <span style={{ color: '#8b7355', marginLeft: '12px', fontSize: '18px' }}>✓</span>
+                  <span style={{ fontSize: '13px', color: '#333' }}>دورة التسويق الإلكتروني</span>
+                </div>
+                <div className="d-flex align-items-center mb-2">
+                  <span style={{ color: '#8b7355', marginLeft: '12px', fontSize: '18px' }}>✓</span>
+                  <span style={{ fontSize: '13px', color: '#333' }}>دورة إدارة المشاريع</span>
+                </div>
+                <div className="d-flex align-items-center">
+                  <span style={{ color: '#8b7355', marginLeft: '12px', fontSize: '18px' }}>✓</span>
+                  <span style={{ fontSize: '13px', color: '#333' }}>المتابعة مع الدعم الفني لمدة عام كامل</span>
+                </div>
+              </div>
             </motion.div>
             <motion.button
               onClick={handleContinue}
