@@ -470,8 +470,11 @@ export default function Onboarding() {
           <h2 className="fw-bold text-dark mb-5" style={{ fontSize: '32px', fontWeight: 700 }}>العرض الخاص</h2>
           
           <div style={{ backgroundColor: '#fff', padding: '40px', borderRadius: '12px', marginBottom: '30px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+            <p style={{ fontSize: '14px', color: '#999', margin: '0 0 10px 0' }}>
+              {answers[9]}
+            </p>
             <p style={{ fontSize: '48px', fontWeight: 800, color: '#2D2D2D', margin: '0 0 10px 0' }}>
-              497 ريال سعودي
+              {countriesPricing[answers[9]]?.price || 0} {answers[9]?.includes('ريال') || answers[9]?.includes('دينار') || answers[9]?.includes('درهم') ? '' : 'ريال'}
             </p>
             <p style={{ fontSize: '16px', color: '#666', margin: '0 0 20px 0' }}>
               وهذا السعر يشمل 5 دورات، وهي:
