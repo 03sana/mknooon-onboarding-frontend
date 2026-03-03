@@ -172,7 +172,8 @@ export default function Onboarding() {
 
             <div className="flex-grow-1 d-flex flex-column justify-content-center">
               <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '32px', lineHeight: '1.3', fontWeight: 900 }}>
-                رحلتك لإطلاق مشروعك تبدأ الآن
+                رحلتك لإطلاق<br />
+                مشروعك تبدأ الآن
               </h2>
               <p className="text-muted mb-2" style={{ fontSize: '15px', lineHeight: '1.6', color: '#888' }}>
                 3 دقائق فقط... وتعرّفي فيها ..
