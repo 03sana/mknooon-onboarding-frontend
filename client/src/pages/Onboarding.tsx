@@ -90,16 +90,16 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 2: Launch Timing */}
-      {currentStep === 2 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-end"
-          style={{ minHeight: '100vh', paddingTop: '60px', paddingBottom: '60px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
-        >
-          <h2 className="fw-bold text-dark mb-5" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>لو كانت التفاصيل واضحة وسهلة<br />...متى حابة تطلقي مشروعك؟</h2>
-          <div className="d-flex flex-column gap-3">
+        {/* Screen 2: Launch Timing */}
+        {currentStep === 2 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-end"
+            style={{ paddingTop: '80px', paddingBottom: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}
+          >
+            <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>لو كانت التفاصيل واضحة وسهلة<br />...متى حابة تطلقي مشروعك؟</h2>
+            <div className="d-flex flex-column gap-2">
             <motion.button
               onClick={() => { handleAnswer(2, 'خلال 30 يوم'); handleContinue(); }}
               className={`btn py-3 fw-bold ${answers[2] === 'خلال 30 يوم' ? 'btn-dark' : 'btn-outline-dark'}`}
