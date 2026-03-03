@@ -54,7 +54,7 @@ export default function Onboarding() {
   const progressPercentage = (currentStep / 10) * 100;
 
   return (
-    <div className="container-fluid bg-light" style={{ paddingBottom: '40px' }}>
+    <div className="container-fluid bg-light h-[100svh] overflow-y-auto" style={{ paddingBottom: '40px' }}>
       {/* Progress Bar - Hidden on Screen 1 */}
       {currentStep > 1 && (
         <div style={{ paddingTop: '20px', paddingBottom: '20px' }}>
@@ -82,7 +82,7 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center d-flex flex-column justify-content-between"
+          className="text-center d-flex flex-column justify-content-between h-[100svh]"
           style={{ paddingTop: '60px', paddingBottom: '60px' }}
         >
           <div className="mb-3">
@@ -521,7 +521,7 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center d-flex flex-column justify-content-between"
+          className="text-center d-flex flex-column justify-content-between h-[100svh]"
           style={{ paddingTop: '40px', paddingBottom: '40px', display: 'flex', flexDirection: 'column' }}
         >
           {/* Main Content */}
