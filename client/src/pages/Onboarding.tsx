@@ -484,7 +484,7 @@ export default function Onboarding() {
           </p>
 
           {/* Courses Box */}
-          <div style={{ backgroundColor: '#F8F7F5', padding: '12px 16px', borderRadius: '14px', marginBottom: '8px', border: '1.5px solid #E8E4DC' }}>
+          <div style={{ backgroundColor: '#F8F7F5', padding: '20px 16px', borderRadius: '14px', marginBottom: '8px', border: '1.5px solid #E8E4DC' }}>
             <div style={{ textAlign: 'right' }}>
               {[
                 'الدورة الاحترافية',
@@ -494,10 +494,10 @@ export default function Onboarding() {
                 'دورة إدارة المشاريع',
                 'المتابعة مع الدعم الفني لمدة عام كامل'
               ].map((item, index) => (
-                <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', margin: '4px 0', gap: '8px', direction: 'rtl' }}>
-                  <span style={{ fontSize: '13px', color: '#2D2D2D', fontWeight: 500 }}>{item}</span>
-                  <div style={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: '#7C6E5B', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <span style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>✓</span>
+                <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', margin: '10px 0', gap: '10px', direction: 'rtl' }}>
+                  <span style={{ fontSize: '15px', color: '#2D2D2D', fontWeight: 500, lineHeight: '1.5' }}>{item}</span>
+                  <div style={{ width: '22px', height: '22px', borderRadius: '50%', backgroundColor: '#7C6E5B', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <span style={{ color: '#fff', fontSize: '13px', fontWeight: 'bold' }}>✓</span>
                   </div>
                 </div>
               ))}
