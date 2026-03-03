@@ -470,15 +470,10 @@ export default function Onboarding() {
           <h2 className="fw-bold text-dark" style={{ fontSize: '26px', fontWeight: 700, textAlign: 'right', marginBottom: '8px' }}>سعر الاشتراك:</h2>
           
           {/* Price Box - Horizontal */}
-          <div style={{ backgroundColor: '#F8F7F5', padding: '12px 20px', borderRadius: '14px', marginBottom: '8px', border: '1.5px solid #E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'space-between', direction: 'rtl' }}>
-            <div style={{ textAlign: 'right' }}>
-              <p style={{ fontSize: '12px', color: '#999', margin: '0 0 2px 0' }}>
-                {answers[9]}
-              </p>
-              <p style={{ fontSize: '28px', fontWeight: 800, color: '#2D2D2D', margin: '0' }}>
-                {countriesPricing[answers[9]]?.price || 0}
-              </p>
-            </div>
+          <div style={{ backgroundColor: '#F8F7F5', padding: '8px 16px', borderRadius: '12px', marginBottom: '6px', border: '1.5px solid #E8E4DC', textAlign: 'center' }}>
+            <p style={{ fontSize: '26px', fontWeight: 800, color: '#2D2D2D', margin: '0' }}>
+              {countriesPricing[answers[9]]?.price || 0}
+            </p>
           </div>
 
           <p style={{ fontSize: '14px', color: '#666', margin: '0 0 6px 0', textAlign: 'right' }}>
