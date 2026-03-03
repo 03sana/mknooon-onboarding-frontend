@@ -241,11 +241,11 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center d-flex flex-column justify-content-center"
-          style={{ minHeight: '100vh', paddingTop: '10px', paddingBottom: '10px' }}
+          className="text-center"
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <div style={{ marginBottom: '10px' }}>
-            <svg width="160" height="160" viewBox="0 0 200 200" style={{ margin: '0 auto', display: 'block' }}>
+          <div style={{ marginBottom: '20px' }}>
+            <svg width="140" height="140" viewBox="0 0 200 200" style={{ margin: '0 auto', display: 'block' }}>
               <circle cx="100" cy="100" r="90" fill="none" stroke="#e0e0e0" strokeWidth="8" />
               <circle
                 cx="100"
@@ -264,16 +264,16 @@ export default function Onboarding() {
             </svg>
           </div>
 
-          <div style={{ marginBottom: '15px' }}>
-            <div style={{ backgroundColor: '#f9f7f4', padding: '12px', borderRadius: '8px', marginBottom: '10px', textAlign: 'center' }}>
-              <p style={{ fontSize: '16px', fontWeight: 600, margin: '0', color: '#2D2D2D' }}>
+          <div style={{ marginBottom: '20px' }}>
+            <div style={{ backgroundColor: '#f9f7f4', padding: '10px', borderRadius: '8px', marginBottom: '10px', textAlign: 'center' }}>
+              <p style={{ fontSize: '15px', fontWeight: 600, margin: '0', color: '#2D2D2D' }}>
                 🎁 جاهزيتك لإطلاق مشروعك
               </p>
             </div>
-            <p style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 10px 0', color: '#2D2D2D', textAlign: 'center' }}>
+            <p style={{ fontSize: '16px', fontWeight: 700, margin: '0 0 10px 0', color: '#2D2D2D', textAlign: 'center' }}>
               🎉 جاهزيتك ممتازة
             </p>
-            <p style={{ fontSize: '14px', lineHeight: '1.5', color: '#666', textAlign: 'center' }}>
+            <p style={{ fontSize: '13px', lineHeight: '1.4', color: '#666', textAlign: 'center' }}>
               إذا خليتي احكيلك الآن كيف تحول هذه الجاهزية إلى مشروع حقيقي خلال 30 يوم.
             </p>
           </div>
@@ -281,7 +281,7 @@ export default function Onboarding() {
           <motion.button
             onClick={handleContinue}
             className="btn btn-dark fw-bold"
-            style={{ borderRadius: '12px', fontSize: '16px', width: '100%', padding: '10px 20px' }}
+            style={{ borderRadius: '12px', fontSize: '16px', width: '100%', padding: '10px 20px', marginBottom: '10px' }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
