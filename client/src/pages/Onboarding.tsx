@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 export default function Onboarding() {
@@ -39,87 +39,146 @@ export default function Onboarding() {
   };
 
   const handleContinue = () => {
-    if (answers[currentStep]) {
+    if (currentStep < 11) {
       setCurrentStep(currentStep + 1);
     }
   };
 
+  const handleBack = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  // Get progress percentage
+  const progressPercentage = (currentStep / 10) * 100;
+
   return (
-    <div style={{ backgroundColor: '#FAFAF8', minHeight: '100vh', paddingBottom: '40px' }}>
-      {/* Screen 1: Welcome */}
+    <div className="container-fluid bg-light" style={{ minHeight: '100vh', paddingBottom: '40px' }}>
+      {/* Progress Bar - Hidden on Screen 1 */}
+      {currentStep > 1 && (
+        <div style={{ paddingTop: '20px', paddingBottom: '20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+            <div style={{ flex: 1, height: '4px', backgroundColor: '#e0e0e0', borderRadius: '2px', marginRight: '10px' }}>
+              <div
+                style={{
+                  height: '100%',
+                  width: `${progressPercentage}%`,
+                  backgroundColor: '#2D2D2D',
+                  borderRadius: '2px',
+                  transition: 'width 0.3s ease'
+                }}
+              />
+            </div>
+            <span style={{ fontSize: '14px', fontWeight: 600, color: '#666', minWidth: '40px', textAlign: 'right' }}>
+              {currentStep}/10
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* Screen 1: Entry */}
       {currentStep === 1 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center d-flex flex-column justify-content-center"
+          className="text-center d-flex flex-column justify-content-between"
           style={{ minHeight: '100vh', paddingTop: '60px', paddingBottom: '60px' }}
         >
-          <h1 className="fw-bold text-dark mb-3" style={{ fontSize: '36px', fontWeight: 700 }}>Mknooon</h1>
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '32px', fontWeight: 700 }}>رحلتك للإطلاق<br />مشروعك تبدأ الآن</h2>
-          <p style={{ fontSize: '16px', color: '#666', marginBottom: '20px' }}>3 دقائق فقط...وتعرفي فيها ..</p>
-          <p style={{ fontSize: '16px', color: '#666', marginBottom: '40px' }}>هل أنت جاهزة لإطلاق مشروعك ؟</p>
-          
-          <motion.button
-            onClick={() => setCurrentStep(2)}
-            className="btn btn-dark fw-bold py-3 px-5"
-            style={{ borderRadius: '12px', fontSize: '16px', width: '100%', maxWidth: '400px', margin: '0 auto' }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            تعرفي على الفرصة
-          </motion.button>
-          <p style={{ fontSize: '14px', color: '#999', marginTop: '30px' }}>أكثر من 11000 امرأة بدأن رحلتهن</p>
-        </motion.div>
-      )}
+          <div className="mb-3">
+            <h1 className="fw-bold text-dark" style={{ fontSize: '18px', fontWeight: 800, marginBottom: '0' }}>Mknooon</h1>
+          </div>
 
-      {/* Screen 2: Question 1 */}
-      {currentStep === 2 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px', paddingLeft: '20px', paddingRight: '20px' }}
-        >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>هل تمتلكين منتجات أو خدمات جاهزة للبيع؟</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {['نعم، أمتلك منتجات', 'نعم، أمتلك خدمات', 'لا، أريد إنشاء منتجات'].map((option) => (
-              <motion.button
-                key={option}
-                onClick={() => {
-                  handleAnswer(2, option);
-                  setCurrentStep(3);
-                }}
-                className="btn btn-outline-dark fw-bold py-3 px-4"
-                style={{ borderRadius: '12px', fontSize: '16px', textAlign: 'right', border: '1.5px solid #D9D5CF' }}
-                whileHover={{ backgroundColor: '#F0EAE0' }}
-              >
-                {option}
-              </motion.button>
-            ))}
+          <div className="flex-grow-1 d-flex flex-column justify-content-center">
+            <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '36px', lineHeight: '1.2', fontWeight: 800, letterSpacing: '-0.5px' }}>
+              رحلتك لإطلاق<br />
+              مشروعك تبدأ الآن
+            </h2>
+            <p className="text-muted mb-2" style={{ fontSize: '16px', lineHeight: '1.6', color: '#666', fontWeight: 600 }}>
+              3 دقائق فقط... وتعرّفي فيها ..
+            </p>
+            <p className="text-muted mb-6" style={{ fontSize: '16px', lineHeight: '1.6', color: '#666', fontWeight: 600 }}>
+              هل انت جاهزة لإطلاق مشروعك ؟
+            </p>
+          </div>
+
+          <div>
+            <motion.button
+              onClick={handleContinue}
+              className="btn btn-dark fw-bold py-3 px-5"
+              style={{ borderRadius: '12px', fontSize: '16px', width: '100%' }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              تعرفي على الفرصة
+            </motion.button>
+            <p className="text-muted mt-4" style={{ fontSize: '14px', color: '#999' }}>
+              أكثر من 11000 امرأة بدأت رحلتها
+            </p>
           </div>
         </motion.div>
       )}
 
-      {/* Screen 3: Question 2 */}
+        {/* Screen 2: Launch Timing */}
+        {currentStep === 2 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-end"
+            style={{ paddingTop: '80px', paddingBottom: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}
+          >
+            <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>لو كانت التفاصيل واضحة وسهلة<br />...متى حابة تطلقي مشروعك؟</h2>
+            <div className="d-flex flex-column gap-2">
+            <motion.button
+              onClick={() => { handleAnswer(2, 'خلال 30 يوم'); handleContinue(); }}
+              className={`btn py-3 fw-bold text-end ${answers[2] === 'خلال 30 يوم' ? 'btn-dark' : 'btn-outline-dark'}`}
+              style={{ borderRadius: '12px', textAlign: 'right', fontSize: '16px', direction: 'rtl', display: 'block', width: '100%' }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <span style={{ marginLeft: '8px' }}>✨</span>
+              خلال 30 يوم
+            </motion.button>
+            <motion.button
+              onClick={() => { handleAnswer(2, 'خلال 2-3 أشهر'); handleContinue(); }}
+              className={`btn py-3 fw-bold text-end ${answers[2] === 'خلال 2-3 أشهر' ? 'btn-dark' : 'btn-outline-dark'}`}
+              style={{ borderRadius: '12px', textAlign: 'right', fontSize: '16px', direction: 'rtl', display: 'block', width: '100%' }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              خلال 2-3 أشهر
+            </motion.button>
+            <motion.button
+              onClick={() => { handleAnswer(2, 'ما زلت أستكشف الفكرة'); handleContinue(); }}
+              className={`btn py-3 fw-bold text-end ${answers[2] === 'ما زلت أستكشف الفكرة' ? 'btn-dark' : 'btn-outline-dark'}`}
+              style={{ borderRadius: '12px', textAlign: 'right', fontSize: '16px', direction: 'rtl', display: 'block', width: '100%' }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              ما زلت أستكشف الفكرة
+            </motion.button>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Screen 3: Income Vision */}
       {currentStep === 3 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px', paddingLeft: '20px', paddingRight: '20px' }}
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>هل لديك خبرة في التسويق الإلكتروني؟</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {['نعم، لدي خبرة', 'لا، مبتدئة', 'لدي خبرة بسيطة'].map((option) => (
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>كم دخلك المستهدف شهرياً؟</h2>
+          <div className="d-flex flex-column gap-2">
+            {['أقل من 5000 ريال', '5000 - 10000 ريال', 'أكثر من 10000 ريال'].map((option) => (
               <motion.button
                 key={option}
-                onClick={() => {
-                  handleAnswer(3, option);
-                  setCurrentStep(4);
-                }}
-                className="btn btn-outline-dark fw-bold py-3 px-4"
-                style={{ borderRadius: '12px', fontSize: '16px', textAlign: 'right', border: '1.5px solid #D9D5CF' }}
-                whileHover={{ backgroundColor: '#F0EAE0' }}
+                onClick={() => { handleAnswer(3, option); handleContinue(); }}
+                className={`btn py-3 fw-bold text-end ${answers[3] === option ? 'btn-dark' : 'btn-outline-dark'}`}
+                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'block', width: '100%' }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {option}
               </motion.button>
@@ -128,26 +187,24 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 4: Question 3 */}
+      {/* Screen 4: Experience Level */}
       {currentStep === 4 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px', paddingLeft: '20px', paddingRight: '20px' }}
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>ما هو هدفك من هذه الدورة؟</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {['زيادة المبيعات', 'تعلم مهارات جديدة', 'بناء مشروع جديد', 'تطوير مشروعي الحالي'].map((option) => (
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>ما خبرتك في مجال عملك؟</h2>
+          <div className="d-flex flex-column gap-2">
+            {['مبتدئة تماماً', 'لدي خبرة بسيطة', 'لدي خبرة جيدة'].map((option) => (
               <motion.button
                 key={option}
-                onClick={() => {
-                  handleAnswer(4, option);
-                  setCurrentStep(5);
-                }}
-                className="btn btn-outline-dark fw-bold py-3 px-4"
-                style={{ borderRadius: '12px', fontSize: '16px', textAlign: 'right', border: '1.5px solid #D9D5CF' }}
-                whileHover={{ backgroundColor: '#F0EAE0' }}
+                onClick={() => { handleAnswer(4, option); handleContinue(); }}
+                className={`btn py-3 fw-bold text-end ${answers[4] === option ? 'btn-dark' : 'btn-outline-dark'}`}
+                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'block', width: '100%' }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {option}
               </motion.button>
@@ -156,26 +213,24 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 5: Question 4 */}
+      {/* Screen 5: Main Challenge */}
       {currentStep === 5 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px', paddingLeft: '20px', paddingRight: '20px' }}
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>كم ساعة في اليوم يمكنك تخصيصها للدراسة؟</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {['أقل من ساعة', '1-2 ساعة', '2-3 ساعات', 'أكثر من 3 ساعات'].map((option) => (
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>ما أكبر تحدي تواجهينه؟</h2>
+          <div className="d-flex flex-column gap-2">
+            {['عدم معرفة من أين أبدأ', 'صعوبة التسويق', 'إدارة الوقت والمشروع'].map((option) => (
               <motion.button
                 key={option}
-                onClick={() => {
-                  handleAnswer(5, option);
-                  setCurrentStep(6);
-                }}
-                className="btn btn-outline-dark fw-bold py-3 px-4"
-                style={{ borderRadius: '12px', fontSize: '16px', textAlign: 'right', border: '1.5px solid #D9D5CF' }}
-                whileHover={{ backgroundColor: '#F0EAE0' }}
+                onClick={() => { handleAnswer(5, option); handleContinue(); }}
+                className={`btn py-3 fw-bold text-end ${answers[5] === option ? 'btn-dark' : 'btn-outline-dark'}`}
+                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'block', width: '100%' }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {option}
               </motion.button>
@@ -184,26 +239,24 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 6: Question 5 */}
+      {/* Screen 6: Learning Style */}
       {currentStep === 6 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px', paddingLeft: '20px', paddingRight: '20px' }}
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>ما هو نطاق منتجاتك/خدماتك؟</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {['منتجات فيزيائية', 'خدمات رقمية', 'كورسات/تدريب', 'منتجات رقمية', 'مزيج من الخيارات'].map((option) => (
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>كيف تفضلين التعلم؟</h2>
+          <div className="d-flex flex-column gap-2">
+            {['دورات تدريبية', 'ورش عمل حية', 'محتوى مكتوب'].map((option) => (
               <motion.button
                 key={option}
-                onClick={() => {
-                  handleAnswer(6, option);
-                  setCurrentStep(7);
-                }}
-                className="btn btn-outline-dark fw-bold py-3 px-4"
-                style={{ borderRadius: '12px', fontSize: '16px', textAlign: 'right', border: '1.5px solid #D9D5CF' }}
-                whileHover={{ backgroundColor: '#F0EAE0' }}
+                onClick={() => { handleAnswer(6, option); handleContinue(); }}
+                className={`btn py-3 fw-bold text-end ${answers[6] === option ? 'btn-dark' : 'btn-outline-dark'}`}
+                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'block', width: '100%' }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {option}
               </motion.button>
@@ -212,47 +265,58 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 7: Progress */}
+      {/* Screen 7: Readiness Score */}
       {currentStep === 7 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center d-flex flex-column justify-content-center"
-          style={{ minHeight: '100vh', paddingTop: '60px', paddingBottom: '60px' }}
+          className="text-center"
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="fw-bold text-dark mb-5" style={{ fontSize: '32px', fontWeight: 700 }}>أنتِ في الطريق الصحيح!</h2>
-          
-          <div style={{ position: 'relative', width: '200px', height: '200px', margin: '40px auto' }}>
-            <svg width="200" height="200" viewBox="0 0 200 200" style={{ transform: 'rotate(-90deg)' }}>
-              <circle cx="100" cy="100" r="90" fill="none" stroke="#E8E4DC" strokeWidth="8" />
+          <motion.div style={{ marginBottom: '20px' }}>
+            <svg width="140" height="140" viewBox="0 0 200 200" style={{ margin: '0 auto', display: 'block' }}>
+              <circle cx="100" cy="100" r="90" fill="none" stroke="#e0e0e0" strokeWidth="8" />
               <motion.circle
                 cx="100"
                 cy="100"
                 r="90"
                 fill="none"
-                stroke="#7C6E5B"
+                stroke="#2D2D2D"
                 strokeWidth="8"
-                strokeDasharray="565.48"
-                initial={{ strokeDashoffset: 565.48 }}
-                animate={{ strokeDashoffset: 565.48 * 0.22 }}
-                transition={{ duration: 2, ease: 'easeInOut' }}
                 strokeLinecap="round"
+                transform="rotate(-90 100 100)"
+                initial={{ strokeDasharray: `0 ${2 * Math.PI * 90}` }}
+                animate={{ strokeDasharray: `${2 * Math.PI * 90 * 0.78} ${2 * Math.PI * 90}` }}
+                transition={{ duration: 2, ease: 'easeInOut' }}
               />
+              <text x="100" y="110" textAnchor="middle" fontSize="48" fontWeight="bold" fill="#2D2D2D">
+                78%
+              </text>
             </svg>
-            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
-              <p style={{ fontSize: '36px', fontWeight: 800, color: '#2D2D2D', margin: '0' }}>78%</p>
-              <p style={{ fontSize: '14px', color: '#999', margin: '4px 0 0 0' }}>مكتمل</p>
+          </motion.div>
+
+          <div style={{ marginBottom: '20px' }}>
+            <div style={{ backgroundColor: '#f9f7f4', padding: '10px', borderRadius: '8px', marginBottom: '10px', textAlign: 'center' }}>
+              <p style={{ fontSize: '15px', fontWeight: 600, margin: '0', color: '#2D2D2D' }}>
+                🎁 جاهزيتك لإطلاق مشروعك
+              </p>
             </div>
+            <p style={{ fontSize: '16px', fontWeight: 700, margin: '0 0 10px 0', color: '#2D2D2D', textAlign: 'center' }}>
+              🎉 جاهزيتك ممتازة
+            </p>
+            <p style={{ fontSize: '13px', lineHeight: '1.4', color: '#666', textAlign: 'center' }}>
+              إذا خليتي احكيلك الآن كيف تحول هذه الجاهزية إلى مشروع حقيقي خلال 30 يوم.
+            </p>
           </div>
 
           <motion.button
-            onClick={() => setCurrentStep(8)}
-            className="btn btn-dark fw-bold py-3 px-5"
-            style={{ borderRadius: '12px', fontSize: '16px', width: '100%', maxWidth: '400px', margin: '40px auto 0' }}
+            onClick={handleContinue}
+            className="btn btn-dark fw-bold"
+            style={{ borderRadius: '12px', fontSize: '16px', width: '100%', padding: '10px 20px', marginBottom: '10px' }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            متابعة
+            اضغطي هنا
           </motion.button>
         </motion.div>
       )}
@@ -263,23 +327,23 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px', paddingLeft: '20px', paddingRight: '20px' }}
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
           <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>شاهدي هذا الفيديو</h2>
-          <div style={{ marginBottom: '30px', borderRadius: '12px', overflow: 'hidden', backgroundColor: '#E8E4DC' }}>
+          <div style={{ marginBottom: '20px', borderRadius: '12px', overflow: 'hidden' }}>
             <iframe
               width="100%"
-              height="315"
+              height="300"
               src="https://www.youtube.com/embed/dJjFfRiy6E4"
-              title="Chocodar Brand Video"
+              title="Mknooon Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               style={{ borderRadius: '12px' }}
-            ></iframe>
+            />
           </div>
           <motion.button
-            onClick={() => setCurrentStep(9)}
+            onClick={handleContinue}
             className="btn btn-dark fw-bold py-3 px-5"
             style={{ borderRadius: '12px', fontSize: '16px', width: '100%' }}
             whileHover={{ scale: 1.02 }}
@@ -296,7 +360,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px', paddingLeft: '20px', paddingRight: '20px' }}
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
           <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>اختاري دولتك</h2>
           <div style={{ position: 'relative', marginBottom: '20px' }}>
@@ -400,28 +464,23 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-end d-flex flex-column justify-content-center"
-          style={{ minHeight: '100vh', paddingTop: '60px', paddingBottom: '60px', paddingLeft: '20px', paddingRight: '20px' }}
+          className="text-center d-flex flex-column justify-content-center"
+          style={{ minHeight: '100vh', paddingTop: '60px', paddingBottom: '60px' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>سعر الاشتراك:</h2>
+          <h2 className="fw-bold text-dark mb-5" style={{ fontSize: '32px', fontWeight: 700 }}>العرض الخاص</h2>
           
-          {/* Price Box */}
-          <div style={{ backgroundColor: '#F8F7F5', padding: '24px', borderRadius: '16px', marginBottom: '24px', border: '1.5px solid #E8E4DC', textAlign: 'center' }}>
-            <p style={{ fontSize: '48px', fontWeight: 800, color: '#2D2D2D', margin: '0' }}>
-              {countriesPricing[answers[9]]?.price || 0}
-            </p>
-            <p style={{ fontSize: '14px', color: '#999', margin: '8px 0 0 0' }}>
+          <div style={{ backgroundColor: '#fff', padding: '40px', borderRadius: '12px', marginBottom: '30px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+            <p style={{ fontSize: '14px', color: '#999', margin: '0 0 10px 0' }}>
               {answers[9]}
             </p>
-          </div>
+            <p style={{ fontSize: '48px', fontWeight: 800, color: '#2D2D2D', margin: '0 0 10px 0' }}>
+              {countriesPricing[answers[9]]?.price || 0} {answers[9]?.includes('ريال') || answers[9]?.includes('دينار') || answers[9]?.includes('درهم') ? '' : 'ريال'}
+            </p>
+            <p style={{ fontSize: '16px', color: '#666', margin: '0 0 20px 0' }}>
+              وهذا السعر يشمل 5 دورات، وهي:
+            </p>
 
-          <p style={{ fontSize: '16px', color: '#666', margin: '0 0 16px 0', textAlign: 'right' }}>
-            وهذا السعر يشمل 5 دورات، وهي:
-          </p>
-
-          {/* Courses Box */}
-          <div style={{ backgroundColor: '#F8F7F5', padding: '24px', borderRadius: '16px', marginBottom: '30px', border: '1.5px solid #E8E4DC' }}>
-            <div style={{ textAlign: 'right' }}>
+            <div style={{ textAlign: 'right', marginBottom: '30px' }}>
               {[
                 'الدورة الاحترافية',
                 'دورة تسعير المنتجات',
@@ -430,12 +489,10 @@ export default function Onboarding() {
                 'دورة إدارة المشاريع',
                 'المتابعة مع الدعم الفني لمدة عام كامل'
               ].map((item, index) => (
-                <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', margin: '12px 0', gap: '12px' }}>
-                  <span style={{ fontSize: '14px', color: '#2D2D2D', fontWeight: 500 }}>{item}</span>
-                  <div style={{ width: '24px', height: '24px', borderRadius: '50%', backgroundColor: '#7C6E5B', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <span style={{ color: '#fff', fontSize: '14px', fontWeight: 'bold' }}>✓</span>
-                  </div>
-                </div>
+                <p key={index} style={{ fontSize: '14px', color: '#666', margin: '10px 0', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                  <span style={{ marginLeft: '10px' }}>✓</span>
+                  {item}
+                </p>
               ))}
             </div>
           </div>
@@ -447,7 +504,7 @@ export default function Onboarding() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            متابعة
+            اشتري الآن
           </motion.button>
         </motion.div>
       )}
@@ -461,17 +518,34 @@ export default function Onboarding() {
           style={{ minHeight: '100vh', paddingTop: '60px', paddingBottom: '60px' }}
         >
           <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '32px', fontWeight: 700 }}>شكراً لك!</h2>
-          <p style={{ fontSize: '16px', color: '#666', marginBottom: '30px' }}>سيتم التواصل معك قريباً</p>
+          <p style={{ fontSize: '16px', color: '#666', marginBottom: '30px' }}>
+            تم استقبال طلبك بنجاح. سنتواصل معك قريباً.
+          </p>
           <motion.button
             onClick={() => setCurrentStep(1)}
             className="btn btn-dark fw-bold py-3 px-5"
-            style={{ borderRadius: '12px', fontSize: '16px', width: '100%', maxWidth: '400px', margin: '0 auto' }}
+            style={{ borderRadius: '12px', fontSize: '16px', width: '100%' }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            العودة للبداية
+            البداية من جديد
           </motion.button>
         </motion.div>
+      )}
+
+      {/* Navigation Buttons */}
+      {currentStep > 1 && currentStep < 11 && (
+        <div style={{ display: 'flex', gap: '10px', marginTop: '20px', paddingBottom: '40px' }}>
+          <motion.button
+            onClick={handleBack}
+            className="btn btn-outline-dark fw-bold py-2 px-4"
+            style={{ borderRadius: '12px', flex: 1, display: 'none' }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            رجوع
+          </motion.button>
+        </div>
       )}
     </div>
   );
