@@ -425,7 +425,7 @@ export default function Onboarding() {
           <motion.button
             onClick={handleBack}
             className="btn btn-outline-dark fw-bold py-2 px-4"
-            style={{ borderRadius: '12px', flex: 1 }}
+            style={{ borderRadius: '12px', flex: 1, display: 'none' }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
