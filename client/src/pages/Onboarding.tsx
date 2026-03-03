@@ -301,8 +301,17 @@ export default function Onboarding() {
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
           <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>شاهدي هذا الفيديو</h2>
-          <div style={{ backgroundColor: '#e0e0e0', height: '300px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-            <p style={{ color: '#999' }}>فيديو توضيحي</p>
+          <div style={{ marginBottom: '20px', borderRadius: '12px', overflow: 'hidden' }}>
+            <iframe
+              width="100%"
+              height="300"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              title="Mknooon Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              style={{ borderRadius: '12px' }}
+            />
           </div>
           <motion.button
             onClick={handleContinue}
@@ -328,7 +337,7 @@ export default function Onboarding() {
           <select
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { handleAnswer(9, e.target.value); }}
             className="form-select mb-3"
-            style={{ borderRadius: '12px', textAlign: 'right' }}
+            style={{ borderRadius: '12px' }}
           >
             <option value="">اختاري دولة</option>
             <option value="السعودية">السعودية</option>
