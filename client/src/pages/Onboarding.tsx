@@ -32,7 +32,7 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="h-[100svh] overflow-hidden bg-[#F7F4EF] flex items-center justify-center">
+    <div className="h-[100svh] overflow-hidden bg-background flex items-center justify-center">
       {/* Screen 10: Pricing */}
       {currentStep === 10 && (
         <motion.div
