@@ -494,11 +494,11 @@ export default function Onboarding() {
                 'دورة إدارة المشاريع',
                 'المتابعة مع الدعم الفني لمدة عام كامل'
               ].map((item, index) => (
-                <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', margin: '10px 0', gap: '10px', direction: 'rtl' }}>
-                  <span style={{ fontSize: '15px', color: '#2D2D2D', fontWeight: 500, lineHeight: '1.5' }}>{item}</span>
+                <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', margin: '10px 0', gap: '10px', direction: 'rtl' }}>
                   <div style={{ width: '22px', height: '22px', borderRadius: '50%', backgroundColor: '#7C6E5B', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <span style={{ color: '#fff', fontSize: '13px', fontWeight: 'bold' }}>✓</span>
                   </div>
+                  <span style={{ fontSize: '15px', color: '#2D2D2D', fontWeight: 500, lineHeight: '1.5' }}>{item}</span>
                 </div>
               ))}
             </div>
