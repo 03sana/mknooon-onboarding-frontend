@@ -88,6 +88,62 @@ export default function Onboarding() {
           </motion.button>
         </motion.div>
       )}
+
+      {/* Screen 11: Confirmation/Thank You */}
+      {currentStep === 11 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full max-w-[390px] h-[100svh] flex flex-col px-5 pt-4 pb-[calc(16px+env(safe-area-inset-bottom))] items-center justify-center"
+        >
+          {/* Success Icon */}
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+            className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6"
+          >
+            <span className="text-4xl">✓</span>
+          </motion.div>
+
+          {/* Main Content */}
+          <div className="text-center mb-8">
+            <h1 className="text-2xl font-bold text-gray-900 mb-3">مبروك!</h1>
+            <p className="text-gray-600 text-base leading-relaxed">
+              تم تسجيلك بنجاح في دورات شوكودار. سيتم إرسال تفاصيل الدخول إلى بريدك الإلكتروني قريباً.
+            </p>
+          </div>
+
+          {/* Next Steps */}
+          <div className="bg-white p-4 rounded-xl border border-gray-200 w-full mb-8">
+            <h3 className="text-right font-bold text-gray-900 mb-3">الخطوات القادمة:</h3>
+            <div className="text-right space-y-2">
+              {[
+                'تحقق من بريدك الإلكتروني لتفاصيل الدخول',
+                'ادخل إلى المنصة وابدأ الدورة الأولى',
+                'استمتع بالتعلم وحقق أحلامك'
+              ].map((step, index) => (
+                <div key={index} className="flex items-center justify-end gap-2">
+                  <span className="text-sm text-gray-700">{step}</span>
+                  <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-xs font-bold">{index + 1}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA Button */}
+          <motion.button
+            onClick={() => setCurrentStep(1)}
+            className="w-full bg-foreground text-background font-bold py-3 rounded-lg"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            العودة للبداية
+          </motion.button>
+        </motion.div>
+      )}
     </div>
   );
 }
