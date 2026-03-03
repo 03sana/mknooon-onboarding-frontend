@@ -5,7 +5,34 @@ export default function Onboarding() {
   const [currentStep, setCurrentStep] = useState(1);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const countries = ['السعودية', 'الإمارات', 'مصر'];
+  
+  const countriesPricing: Record<string, number> = {
+    'السعودية': 320,
+    'الإمارات العربية المتحدة': 320,
+    'مصر': 1250,
+    'الأردن': 30,
+    'لبنان': 40,
+    'قطر': 290,
+    'الكويت': 29,
+    'سلطنة عُمان': 35,
+    'البحرين': 40,
+    'ليبيا': 295,
+    'المغرب': 290,
+    'تونس': 150,
+    'الجزائر': 7000,
+    'العراق': 60000,
+    'سوريا': 4500,
+    'السودان': 95000,
+    'اليمن': 50,
+    'فلسطين - الضفة الغربية': 280,
+    'فلسطين - الداخل والقدس': 390,
+    'بريطانيا': 100,
+    'كندا': 150,
+    'أمريكا': 130,
+    'باقي الدول': 130
+  };
+  
+  const countries = Object.keys(countriesPricing).sort();
 
   const handleAnswer = (step: number, answer: string) => {
     setAnswers({ ...answers, [step]: answer });
@@ -353,18 +380,17 @@ export default function Onboarding() {
                 textAlign: 'right',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'flex-end',
-                gap: '8px',
+                justifyContent: 'space-between',
                 transition: 'all 0.2s ease',
                 boxShadow: isDropdownOpen ? 'none' : '0 1px 3px rgba(0, 0, 0, 0.05)',
                 cursor: 'pointer'
               }}
-              whileHover={{ backgroundColor: '#FAFAF8' }}
+              whileHover={{ backgroundColor: isDropdownOpen ? '#FFFFFF' : '#FAFAF8' }}
             >
-              <span>{answers[9] || 'اختاري دولة'}</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C6E5B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C6E5B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease' }}>
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
+              <span>{answers[9] || 'اختاري دولة'}</span>
             </motion.button>
             
             {isDropdownOpen && (
@@ -382,10 +408,12 @@ export default function Onboarding() {
                   borderTop: 'none',
                   borderRadius: '0 0 10px 10px',
                   zIndex: 10,
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                  maxHeight: '300px',
+                  overflowY: 'auto'
                 }}
               >
-                {countries.map((country) => (
+                {countries.map((country, index) => (
                   <motion.button
                     key={country}
                     onClick={() => {
@@ -398,16 +426,21 @@ export default function Onboarding() {
                       textAlign: 'right',
                       direction: 'rtl',
                       border: 'none',
+                      borderBottom: index < countries.length - 1 ? '1px solid #F0EAE0' : 'none',
                       backgroundColor: answers[9] === country ? '#F0EAE0' : '#FFFFFF',
                       color: '#2D2D2D',
-                      fontSize: '16px',
+                      fontSize: '15px',
                       fontWeight: 500,
                       cursor: 'pointer',
-                      transition: 'all 0.2s ease'
+                      transition: 'all 0.2s ease',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
                     }}
                     whileHover={{ backgroundColor: '#F0EAE0' }}
                   >
-                    {country}
+                    <span style={{ fontSize: '13px', color: '#999', fontWeight: 400 }}>{countriesPricing[country]}</span>
+                    <span>{country}</span>
                   </motion.button>
                 ))}
               </motion.div>
