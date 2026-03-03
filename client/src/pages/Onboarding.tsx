@@ -465,23 +465,23 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center d-flex flex-column justify-content-center"
-          style={{ minHeight: '100vh', paddingTop: '60px', paddingBottom: '60px' }}
+          style={{ minHeight: '100vh', paddingTop: '40px', paddingBottom: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>سعر الاشتراك:</h2>
+          <h2 className="fw-bold text-dark mb-3" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right' }}>سعر الاشتراك:</h2>
           
           {/* Price Box */}
-          <div style={{ backgroundColor: '#F8F7F5', padding: '16px 24px', borderRadius: '16px', marginBottom: '24px', border: '1.5px solid #E8E4DC', textAlign: 'center' }}>
-            <p style={{ fontSize: '32px', fontWeight: 800, color: '#2D2D2D', margin: '0' }}>
+          <div style={{ backgroundColor: '#F8F7F5', padding: '12px 24px', borderRadius: '16px', marginBottom: '16px', border: '1.5px solid #E8E4DC', textAlign: 'center' }}>
+            <p style={{ fontSize: '28px', fontWeight: 800, color: '#2D2D2D', margin: '0' }}>
               {countriesPricing[answers[9]]?.price || 0} {countriesPricing[answers[9]]?.currency || 'ريال'}
             </p>
           </div>
 
-          <p style={{ fontSize: '16px', color: '#666', margin: '0 0 16px 0', textAlign: 'right' }}>
+          <p style={{ fontSize: '13px', color: '#666', margin: '0 0 12px 0', textAlign: 'right' }}>
             وهذا السعر يشمل 5 دورات، وهي:
           </p>
 
           {/* Courses Box */}
-          <div style={{ backgroundColor: '#F8F7F5', padding: '24px', borderRadius: '16px', marginBottom: '30px', border: '1.5px solid #E8E4DC' }}>
+          <div style={{ backgroundColor: '#F8F7F5', padding: '16px', borderRadius: '16px', marginBottom: '20px', border: '1.5px solid #E8E4DC' }}>
             <div style={{ textAlign: 'right' }}>
               {[
                 'الدورة الاحترافية',
@@ -491,10 +491,10 @@ export default function Onboarding() {
                 'دورة إدارة المشاريع',
                 'المتابعة مع الدعم الفني لمدة عام كامل'
               ].map((item, index) => (
-                <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', margin: '12px 0', gap: '12px', direction: 'rtl' }}>
-                  <span style={{ fontSize: '14px', color: '#2D2D2D', fontWeight: 500 }}>{item}</span>
-                  <div style={{ width: '24px', height: '24px', borderRadius: '50%', backgroundColor: '#7C6E5B', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <span style={{ color: '#fff', fontSize: '14px', fontWeight: 'bold' }}>✓</span>
+                <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', margin: '8px 0', gap: '10px', direction: 'rtl' }}>
+                  <span style={{ fontSize: '13px', color: '#2D2D2D', fontWeight: 500 }}>{item}</span>
+                  <div style={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: '#7C6E5B', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <span style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>✓</span>
                   </div>
                 </div>
               ))}
@@ -503,8 +503,8 @@ export default function Onboarding() {
 
           <motion.button
             onClick={() => setCurrentStep(11)}
-            className="btn btn-dark fw-bold py-3 px-5"
-            style={{ borderRadius: '12px', fontSize: '16px', width: '100%' }}
+            className="btn btn-dark fw-bold py-2 px-5"
+            style={{ borderRadius: '12px', fontSize: '14px', width: '100%' }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
