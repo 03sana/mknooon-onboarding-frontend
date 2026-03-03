@@ -383,7 +383,7 @@ export default function Onboarding() {
               </p>
               {/* Second line without background */}
               <h3 className="fw-bold text-dark mb-3" style={{ fontSize: '20px', fontWeight: 700 }}>
-                🎉 جاهزتك ممتازة
+                🎉 جاهزيتك ممتازة
               </h3>
               {/* Third line without background */}
               <p className="text-muted mb-0" style={{ fontSize: '13px', lineHeight: '1.8', color: '#555' }}>
