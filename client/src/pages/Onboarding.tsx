@@ -401,13 +401,12 @@ export default function Onboarding() {
                 exit={{ opacity: 0, y: -10 }}
                 style={{
                   position: 'absolute',
-                  top: 'calc(100% - 1px)',
+                  top: 'calc(100% + 8px)',
                   left: 0,
                   right: 0,
                   backgroundColor: '#FFFFFF',
                   border: '1.5px solid #D9D5CF',
-                  borderTop: 'none',
-                  borderRadius: '0 0 10px 10px',
+                  borderRadius: '10px',
                   zIndex: 10,
                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                   maxHeight: '300px',
