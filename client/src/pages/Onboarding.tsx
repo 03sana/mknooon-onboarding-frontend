@@ -464,8 +464,8 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center d-flex flex-column justify-content-center"
-          style={{ height: '100vh', paddingTop: '20px', paddingBottom: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}
+          className="text-center"
+          style={{ minHeight: '100vh', paddingTop: '40px', paddingBottom: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
         >
           <h2 className="fw-bold text-dark mb-2" style={{ fontSize: '20px', fontWeight: 700, textAlign: 'right' }}>سعر الاشتراك:</h2>
           
