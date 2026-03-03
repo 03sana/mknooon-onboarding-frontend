@@ -102,8 +102,8 @@ export default function Onboarding() {
             <div className="d-flex flex-column gap-2">
             <motion.button
               onClick={() => { handleAnswer(2, 'خلال 30 يوم'); handleContinue(); }}
-              className={`btn py-3 fw-bold ${answers[2] === 'خلال 30 يوم' ? 'btn-dark' : 'btn-outline-dark'}`}
-              style={{ borderRadius: '12px', textAlign: 'right', fontSize: '16px' }}
+              className={`btn py-3 fw-bold d-flex justify-content-end ${answers[2] === 'خلال 30 يوم' ? 'btn-dark' : 'btn-outline-dark'}`}
+              style={{ borderRadius: '12px', textAlign: 'right', fontSize: '16px', direction: 'rtl' }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -112,8 +112,8 @@ export default function Onboarding() {
             </motion.button>
             <motion.button
               onClick={() => { handleAnswer(2, 'خلال 2-3 أشهر'); handleContinue(); }}
-              className={`btn py-3 fw-bold ${answers[2] === 'خلال 2-3 أشهر' ? 'btn-dark' : 'btn-outline-dark'}`}
-              style={{ borderRadius: '12px', textAlign: 'right', fontSize: '16px' }}
+              className={`btn py-3 fw-bold d-flex justify-content-end ${answers[2] === 'خلال 2-3 أشهر' ? 'btn-dark' : 'btn-outline-dark'}`}
+              style={{ borderRadius: '12px', textAlign: 'right', fontSize: '16px', direction: 'rtl' }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -121,8 +121,8 @@ export default function Onboarding() {
             </motion.button>
             <motion.button
               onClick={() => { handleAnswer(2, 'ما زلت أستكشف الفكرة'); handleContinue(); }}
-              className={`btn py-3 fw-bold ${answers[2] === 'ما زلت أستكشف الفكرة' ? 'btn-dark' : 'btn-outline-dark'}`}
-              style={{ borderRadius: '12px', textAlign: 'right', fontSize: '16px' }}
+              className={`btn py-3 fw-bold d-flex justify-content-end ${answers[2] === 'ما زلت أستكشف الفكرة' ? 'btn-dark' : 'btn-outline-dark'}`}
+              style={{ borderRadius: '12px', textAlign: 'right', fontSize: '16px', direction: 'rtl' }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -140,14 +140,14 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="h5 fw-bold text-dark mb-4" style={{ textAlign: 'right' }}>كم دخلك المستهدف شهرياً؟</h2>
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>كم دخلك المستهدف شهرياً؟</h2>
           <div className="d-flex flex-column gap-2">
             {['أقل من 5000 ريال', '5000 - 10000 ريال', 'أكثر من 10000 ريال'].map((option) => (
               <motion.button
                 key={option}
                 onClick={() => { handleAnswer(3, option); handleContinue(); }}
-                className={`btn py-3 fw-bold ${answers[3] === option ? 'btn-dark' : 'btn-outline-dark'}`}
-                style={{ borderRadius: '12px' }}
+                className={`btn py-3 fw-bold d-flex justify-content-end ${answers[3] === option ? 'btn-dark' : 'btn-outline-dark'}`}
+                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl' }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -166,14 +166,14 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="h5 fw-bold text-dark mb-4" style={{ textAlign: 'right' }}>ما خبرتك في مجال عملك؟</h2>
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>ما خبرتك في مجال عملك؟</h2>
           <div className="d-flex flex-column gap-2">
             {['مبتدئة تماماً', 'لدي خبرة بسيطة', 'لدي خبرة جيدة'].map((option) => (
               <motion.button
                 key={option}
                 onClick={() => { handleAnswer(4, option); handleContinue(); }}
-                className={`btn py-3 fw-bold ${answers[4] === option ? 'btn-dark' : 'btn-outline-dark'}`}
-                style={{ borderRadius: '12px' }}
+                className={`btn py-3 fw-bold d-flex justify-content-end ${answers[4] === option ? 'btn-dark' : 'btn-outline-dark'}`}
+                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl' }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -192,14 +192,14 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="h5 fw-bold text-dark mb-4" style={{ textAlign: 'right' }}>ما أكبر تحدي تواجهينه؟</h2>
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>ما أكبر تحدي تواجهينه؟</h2>
           <div className="d-flex flex-column gap-2">
             {['عدم معرفة من أين أبدأ', 'صعوبة التسويق', 'إدارة الوقت والمشروع'].map((option) => (
               <motion.button
                 key={option}
                 onClick={() => { handleAnswer(5, option); handleContinue(); }}
-                className={`btn py-3 fw-bold ${answers[5] === option ? 'btn-dark' : 'btn-outline-dark'}`}
-                style={{ borderRadius: '12px' }}
+                className={`btn py-3 fw-bold d-flex justify-content-end ${answers[5] === option ? 'btn-dark' : 'btn-outline-dark'}`}
+                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl' }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -218,14 +218,14 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="h5 fw-bold text-dark mb-4" style={{ textAlign: 'right' }}>كيف تفضلين التعلم؟</h2>
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>كيف تفضلين التعلم؟</h2>
           <div className="d-flex flex-column gap-2">
             {['دورات تدريبية', 'ورش عمل حية', 'محتوى مكتوب'].map((option) => (
               <motion.button
                 key={option}
                 onClick={() => { handleAnswer(6, option); handleContinue(); }}
-                className={`btn py-3 fw-bold ${answers[6] === option ? 'btn-dark' : 'btn-outline-dark'}`}
-                style={{ borderRadius: '12px' }}
+                className={`btn py-3 fw-bold d-flex justify-content-end ${answers[6] === option ? 'btn-dark' : 'btn-outline-dark'}`}
+                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl' }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -298,7 +298,7 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="h5 fw-bold text-dark mb-4" style={{ textAlign: 'right' }}>شاهدي هذا الفيديو</h2>
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>شاهدي هذا الفيديو</h2>
           <div style={{ backgroundColor: '#e0e0e0', height: '300px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
             <p style={{ color: '#999' }}>فيديو توضيحي</p>
           </div>
@@ -322,11 +322,11 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="h5 fw-bold text-dark mb-4" style={{ textAlign: 'right' }}>اختاري دولتك</h2>
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>اختاري دولتك</h2>
           <select
             onChange={(e) => { handleAnswer(9, e.target.value); }}
             className="form-select mb-3"
-            style={{ borderRadius: '12px' }}
+            style={{ borderRadius: '12px', textAlign: 'right' }}
           >
             <option value="">اختاري دولة</option>
             <option value="السعودية">السعودية</option>
