@@ -54,7 +54,7 @@ export default function Onboarding() {
   const progressPercentage = (currentStep / 10) * 100;
 
   return (
-    <div className="container-fluid bg-light" style={{ minHeight: '100vh', paddingBottom: '40px' }}>
+    <div className="container-fluid bg-light" style={{ paddingBottom: '40px' }}>
       {/* Progress Bar - Hidden on Screen 1 */}
       {currentStep > 1 && (
         <div style={{ paddingTop: '20px', paddingBottom: '20px' }}>
@@ -83,7 +83,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center d-flex flex-column justify-content-between"
-          style={{ minHeight: '100vh', paddingTop: '60px', paddingBottom: '60px' }}
+          style={{ paddingTop: '60px', paddingBottom: '60px' }}
         >
           <div className="mb-3">
             <h1 className="fw-bold text-dark" style={{ fontSize: '18px', fontWeight: 800, marginBottom: '0' }}>Mknooon</h1>
@@ -522,7 +522,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center d-flex flex-column justify-content-between"
-          style={{ minHeight: '100vh', paddingTop: '40px', paddingBottom: '40px', display: 'flex', flexDirection: 'column' }}
+          style={{ paddingTop: '40px', paddingBottom: '40px', display: 'flex', flexDirection: 'column' }}
         >
           {/* Main Content */}
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
