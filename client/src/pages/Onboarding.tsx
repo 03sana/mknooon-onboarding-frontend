@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 
 export default function Onboarding() {
   const [currentStep, setCurrentStep] = useState(1);
-  const [answers, setAnswers] = useState({});
+  const [answers, setAnswers] = useState<Record<number, string>>({});
 
-  const handleAnswer = (step, answer) => {
+  const handleAnswer = (step: number, answer: string) => {
     setAnswers({ ...answers, [step]: answer });
   };
 
@@ -244,25 +244,27 @@ export default function Onboarding() {
           className="text-center"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <div style={{ marginBottom: '20px' }}>
+          <motion.div style={{ marginBottom: '20px' }}>
             <svg width="140" height="140" viewBox="0 0 200 200" style={{ margin: '0 auto', display: 'block' }}>
               <circle cx="100" cy="100" r="90" fill="none" stroke="#e0e0e0" strokeWidth="8" />
-              <circle
+              <motion.circle
                 cx="100"
                 cy="100"
                 r="90"
                 fill="none"
                 stroke="#2D2D2D"
                 strokeWidth="8"
-                strokeDasharray={`${2 * Math.PI * 90 * 0.78} ${2 * Math.PI * 90}`}
                 strokeLinecap="round"
                 transform="rotate(-90 100 100)"
+                initial={{ strokeDasharray: `0 ${2 * Math.PI * 90}` }}
+                animate={{ strokeDasharray: `${2 * Math.PI * 90 * 0.78} ${2 * Math.PI * 90}` }}
+                transition={{ duration: 2, ease: 'easeInOut' }}
               />
               <text x="100" y="110" textAnchor="middle" fontSize="48" fontWeight="bold" fill="#2D2D2D">
                 78%
               </text>
             </svg>
-          </div>
+          </motion.div>
 
           <div style={{ marginBottom: '20px' }}>
             <div style={{ backgroundColor: '#f9f7f4', padding: '10px', borderRadius: '8px', marginBottom: '10px', textAlign: 'center' }}>
@@ -324,7 +326,7 @@ export default function Onboarding() {
         >
           <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>اختاري دولتك</h2>
           <select
-            onChange={(e) => { handleAnswer(9, e.target.value); }}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { handleAnswer(9, e.target.value); }}
             className="form-select mb-3"
             style={{ borderRadius: '12px', textAlign: 'right' }}
           >
