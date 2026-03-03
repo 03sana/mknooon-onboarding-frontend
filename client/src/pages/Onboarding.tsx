@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 export default function Onboarding() {
   const [currentStep, setCurrentStep] = useState(1);
   const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const countries = ['السعودية', 'الإمارات', 'مصر'];
 
   const handleAnswer = (step: number, answer: string) => {
     setAnswers({ ...answers, [step]: answer });
@@ -334,47 +336,88 @@ export default function Onboarding() {
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
           <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>اختاري دولتك</h2>
-          <select
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { handleAnswer(9, e.target.value); }}
-            className="form-select mb-3"
-            style={{
-              borderRadius: '10px',
-              border: '1.5px solid #D9D5CF',
-              padding: '14px 16px',
-              fontSize: '16px',
-              fontWeight: 500,
-              backgroundColor: '#FFFFFF',
-              color: '#2D2D2D',
-              direction: 'rtl',
-              textAlign: 'right',
-              appearance: 'none',
-              backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%277C6E5B%27 stroke-width=%272.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e")',
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'left 14px center',
-              backgroundSize: '18px',
-              paddingLeft: '42px',
-              transition: 'all 0.2s ease',
-              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
-            }}
-            onFocus={(e) => {
-              e.currentTarget.style.borderColor = '#7C6E5B';
-              e.currentTarget.style.boxShadow = '0 0 0 3px rgba(124, 110, 91, 0.1)';
-            }}
-            onBlur={(e) => {
-              e.currentTarget.style.borderColor = '#D9D5CF';
-              e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.05)';
-            }}
-          >
-            <option value="">اختاري دولة</option>
-            <option value="السعودية">السعودية</option>
-            <option value="الإمارات">الإمارات</option>
-            <option value="مصر">مصر</option>
-          </select>
+          <div style={{ position: 'relative', marginBottom: '20px' }}>
+            <motion.button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              style={{
+                width: '100%',
+                borderRadius: '10px',
+                border: isDropdownOpen ? '1.5px solid #7C6E5B' : '1.5px solid #D9D5CF',
+                padding: '14px 16px',
+                fontSize: '16px',
+                fontWeight: 500,
+                backgroundColor: '#FFFFFF',
+                color: answers[9] ? '#2D2D2D' : '#999',
+                direction: 'rtl',
+                textAlign: 'right',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                gap: '8px',
+                transition: 'all 0.2s ease',
+                boxShadow: isDropdownOpen ? '0 0 0 3px rgba(124, 110, 91, 0.1)' : '0 1px 3px rgba(0, 0, 0, 0.05)',
+                cursor: 'pointer'
+              }}
+              whileHover={{ backgroundColor: '#FAFAF8' }}
+            >
+              <span>{answers[9] || 'اختاري دولة'}</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C6E5B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </motion.button>
+            
+            {isDropdownOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  right: 0,
+                  backgroundColor: '#FFFFFF',
+                  border: '1.5px solid #D9D5CF',
+                  borderTop: 'none',
+                  borderRadius: '0 0 10px 10px',
+                  marginTop: '-1px',
+                  zIndex: 10,
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+                }}
+              >
+                {countries.map((country) => (
+                  <motion.button
+                    key={country}
+                    onClick={() => {
+                      handleAnswer(9, country);
+                      setIsDropdownOpen(false);
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '14px 16px',
+                      textAlign: 'right',
+                      direction: 'rtl',
+                      border: 'none',
+                      backgroundColor: answers[9] === country ? '#F0EAE0' : '#FFFFFF',
+                      color: '#2D2D2D',
+                      fontSize: '16px',
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease'
+                    }}
+                    whileHover={{ backgroundColor: '#F0EAE0' }}
+                  >
+                    {country}
+                  </motion.button>
+                ))}
+              </motion.div>
+            )}
+          </div>
           <motion.button
             onClick={handleContinue}
             disabled={!answers[9]}
             className="btn btn-dark fw-bold py-3 px-5"
-            style={{ borderRadius: '12px', fontSize: '16px', width: '100%' }}
+            style={{ borderRadius: '12px', fontSize: '16px', width: '100%', opacity: !answers[9] ? 0.5 : 1 }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
