@@ -516,27 +516,52 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 11: Final */}
+      {/* Screen 11: Final - Decision Screen */}
       {currentStep === 11 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center d-flex flex-column justify-content-center"
-          style={{ minHeight: '100vh', paddingTop: '60px', paddingBottom: '60px' }}
+          className="text-center d-flex flex-column justify-content-between"
+          style={{ minHeight: '100vh', paddingTop: '40px', paddingBottom: '40px', display: 'flex', flexDirection: 'column' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '32px', fontWeight: 700 }}>شكراً لك!</h2>
-          <p style={{ fontSize: '16px', color: '#666', marginBottom: '30px' }}>
-            تم استقبال طلبك بنجاح. سنتواصل معك قريباً.
-          </p>
-          <motion.button
-            onClick={() => setCurrentStep(1)}
-            className="btn btn-dark fw-bold py-3 px-5"
-            style={{ borderRadius: '12px', fontSize: '16px', width: '100%' }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            البداية من جديد
-          </motion.button>
+          {/* Main Content */}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, lineHeight: '1.4', textAlign: 'right', direction: 'rtl' }}>
+              مشروعك أقرب مما تخيلي...<br />خلينا نبدأه صح.
+            </h2>
+          </div>
+
+          {/* Buttons Section */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
+            <motion.button
+              onClick={() => setCurrentStep(1)}
+              className="btn fw-bold py-3 px-5"
+              style={{ borderRadius: '12px', fontSize: '16px', width: '100%', backgroundColor: '#2D2D2D', color: '#fff', border: 'none' }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              ابدأ مشروعي الآن 🚀
+            </motion.button>
+            <motion.button
+              onClick={() => setCurrentStep(1)}
+              className="btn fw-bold py-3 px-5"
+              style={{ borderRadius: '12px', fontSize: '16px', width: '100%', backgroundColor: '#fff', color: '#2D2D2D', border: '1.5px solid #E8E4DC' }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              عندي سؤال قبل الاشتراك
+            </motion.button>
+          </div>
+
+          {/* Footer Text */}
+          <div style={{ textAlign: 'center' }}>
+            <p style={{ fontSize: '13px', color: '#999', marginBottom: '12px', direction: 'rtl' }}>
+              غير مستعدة حالياً؟ ستابعي معكم على الواتساب
+            </p>
+            <p style={{ fontSize: '12px', color: '#ccc', direction: 'rtl' }}>
+              انضمي لأكثر من 4000 امرأة بدأت رحلتهن مع شوكودار<br />#COBAB2
+            </p>
+          </div>
         </motion.div>
       )}
 
