@@ -127,7 +127,7 @@ export default function Onboarding() {
   };
 
   const handleContinue = async () => {
-    if (currentStep < 9) {
+    if (currentStep < 10) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -137,8 +137,8 @@ export default function Onboarding() {
   };
 
   const isContinueDisabled = () => {
-    if (currentStep === 8) return !selectedCountry;
-    if (currentStep <= 7) return !answers[currentStep];
+    if (currentStep === 9) return !selectedCountry;
+    if (currentStep <= 8) return !answers[currentStep];
     return false;
   };
 
