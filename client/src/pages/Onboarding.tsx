@@ -465,28 +465,28 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center d-flex flex-column justify-content-center"
-          style={{ minHeight: '100vh', paddingTop: '10px', paddingBottom: '30px' }}
+          style={{ minHeight: '100vh', paddingTop: '8px', paddingBottom: '8px' }}
         >
-          <h2 className="fw-bold text-dark mb-2" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>سعر الاشتراك:</h2>
+          <h2 className="fw-bold text-dark" style={{ fontSize: '26px', fontWeight: 700, textAlign: 'right', marginBottom: '8px' }}>سعر الاشتراك:</h2>
           
           {/* Price Box - Horizontal */}
-          <div style={{ backgroundColor: '#F8F7F5', padding: '16px 24px', borderRadius: '16px', marginBottom: '12px', border: '1.5px solid #E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'space-between', direction: 'rtl' }}>
+          <div style={{ backgroundColor: '#F8F7F5', padding: '12px 20px', borderRadius: '14px', marginBottom: '8px', border: '1.5px solid #E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'space-between', direction: 'rtl' }}>
             <div style={{ textAlign: 'right' }}>
-              <p style={{ fontSize: '14px', color: '#999', margin: '0 0 4px 0' }}>
+              <p style={{ fontSize: '12px', color: '#999', margin: '0 0 2px 0' }}>
                 {answers[9]}
               </p>
-              <p style={{ fontSize: '32px', fontWeight: 800, color: '#2D2D2D', margin: '0' }}>
+              <p style={{ fontSize: '28px', fontWeight: 800, color: '#2D2D2D', margin: '0' }}>
                 {countriesPricing[answers[9]]?.price || 0}
               </p>
             </div>
           </div>
 
-          <p style={{ fontSize: '16px', color: '#666', margin: '0 0 10px 0', textAlign: 'right' }}>
+          <p style={{ fontSize: '14px', color: '#666', margin: '0 0 6px 0', textAlign: 'right' }}>
             وهذا السعر يشمل 5 دورات، وهي:
           </p>
 
           {/* Courses Box */}
-          <div style={{ backgroundColor: '#F8F7F5', padding: '16px 20px', borderRadius: '16px', marginBottom: '12px', border: '1.5px solid #E8E4DC' }}>
+          <div style={{ backgroundColor: '#F8F7F5', padding: '12px 16px', borderRadius: '14px', marginBottom: '8px', border: '1.5px solid #E8E4DC' }}>
             <div style={{ textAlign: 'right' }}>
               {[
                 'الدورة الاحترافية',
@@ -496,10 +496,10 @@ export default function Onboarding() {
                 'دورة إدارة المشاريع',
                 'المتابعة مع الدعم الفني لمدة عام كامل'
               ].map((item, index) => (
-                <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', margin: '12px 0', gap: '12px', direction: 'rtl' }}>
-                  <span style={{ fontSize: '14px', color: '#2D2D2D', fontWeight: 500 }}>{item}</span>
-                  <div style={{ width: '24px', height: '24px', borderRadius: '50%', backgroundColor: '#7C6E5B', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <span style={{ color: '#fff', fontSize: '14px', fontWeight: 'bold' }}>✓</span>
+                <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', margin: '4px 0', gap: '8px', direction: 'rtl' }}>
+                  <span style={{ fontSize: '13px', color: '#2D2D2D', fontWeight: 500 }}>{item}</span>
+                  <div style={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: '#7C6E5B', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <span style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>✓</span>
                   </div>
                 </div>
               ))}
