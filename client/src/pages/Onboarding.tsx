@@ -366,12 +366,21 @@ export default function Onboarding() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
+              className="text-center"
+              style={{
+                backgroundColor: '#f9f7f4',
+                padding: '16px 12px',
+                borderRadius: '12px',
+                marginBottom: '20px'
+              }}
             >
-              <h3 className="h5 fw-bold text-dark mb-2">🎉 جاهزتك ممتازة</h3>
-              <p className="text-muted mb-4" style={{ fontSize: '14px', lineHeight: '1.6' }}>
-                جاهزتك لإطلاق مشروعك:
+              <p className="text-dark mb-2" style={{ fontSize: '15px', fontWeight: 600, lineHeight: '1.6' }}>
+                🎁 جاهزيتك لإطلاق مشروعك
               </p>
-              <p className="text-muted mb-4" style={{ fontSize: '13px', lineHeight: '1.8' }}>
+              <h3 className="fw-bold text-dark mb-3" style={{ fontSize: '20px', fontWeight: 700 }}>
+                🎉 جاهزتك ممتازة
+              </h3>
+              <p className="text-muted mb-0" style={{ fontSize: '13px', lineHeight: '1.8', color: '#555' }}>
                 إذا خليتي احكيلك الآن كيف تحول هذه الجاهزية إلى مشروع حقيقي خلال 30 يوم.
               </p>
             </motion.div>
