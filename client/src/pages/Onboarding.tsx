@@ -1,45 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+
+interface Country {
+  id: number;
+  code: string;
+  name: string;
+  currency: string;
+  currency_symbol: string;
+}
+
+interface PaymentMethod {
+  id: number;
+  code: string;
+  name: string;
+}
+
+const API_BASE_URL = 'http://localhost:8000/api';
 
 export default function Onboarding() {
   const [currentStep, setCurrentStep] = useState(1);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  
-  const countriesPricing: Record<string, { price: number; flag: string; currency: string }> = {
-    'السعودية': { price: 320, flag: '🇸🇦', currency: 'ريال' },
-    'الإمارات العربية المتحدة': { price: 320, flag: '🇦🇪', currency: 'درهم' },
-    'مصر': { price: 1250, flag: '🇪🇬', currency: 'جنيه' },
-    'الأردن': { price: 30, flag: '🇯🇴', currency: 'دينار' },
-    'لبنان': { price: 40, flag: '🇱🇧', currency: 'ليرة' },
-    'قطر': { price: 290, flag: '🇶🇦', currency: 'ريال' },
-    'الكويت': { price: 29, flag: '🇰🇼', currency: 'دينار' },
-    'سلطنة عُمان': { price: 35, flag: '🇴🇲', currency: 'ريال' },
-    'البحرين': { price: 40, flag: '🇧🇭', currency: 'دينار' },
-    'ليبيا': { price: 295, flag: '🇱🇾', currency: 'دينار' },
-    'المغرب': { price: 290, flag: '🇲🇦', currency: 'درهم' },
-    'تونس': { price: 150, flag: '🇹🇳', currency: 'دينار' },
-    'الجزائر': { price: 7000, flag: '🇩🇿', currency: 'دينار' },
-    'العراق': { price: 60000, flag: '🇮🇶', currency: 'دينار' },
-    'سوريا': { price: 4500, flag: '🇸🇾', currency: 'ليرة' },
-    'السودان': { price: 95000, flag: '🇸🇩', currency: 'جنيه' },
-    'اليمن': { price: 50, flag: '🇾🇪', currency: 'ريال' },
-    'فلسطين - الضفة الغربية': { price: 280, flag: '🇵🇸', currency: 'شيقل' },
-    'فلسطين - الداخل والقدس': { price: 390, flag: '🇵🇸', currency: 'شيقل' },
-    'بريطانيا': { price: 100, flag: '🇬🇧', currency: 'جنيه' },
-    'كندا': { price: 150, flag: '🇨🇦', currency: 'دولار' },
-    'أمريكا': { price: 130, flag: '🇺🇸', currency: 'دولار' },
-    'باقي الدول': { price: 130, flag: '🌍', currency: 'دولار' }
-  };
-  
-  const countries = Object.keys(countriesPricing).sort();
+  const [countries, setCountries] = useState<Country[]>([]);
+  const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+
+  // Fetch countries on component mount
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`${API_BASE_URL}/countries-list`);
+        const data = await response.json();
+        setCountries(data);
+      } catch (error) {
+        console.error('Error fetching countries:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCountries();
+  }, []);
+
+  // Fetch payment methods when country is selected
+  useEffect(() => {
+    if (selectedCountry) {
+      const fetchPaymentMethods = async () => {
+        try {
+          setLoading(true);
+          const response = await fetch(`${API_BASE_URL}/payment-methods?country_code=${selectedCountry.code}`);
+          const data = await response.json();
+          setPaymentMethods(data.payment_methods || []);
+        } catch (error) {
+          console.error('Error fetching payment methods:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchPaymentMethods();
+    }
+  }, [selectedCountry]);
 
   const handleAnswer = (step: number, answer: string) => {
     setAnswers({ ...answers, [step]: answer });
   };
 
   const handleContinue = () => {
-    if (currentStep < 11) {
+    if (currentStep < 15) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -50,13 +78,28 @@ export default function Onboarding() {
     }
   };
 
-  // Get progress percentage
-  const progressPercentage = (currentStep / 10) * 100;
+  const handleCountrySelect = (country: Country) => {
+    setSelectedCountry(country);
+    handleAnswer(10, country.name);
+    setIsDropdownOpen(false);
+  };
+
+  const handlePaymentMethodSelect = (method: PaymentMethod) => {
+    handleAnswer(13, method.code);
+    handleContinue();
+  };
+
+  const openWhatsApp = () => {
+    window.open('https://wa.me/905344258184', '_blank');
+  };
+
+  // Get progress percentage (based on 12 main screens)
+  const progressPercentage = (currentStep / 12) * 100;
 
   return (
     <div className="container-fluid bg-light h-[100svh] overflow-y-auto" style={{ paddingBottom: '40px' }}>
-      {/* Progress Bar - Hidden on Screen 1 */}
-      {currentStep > 1 && currentStep !== 11 && (
+      {/* Progress Bar - Hidden on Screen 1 and decision screens */}
+      {currentStep > 1 && currentStep !== 12 && currentStep !== 15 && (
         <div style={{ paddingTop: '20px', paddingBottom: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
             <div style={{ flex: 1, height: '4px', backgroundColor: '#e0e0e0', borderRadius: '2px', marginRight: '10px' }}>
@@ -71,7 +114,7 @@ export default function Onboarding() {
               />
             </div>
             <span style={{ fontSize: '14px', fontWeight: 600, color: '#666', minWidth: '40px', textAlign: 'right' }}>
-              {currentStep}/10
+              {currentStep}/12
             </span>
           </div>
         </div>
@@ -119,16 +162,16 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-        {/* Screen 2: Launch Timing */}
-        {currentStep === 2 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-end"
-            style={{ paddingTop: '80px', paddingBottom: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}
-          >
-            <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>لو كانت التفاصيل واضحة وسهلة<br />...متى حابة تطلقي مشروعك؟</h2>
-            <div className="d-flex flex-column gap-2">
+      {/* Screen 2: Launch Timing */}
+      {currentStep === 2 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-end"
+          style={{ paddingTop: '80px', paddingBottom: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}
+        >
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>لو كانت التفاصيل واضحة وسهلة<br />...متى حابة تطلقي مشروعك؟</h2>
+          <div className="d-flex flex-column gap-2">
             <motion.button
               onClick={() => { handleAnswer(2, 'خلال 30 يوم'); handleContinue(); }}
               className={`btn py-3 fw-bold text-end ${answers[2] === 'خلال 30 يوم' ? 'btn-dark' : 'btn-outline-dark'}`}
@@ -298,44 +341,27 @@ export default function Onboarding() {
                 stroke="#2D2D2D"
                 strokeWidth="8"
                 strokeLinecap="round"
-                transform="rotate(-90 100 100)"
-                initial={{ strokeDasharray: `0 ${2 * Math.PI * 90}` }}
-                animate={{ strokeDasharray: `${2 * Math.PI * 90 * 0.78} ${2 * Math.PI * 90}` }}
+                initial={{ strokeDasharray: '565.48px', strokeDashoffset: '565.48px' }}
+                animate={{ strokeDashoffset: '141.37px' }}
                 transition={{ duration: 2, ease: 'easeInOut' }}
               />
-              <text x="100" y="110" textAnchor="middle" fontSize="48" fontWeight="bold" fill="#2D2D2D">
-                78%
-              </text>
             </svg>
           </motion.div>
-
-          <div style={{ marginBottom: '20px' }}>
-            <div style={{ backgroundColor: '#f9f7f4', padding: '10px', borderRadius: '8px', marginBottom: '10px', textAlign: 'center' }}>
-              <p style={{ fontSize: '15px', fontWeight: 600, margin: '0', color: '#2D2D2D' }}>
-                🎁 جاهزيتك لإطلاق مشروعك
-              </p>
-            </div>
-            <p style={{ fontSize: '16px', fontWeight: 700, margin: '0 0 10px 0', color: '#2D2D2D', textAlign: 'center' }}>
-              🎉 جاهزيتك ممتازة
-            </p>
-            <p style={{ fontSize: '13px', lineHeight: '1.4', color: '#666', textAlign: 'center' }}>
-              إذا خليتي احكيلك الآن كيف تحول هذه الجاهزية إلى مشروع حقيقي خلال 30 يوم.
-            </p>
-          </div>
-
+          <h2 className="fw-bold text-dark mb-2" style={{ fontSize: '36px', fontWeight: 700 }}>75%</h2>
+          <p className="text-muted mb-4" style={{ fontSize: '16px' }}>جاهزيتك عالية جداً!</p>
           <motion.button
-            onClick={handleContinue}
-            className="btn btn-dark fw-bold"
-            style={{ borderRadius: '12px', fontSize: '16px', width: '100%', padding: '10px 20px', marginBottom: '10px' }}
+            onClick={() => handleContinue()}
+            className="btn btn-dark fw-bold w-100"
+            style={{ borderRadius: '12px', padding: '12px 20px', fontSize: '16px' }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            اضغطي هنا
+            تابعي
           </motion.button>
         </motion.div>
       )}
 
-      {/* Screen 8: Video */}
+      {/* Screen 8: Placeholder */}
       {currentStep === 8 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -343,42 +369,20 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <p style={{ fontSize: '14px', color: '#666', marginBottom: '20px', textAlign: 'right' }}>شاهدي فيديو راح يمكنك من عمل مشروعك</p>
-          <div style={{ marginBottom: '30px', borderRadius: '12px', overflow: 'hidden' }}>
-            <iframe
-              width="100%"
-              height="300"
-              src="https://www.youtube.com/embed/dJjFfRiy6E4"
-              title="Mknooon Video"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              style={{ borderRadius: '12px' }}
-            />
-          </div>
-          <h3 style={{ fontSize: '20px', fontWeight: 700, textAlign: 'right', marginBottom: '30px', color: '#2D2D2D' }}>مستقبلك بعد مشروعك .. أفضل</h3>
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>Screen 8 Content</h2>
           <motion.button
-            onClick={handleContinue}
-            className="btn btn-dark fw-bold py-3 px-5"
-            style={{ borderRadius: '12px', fontSize: '16px', width: '100%' }}
+            onClick={() => handleContinue()}
+            className="btn btn-dark fw-bold w-100"
+            style={{ borderRadius: '12px', padding: '12px 20px', fontSize: '16px' }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            تعرفي على تكلفة الاشتراك 🚀
-          </motion.button>
-          <motion.button
-            onClick={handleContinue}
-            className="btn btn-dark fw-bold py-3 px-5"
-            style={{ borderRadius: '12px', fontSize: '16px', width: '100%', display: 'none' }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            متابعة
+            تابعي
           </motion.button>
         </motion.div>
       )}
 
-      {/* Screen 9: Country Selection */}
+      {/* Screen 9: Placeholder */}
       {currentStep === 9 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -386,97 +390,117 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="fw-bold text-dark mb-2" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>وحتى نقدرتطيكي السعر حسب عملتك المحلية...</h2>
-          <p style={{ fontSize: '14px', color: '#666', marginBottom: '20px', textAlign: 'right' }}>من أي دولة تواصلي معنا؟</p>
-          <p style={{ fontSize: '12px', color: '#999', marginBottom: '20px', textAlign: 'right' }}>اختاري دولتك</p>
-          <div style={{ position: 'relative', marginBottom: '20px' }}>
-            <motion.button
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              style={{
-                width: '100%',
-                borderRadius: isDropdownOpen ? '10px 10px 0 0' : '10px',
-                border: '1.5px solid #D9D5CF',
-                borderBottom: isDropdownOpen ? 'none' : '1.5px solid #D9D5CF',
-                padding: '14px 16px',
-                fontSize: '16px',
-                fontWeight: 500,
-                backgroundColor: '#FFFFFF',
-                color: answers[9] ? '#2D2D2D' : '#999',
-                direction: 'rtl',
-                textAlign: 'right',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-                gap: '8px',
-                transition: 'all 0.2s ease',
-                boxShadow: isDropdownOpen ? '0 0 0 3px rgba(124, 110, 91, 0.1)' : '0 1px 3px rgba(0, 0, 0, 0.05)',
-                cursor: 'pointer'
-              }}
-              whileHover={{ backgroundColor: '#FAFAF8' }}
-            >
-              <span>{answers[9] || 'اختاري دولة'}</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C6E5B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </motion.button>
-            
-            {isDropdownOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>Screen 9 Content</h2>
+          <motion.button
+            onClick={() => handleContinue()}
+            className="btn btn-dark fw-bold w-100"
+            style={{ borderRadius: '12px', padding: '12px 20px', fontSize: '16px' }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            تابعي
+          </motion.button>
+        </motion.div>
+      )}
+
+      {/* Screen 10: Country Selection */}
+      {currentStep === 10 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-end"
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
+        >
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>اختاري دولتك</h2>
+          
+          {loading && <p style={{ textAlign: 'center', color: '#666' }}>جاري التحميل...</p>}
+          
+          {!loading && (
+            <div style={{ position: 'relative' }}>
+              <motion.button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 style={{
-                  position: 'absolute',
-                  top: 'calc(100% + 8px)',
-                  left: 0,
-                  right: 0,
-                  backgroundColor: '#FFFFFF',
-                  border: '1.5px solid #D9D5CF',
+                  width: '100%',
+                  padding: '14px 16px',
                   borderRadius: '10px',
-                  zIndex: 10,
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                  maxHeight: '300px',
-                  overflowY: 'auto'
+                  border: '1.5px solid #D9D5CF',
+                  fontSize: '16px',
+                  fontWeight: 500,
+                  backgroundColor: '#FFFFFF',
+                  color: answers[10] ? '#2D2D2D' : '#999',
+                  direction: 'rtl',
+                  textAlign: 'right',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'flex-end',
+                  gap: '8px',
+                  transition: 'all 0.2s ease',
+                  boxShadow: isDropdownOpen ? '0 0 0 3px rgba(124, 110, 91, 0.1)' : '0 1px 3px rgba(0, 0, 0, 0.05)',
+                  cursor: 'pointer'
                 }}
+                whileHover={{ backgroundColor: '#FAFAF8' }}
               >
-                {countries.map((country) => (
-                  <motion.button
-                    key={country}
-                    onClick={() => {
-                      handleAnswer(9, country);
-                      setIsDropdownOpen(false);
-                    }}
-                    style={{
-                      width: '100%',
-                      padding: '14px 16px',
-                      textAlign: 'right',
-                      direction: 'rtl',
-                      border: 'none',
-                      borderBottom: '1px solid #F0EAE0',
-                      backgroundColor: answers[9] === country ? '#F0EAE0' : '#FFFFFF',
-                      color: '#2D2D2D',
-                      fontSize: '16px',
-                      fontWeight: 500,
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center'
-                    }}
-                    whileHover={{ backgroundColor: '#F0EAE0' }}
-                  >
-                    <span style={{ fontSize: '18px' }}>{countriesPricing[country].flag}</span>
-                    <span>{country}</span>
-                  </motion.button>
-                ))}
-              </motion.div>
-            )}
-          </div>
+                <span>{answers[10] || 'اختاري دولة'}</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C6E5B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </motion.button>
+              
+              {isDropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  style={{
+                    position: 'absolute',
+                    top: 'calc(100% + 8px)',
+                    left: 0,
+                    right: 0,
+                    backgroundColor: '#FFFFFF',
+                    border: '1.5px solid #D9D5CF',
+                    borderRadius: '10px',
+                    zIndex: 10,
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    maxHeight: '300px',
+                    overflowY: 'auto'
+                  }}
+                >
+                  {countries.map((country) => (
+                    <motion.button
+                      key={country.id}
+                      onClick={() => handleCountrySelect(country)}
+                      style={{
+                        width: '100%',
+                        padding: '14px 16px',
+                        textAlign: 'right',
+                        direction: 'rtl',
+                        border: 'none',
+                        borderBottom: '1px solid #F0EAE0',
+                        backgroundColor: answers[10] === country.name ? '#F0EAE0' : '#FFFFFF',
+                        color: '#2D2D2D',
+                        fontSize: '16px',
+                        fontWeight: 500,
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                      }}
+                      whileHover={{ backgroundColor: '#F0EAE0' }}
+                    >
+                      <span>{country.name}</span>
+                    </motion.button>
+                  ))}
+                </motion.div>
+              )}
+            </div>
+          )}
+          
           <motion.button
             onClick={handleContinue}
-            disabled={!answers[9]}
-            className="btn btn-dark fw-bold py-3 px-5"
-            style={{ borderRadius: '12px', fontSize: '16px', width: '100%', opacity: !answers[9] ? 0.5 : 1 }}
+            disabled={!answers[10]}
+            className="btn btn-dark fw-bold py-3 px-5 mt-4"
+            style={{ borderRadius: '12px', fontSize: '16px', width: '100%', opacity: !answers[10] ? 0.5 : 1 }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -485,8 +509,8 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 10: Pricing */}
-      {currentStep === 10 && (
+      {/* Screen 11: Pricing */}
+      {currentStep === 11 && selectedCountry && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -495,12 +519,12 @@ export default function Onboarding() {
         >
           <h2 className="fw-bold text-dark" style={{ fontSize: '26px', fontWeight: 700, textAlign: 'right', marginBottom: '8px' }}>سعر الاشتراك:</h2>
           
-          {/* Price Box - Horizontal */}
+          {/* Price Box */}
           <div style={{ backgroundColor: '#F8F7F5', padding: '12px 20px', borderRadius: '14px', marginBottom: '8px', border: '1.5px solid #E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', direction: 'rtl' }}>
             <div style={{ textAlign: 'center' }}>
               <p style={{ fontSize: '28px', fontWeight: 800, color: '#2D2D2D', margin: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-                <span>{countriesPricing[answers[9]]?.price || 0}</span>
-                <span style={{ fontSize: '16px', color: '#666' }}>{countriesPricing[answers[9]]?.currency || 'عملة'}</span>
+                <span>{selectedCountry.currency}</span>
+                <span style={{ fontSize: '16px', color: '#666' }}>{selectedCountry.currency_symbol}</span>
               </p>
             </div>
           </div>
@@ -531,7 +555,7 @@ export default function Onboarding() {
           </div>
 
           <motion.button
-            onClick={() => setCurrentStep(11)}
+            onClick={() => setCurrentStep(12)}
             className="btn btn-dark fw-bold py-3 px-5"
             style={{ borderRadius: '12px', fontSize: '16px', width: '100%' }}
             whileHover={{ scale: 1.02 }}
@@ -542,8 +566,8 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 11: Final - Decision Screen */}
-      {currentStep === 11 && (
+      {/* Screen 12: Decision Screen */}
+      {currentStep === 12 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -599,7 +623,7 @@ export default function Onboarding() {
               style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%' }}
             >
               <motion.button
-                onClick={() => setCurrentStep(1)}
+                onClick={() => setCurrentStep(13)}
                 className="btn fw-bold py-3 px-5"
                 style={{ borderRadius: '12px', fontSize: '16px', width: '100%', backgroundColor: '#2D2D2D', color: '#fff', border: 'none' }}
                 whileHover={{ scale: 1.02 }}
@@ -608,12 +632,15 @@ export default function Onboarding() {
                 ابدأ مشروعي الآن 🚀
               </motion.button>
               <motion.button
-                onClick={() => setCurrentStep(1)}
+                onClick={openWhatsApp}
                 className="btn fw-bold py-3 px-5"
-                style={{ borderRadius: '12px', fontSize: '16px', width: '100%', backgroundColor: '#fff', color: '#2D2D2D', border: '1.5px solid #E8E4DC' }}
+                style={{ borderRadius: '12px', fontSize: '16px', width: '100%', backgroundColor: '#fff', color: '#2D2D2D', border: '1.5px solid #E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-4.946 1.347l-.355.192-.368-.06a9.879 9.879 0 00-3.464.608l.564 2.173 1.888-.959a9.877 9.877 0 018.368 2.52c.248.248.456.509.62.783l2.04-1.294a9.884 9.884 0 00-3.348-5.17z"/>
+                </svg>
                 عندي سؤال قبل الاشتراك
               </motion.button>
             </motion.div>
@@ -629,15 +656,112 @@ export default function Onboarding() {
             <p style={{ fontSize: '13px', color: '#999', marginBottom: '12px', direction: 'rtl' }}>
               غير مستعدة حالياً؟ ستابعي معكم على الواتساب
             </p>
-            <p style={{ fontSize: '12px', color: '#ccc', direction: 'rtl' }}>
-              انضمي لأكثر من 4000 امرأة بدأت رحلتهن مع شوكودار<br />#COBAB2
-            </p>
           </motion.div>
         </motion.div>
       )}
 
+      {/* Screen 13: Payment Method Selection */}
+      {currentStep === 13 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-end"
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
+        >
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>اختاري طريقة الدفع</h2>
+          
+          {loading && <p style={{ textAlign: 'center', color: '#666' }}>جاري التحميل...</p>}
+          
+          {!loading && paymentMethods.length > 0 && (
+            <div className="d-flex flex-column gap-3">
+              {paymentMethods.map((method) => (
+                <motion.button
+                  key={method.id}
+                  onClick={() => handlePaymentMethodSelect(method)}
+                  className="btn py-3 fw-bold text-end"
+                  style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'block', width: '100%', backgroundColor: '#F8F7F5', color: '#2D2D2D', border: '1.5px solid #E8E4DC' }}
+                  whileHover={{ scale: 1.02, backgroundColor: '#F0EAE0' }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {method.name}
+                </motion.button>
+              ))}
+            </div>
+          )}
+          
+          {!loading && paymentMethods.length === 0 && (
+            <p style={{ textAlign: 'center', color: '#999' }}>لا توجد طرق دفع متاحة</p>
+          )}
+        </motion.div>
+      )}
+
+      {/* Screen 14: Payment Instructions */}
+      {currentStep === 14 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-end"
+          style={{ paddingTop: '80px', paddingBottom: '40px' }}
+        >
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>تفاصيل الدفع</h2>
+          <p style={{ fontSize: '14px', color: '#666', textAlign: 'right' }}>تم اختيار طريقة الدفع: {answers[13]}</p>
+          <motion.button
+            onClick={() => setCurrentStep(15)}
+            className="btn btn-dark fw-bold w-100 mt-4"
+            style={{ borderRadius: '12px', padding: '12px 20px', fontSize: '16px' }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            تابعي
+          </motion.button>
+        </motion.div>
+      )}
+
+      {/* Screen 15: Success */}
+      {currentStep === 15 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center d-flex flex-column h-[100svh]"
+          style={{ paddingTop: '60px', paddingBottom: '60px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
+        >
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.6, type: 'spring', stiffness: 100 }}
+            style={{
+              width: '100px',
+              height: '100px',
+              borderRadius: '50%',
+              backgroundColor: '#7C6E5B',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: '30px'
+            }}
+          >
+            <motion.span
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.6, duration: 0.4 }}
+              style={{ fontSize: '50px', color: '#fff', fontWeight: 'bold' }}
+            >
+              ✓
+            </motion.span>
+          </motion.div>
+          
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '32px', fontWeight: 700, lineHeight: '1.4' }}>
+            شكراً لك!<br />تم استلام طلبك
+          </h2>
+          
+          <p style={{ fontSize: '16px', color: '#666', marginBottom: '30px' }}>
+            سيتم التواصل معك قريباً
+          </p>
+        </motion.div>
+      )}
+
       {/* Navigation Buttons */}
-      {currentStep > 1 && currentStep < 11 && (
+      {currentStep > 1 && currentStep < 12 && currentStep !== 13 && (
         <div style={{ display: 'flex', gap: '10px', marginTop: '20px', paddingBottom: '40px' }}>
           <motion.button
             onClick={handleBack}
