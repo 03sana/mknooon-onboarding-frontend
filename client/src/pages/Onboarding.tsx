@@ -135,7 +135,7 @@ export default function Onboarding() {
     } else {
       if (selectedCountry) {
         try {
-          const response = await fetch(`${API_BASE_URL}/payment-instructions?method=${method.code}&country=${selectedCountry.code}`);
+          const response = await fetch(`${API_BASE_URL}/payment-instructions?country=${selectedCountry.code}&method=${method.code}`);
           const data = await response.json();
           setPaymentInstructions(data);
         } catch (error) {
