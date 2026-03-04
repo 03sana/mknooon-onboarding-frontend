@@ -262,12 +262,12 @@ export default function Onboarding() {
         >
           <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>تختاري شكل علامتك الخاصة...أي سؤال أقرب لشخصيتك؟</h2>
           <div className="d-flex flex-column gap-3">
-            {[{ title: 'فاخرة وفورية', desc: 'أنيقة، رائقة، رافية' }, { title: 'عصرية وملموسة', desc: 'حديثة، عصرية، ملموسة' }, { title: 'منزلية دافئة', desc: 'خصوصية، شخصية، دافئة' }].map((option, idx) => (
+            {[{ title: 'فاخرة وفورية', desc: 'أنيقة، رائقة، رافية', color: '#D4AF37' }, { title: 'عصرية وملموسة', desc: 'حديثة، عصرية، ملموسة', color: '#4A90E2' }, { title: 'منزلية دافئة', desc: 'خصوصية، شخصية، دافئة', color: '#8B6F47' }].map((option, idx) => (
               <motion.button
                 key={idx}
                 onClick={() => { handleAnswer(6, option.title); handleContinue(); }}
                 className={`btn py-4 fw-bold text-end d-flex flex-column align-items-start ${answers[6] === option.title ? 'btn-dark' : 'btn-outline-dark'}`}
-                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'flex', width: '100%', gap: '4px' }}
+                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'flex', width: '100%', gap: '4px', borderLeft: `4px solid ${option.color}` }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
