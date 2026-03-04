@@ -53,7 +53,7 @@ export default function Onboarding() {
           setLoading(true);
           const response = await fetch(`${API_BASE_URL}/payment-methods?country_code=${selectedCountry.code}`);
           const data = await response.json();
-          setPaymentMethods(data.payment_methods || []);
+          setPaymentMethods(data.payment_methods || data || []);
         } catch (error) {
           console.error('Error fetching payment methods:', error);
         } finally {
