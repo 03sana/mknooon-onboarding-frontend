@@ -742,6 +742,11 @@ export default function Onboarding() {
                   </p>
                   {paymentInstructions.fields && (
                     <div>
+                      {paymentInstructions.fields.email && (
+                        <p style={{ fontSize: '14px', color: '#2D2D2D', marginBottom: '8px' }}>
+                          <strong>البريد الإلكتروني:</strong> {paymentInstructions.fields.email}
+                        </p>
+                      )}
                       {paymentInstructions.fields.phone && (
                         <p style={{ fontSize: '14px', color: '#2D2D2D', marginBottom: '8px' }}>
                           <strong>الرقم:</strong> {paymentInstructions.fields.phone}
