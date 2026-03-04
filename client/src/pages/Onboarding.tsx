@@ -27,6 +27,8 @@ export default function Onboarding() {
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod | null>(null);
+  const [paymentInstructions, setPaymentInstructions] = useState<any>(null);
 
   // Fetch countries on component mount
   useEffect(() => {
@@ -86,9 +88,24 @@ export default function Onboarding() {
     setIsDropdownOpen(false);
   };
 
-  const handlePaymentMethodSelect = (method: PaymentMethod) => {
+  const handlePaymentMethodSelect = async (method: PaymentMethod) => {
+    setSelectedPaymentMethod(method);
     handleAnswer(13, method.code);
-    handleContinue();
+    
+    if (method.code === 'visa') {
+      setCurrentStep(13);
+    } else {
+      if (selectedCountry) {
+        try {
+          const response = await fetch(`${API_BASE_URL}/payment-instructions?method=${method.code}&country=${selectedCountry.code}`);
+          const data = await response.json();
+          setPaymentInstructions(data);
+        } catch (error) {
+          console.error('Error fetching payment instructions:', error);
+        }
+      }
+      setCurrentStep(13);
+    }
   };
 
   const openWhatsApp = () => {
@@ -691,25 +708,78 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 13: Payment Instructions */}
-      {currentStep === 13 && (
+      {/* Screen 13: Payment Processing */}
+      {currentStep === 13 && selectedPaymentMethod && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>تفاصيل الدفع</h2>
-          <p style={{ fontSize: '14px', color: '#666', textAlign: 'right' }}>تم اختيار طريقة الدفع: {answers[13]}</p>
-          <motion.button
-            onClick={() => setCurrentStep(15)}
-            className="btn btn-dark fw-bold w-100 mt-4"
-            style={{ borderRadius: '12px', padding: '12px 20px', fontSize: '16px' }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            تابعي
-          </motion.button>
+          {selectedPaymentMethod.code === 'visa' ? (
+            <>
+              <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>الدفع عبر Stripe</h2>
+              <p style={{ fontSize: '14px', color: '#666', textAlign: 'right', marginBottom: '20px' }}>سيتم تحويلك إلى صفحة الدفع الآمنة</p>
+              <motion.button
+                onClick={() => setCurrentStep(14)}
+                className="btn btn-dark fw-bold w-100 mt-4"
+                style={{ borderRadius: '12px', padding: '12px 20px', fontSize: '16px' }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                الانتقال إلى الدفع
+              </motion.button>
+            </>
+          ) : (
+            <>
+              <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>تفاصيل الدفع</h2>
+              {paymentInstructions && (
+                <div style={{ backgroundColor: '#F8F7F5', padding: '20px', borderRadius: '12px', marginBottom: '20px', textAlign: 'right', direction: 'rtl' }}>
+                  <p style={{ fontSize: '14px', color: '#2D2D2D', marginBottom: '10px' }}>
+                    <strong>طريقة الدفع:</strong> {paymentInstructions.payment_method?.name}
+                  </p>
+                  {paymentInstructions.fields && (
+                    <div>
+                      {paymentInstructions.fields.phone && (
+                        <p style={{ fontSize: '14px', color: '#2D2D2D', marginBottom: '8px' }}>
+                          <strong>الرقم:</strong> {paymentInstructions.fields.phone}
+                        </p>
+                      )}
+                      {paymentInstructions.fields.recipient && (
+                        <p style={{ fontSize: '14px', color: '#2D2D2D', marginBottom: '8px' }}>
+                          <strong>المستقبل:</strong> {paymentInstructions.fields.recipient}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+              {paymentInstructions?.requires_receipt && (
+                <motion.button
+                  onClick={() => {
+                    const message = paymentInstructions.receipt_whatsapp.prefill;
+                    const phone = paymentInstructions.receipt_whatsapp.phone.replace(/[^0-9]/g, '');
+                    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+                  }}
+                  className="btn fw-bold w-100 mt-4"
+                  style={{ borderRadius: '12px', padding: '12px 20px', fontSize: '16px', backgroundColor: '#25D366', color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  أرسل الإيصال عبر WhatsApp
+                </motion.button>
+              )}
+              <motion.button
+                onClick={() => setCurrentStep(14)}
+                className="btn btn-dark fw-bold w-100 mt-4"
+                style={{ borderRadius: '12px', padding: '12px 20px', fontSize: '16px' }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                تابعي
+              </motion.button>
+            </>
+          )}
         </motion.div>
       )}
 
