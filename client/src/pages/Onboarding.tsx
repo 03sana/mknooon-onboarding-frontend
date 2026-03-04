@@ -73,7 +73,7 @@ export default function Onboarding() {
 
   // Fetch payment methods when country is selected
   useEffect(() => {
-    if (selectedCountry) {
+    if (selectedCountry && selectedBrand) {
       const fetchPaymentMethods = async () => {
         try {
           setLoading(true);
@@ -86,9 +86,23 @@ export default function Onboarding() {
           setLoading(false);
         }
       };
+      
+      const fetchPrice = async () => {
+        try {
+          const response = await fetch(`${API_BASE_URL}/price?src=${selectedBrand}&country=${selectedCountry.code}`);
+          const data = await response.json();
+          if (data.data) {
+            setSelectedCountry(prev => prev ? { ...prev, price: data.data.price, currency: data.data.currency, currency_symbol: data.data.currency_symbol } : null);
+          }
+        } catch (error) {
+          console.error('Error fetching price:', error);
+        }
+      };
+      
       fetchPaymentMethods();
+      fetchPrice();
     }
-  }, [selectedCountry]);
+  }, [selectedCountry, selectedBrand]);
 
   const handleAnswer = (step: number, answer: string) => {
     setAnswers({ ...answers, [step]: answer });
