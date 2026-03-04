@@ -260,18 +260,19 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>كيف تفضلين التعلم؟</h2>
-          <div className="d-flex flex-column gap-2">
-            {['دورات تدريبية', 'ورش عمل حية', 'محتوى مكتوب'].map((option) => (
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>تختاري شكل علامتك الخاصة...أي سؤال أقرب لشخصيتك؟</h2>
+          <div className="d-flex flex-column gap-3">
+            {[{ title: 'فاخرة وفورية', desc: 'أنيقة، رائقة، رافية' }, { title: 'عصرية وملموسة', desc: 'حديثة، عصرية، ملموسة' }, { title: 'منزلية دافئة', desc: 'خصوصية، شخصية، دافئة' }].map((option, idx) => (
               <motion.button
-                key={option}
-                onClick={() => { handleAnswer(6, option); handleContinue(); }}
-                className={`btn py-3 fw-bold text-end ${answers[6] === option ? 'btn-dark' : 'btn-outline-dark'}`}
-                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'block', width: '100%' }}
+                key={idx}
+                onClick={() => { handleAnswer(6, option.title); handleContinue(); }}
+                className={`btn py-4 fw-bold text-end d-flex flex-column align-items-start ${answers[6] === option.title ? 'btn-dark' : 'btn-outline-dark'}`}
+                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'flex', width: '100%', gap: '4px' }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                {option}
+                <span style={{ fontSize: '16px', fontWeight: 600 }}>{option.title}</span>
+                <span style={{ fontSize: '12px', fontWeight: 400, opacity: 0.8 }}>{option.desc}</span>
               </motion.button>
             ))}
           </div>
