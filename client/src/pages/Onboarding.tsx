@@ -386,7 +386,9 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>اختاري دولتك</h2>
+          <h2 className="fw-bold text-dark mb-2" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>وحتى نقدرتطيكي السعر حسب عملتك المحلية...</h2>
+          <p style={{ fontSize: '14px', color: '#666', marginBottom: '20px', textAlign: 'right' }}>من أي دولة تواصلي معنا؟</p>
+          <p style={{ fontSize: '12px', color: '#999', marginBottom: '20px', textAlign: 'right' }}>اختاري دولتك</p>
           <div style={{ position: 'relative', marginBottom: '20px' }}>
             <motion.button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
