@@ -395,7 +395,7 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 9: Placeholder - Can be filled with future content */}
+      {/* Screen 9: Country Selection (Original) */}
       {currentStep === 9 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -403,20 +403,105 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>Screen 9 Content</h2>
+          <h2 className="fw-bold text-dark mb-2" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>وحتى نقدرتطيكي السعر حسب عملتك المحلية...</h2>
+          <p style={{ fontSize: '14px', color: '#666', marginBottom: '20px', textAlign: 'right' }}>من أي دولة تواصلي معنا؟</p>
+          <p style={{ fontSize: '12px', color: '#999', marginBottom: '20px', textAlign: 'right' }}>اختاري دولتك</p>
+          <div style={{ position: 'relative', marginBottom: '20px' }}>
+            <motion.button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              style={{
+                width: '100%',
+                borderRadius: isDropdownOpen ? '10px 10px 0 0' : '10px',
+                border: '1.5px solid #D9D5CF',
+                borderBottom: isDropdownOpen ? 'none' : '1.5px solid #D9D5CF',
+                padding: '14px 16px',
+                fontSize: '16px',
+                fontWeight: 500,
+                backgroundColor: '#FFFFFF',
+                color: answers[9] ? '#2D2D2D' : '#999',
+                direction: 'rtl',
+                textAlign: 'right',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                gap: '8px',
+                transition: 'all 0.2s ease',
+                boxShadow: isDropdownOpen ? '0 0 0 3px rgba(124, 110, 91, 0.1)' : '0 1px 3px rgba(0, 0, 0, 0.05)',
+                cursor: 'pointer'
+              }}
+              whileHover={{ backgroundColor: '#FAFAF8' }}
+            >
+              <span>{answers[9] || 'اختاري دولة'}</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C6E5B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </motion.button>
+            
+            {isDropdownOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                style={{
+                  position: 'absolute',
+                  top: 'calc(100% + 8px)',
+                  left: 0,
+                  right: 0,
+                  backgroundColor: '#FFFFFF',
+                  border: '1.5px solid #D9D5CF',
+                  borderRadius: '10px',
+                  zIndex: 10,
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                  maxHeight: '300px',
+                  overflowY: 'auto'
+                }}
+              >
+                {countries.map((country) => (
+                  <motion.button
+                    key={country.id}
+                    onClick={() => {
+                      handleAnswer(9, country.name);
+                      setSelectedCountry(country);
+                      setIsDropdownOpen(false);
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '14px 16px',
+                      textAlign: 'right',
+                      direction: 'rtl',
+                      border: 'none',
+                      borderBottom: '1px solid #F0EAE0',
+                      backgroundColor: answers[9] === country.name ? '#F0EAE0' : '#FFFFFF',
+                      color: '#2D2D2D',
+                      fontSize: '16px',
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}
+                    whileHover={{ backgroundColor: '#F0EAE0' }}
+                  >
+                    <span>{country.name}</span>
+                  </motion.button>
+                ))}
+              </motion.div>
+            )}
+          </div>
           <motion.button
-            onClick={() => handleContinue()}
-            className="btn btn-dark fw-bold w-100"
-            style={{ borderRadius: '12px', padding: '12px 20px', fontSize: '16px' }}
+            onClick={handleContinue}
+            disabled={!answers[9]}
+            className="btn btn-dark fw-bold py-3 px-5"
+            style={{ borderRadius: '12px', fontSize: '16px', width: '100%', opacity: !answers[9] ? 0.5 : 1 }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            تابعي
+            متابعة
           </motion.button>
         </motion.div>
       )}
-
-      {/* Screen 10: Country Selection */}
+      {/* Screen 10: Placeholder for future content */}
       {currentStep === 10 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
