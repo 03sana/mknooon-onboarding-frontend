@@ -221,7 +221,7 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>طبيعي يكون عندك هاي المخاوف ❤️</h2>
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>طبيعي يكون عندك هاي المخاوف 🤍</h2>
           <p className="text-muted mb-4" style={{ fontSize: '14px', textAlign: 'right', direction: 'rtl' }}>لذلك فرقنا يكون معك خطوة بخطوة في:</p>
           <div className="d-flex flex-column gap-3">
             {['كيف تبدي', 'من وين توفري المواد الخام', 'كيف تسعري منتجاتك', 'كيف تصويرهم باحترافية', 'كيف تسوقي على السوشال ميديا', 'كيف تجيبي أول طلبية فعلية'].map((item, idx) => (
