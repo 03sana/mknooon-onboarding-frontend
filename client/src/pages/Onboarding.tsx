@@ -93,7 +93,7 @@ export default function Onboarding() {
     handleAnswer(13, method.code);
     
     if (method.code === 'visa') {
-      setCurrentStep(13);
+      setCurrentStep(14);
     } else {
       if (selectedCountry) {
         try {
@@ -104,7 +104,7 @@ export default function Onboarding() {
           console.error('Error fetching payment instructions:', error);
         }
       }
-      setCurrentStep(13);
+      setCurrentStep(14);
     }
   };
 
@@ -112,13 +112,13 @@ export default function Onboarding() {
     window.open('https://wa.me/905344258184', '_blank');
   };
 
-  // Get progress percentage (based on 12 main screens)
-  const progressPercentage = (currentStep / 12) * 100;
+  // Get progress percentage (based on 14 main screens)
+  const progressPercentage = (currentStep / 14) * 100;
 
   return (
     <div className="container-fluid bg-light h-[100svh] overflow-y-auto" style={{ paddingBottom: '40px' }}>
       {/* Progress Bar - Hidden on Screen 1 and decision screens */}
-      {currentStep > 1 && currentStep !== 12 && currentStep !== 15 && (
+      {currentStep > 1 && currentStep !== 11 && currentStep !== 15 && (
         <div style={{ paddingTop: '20px', paddingBottom: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
             <div style={{ flex: 1, height: '4px', backgroundColor: '#e0e0e0', borderRadius: '2px', marginRight: '10px' }}>
@@ -708,8 +708,10 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 13: Payment Processing */}
-      {currentStep === 13 && selectedPaymentMethod && (
+
+
+      {/* Screen 14: Payment Processing */}
+      {currentStep === 14 && selectedPaymentMethod && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -721,7 +723,7 @@ export default function Onboarding() {
               <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>الدفع عبر Stripe</h2>
               <p style={{ fontSize: '14px', color: '#666', textAlign: 'right', marginBottom: '20px' }}>سيتم تحويلك إلى صفحة الدفع الآمنة</p>
               <motion.button
-                onClick={() => setCurrentStep(14)}
+                onClick={() => setCurrentStep(15)}
                 className="btn btn-dark fw-bold w-100 mt-4"
                 style={{ borderRadius: '12px', padding: '12px 20px', fontSize: '16px' }}
                 whileHover={{ scale: 1.02 }}
@@ -770,7 +772,7 @@ export default function Onboarding() {
                 </motion.button>
               )}
               <motion.button
-                onClick={() => setCurrentStep(14)}
+                onClick={() => setCurrentStep(15)}
                 className="btn btn-dark fw-bold w-100 mt-4"
                 style={{ borderRadius: '12px', padding: '12px 20px', fontSize: '16px' }}
                 whileHover={{ scale: 1.02 }}
@@ -783,8 +785,8 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 14: Success */}
-      {currentStep === 14 && (
+      {/* Screen 15: Success */}
+      {currentStep === 15 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
