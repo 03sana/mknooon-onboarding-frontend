@@ -211,7 +211,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}
+          style={{ paddingBottom: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}
         >
           <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>لو كانت التفاصيل واضحة وسهلة<br />...متى حابة تطلقي مشروعك؟</h2>
           <div className="d-flex flex-column gap-2">
@@ -253,7 +253,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px' }}
+          style={{ paddingBottom: '40px' }}
         >
           <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>لما يبدأ مشروعك بنجح ويحقق إيرادات .. كيف حالة يكون دخله بالنسبة لك؟</h2>
           <div className="d-flex flex-column gap-2">
@@ -279,7 +279,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px' }}
+          style={{ paddingBottom: '40px' }}
         >
           <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>أكثر شيء يتخافي منه لما تفكري تبدي مشروعك ؟</h2>
           <div className="d-flex flex-column gap-3">
@@ -344,7 +344,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px' }}
+          style={{ paddingBottom: '40px' }}
         >
           <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>تختاري شكل علامتك الخاصة...أي سؤال أقرب لشخصيتك؟</h2>
           <div className="d-flex flex-column gap-3">
@@ -371,7 +371,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
-          style={{ paddingTop: '80px', paddingBottom: '40px' }}
+          style={{ paddingBottom: '40px' }}
         >
           <motion.div style={{ marginBottom: '20px' }}>
             <svg width="140" height="140" viewBox="0 0 200 200" style={{ margin: '0 auto', display: 'block' }}>
@@ -410,7 +410,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px' }}
+          style={{ paddingBottom: '40px' }}
         >
           <p style={{ fontSize: '14px', color: '#666', marginBottom: '20px', textAlign: 'right' }}>شاهدي فيديو راح يمكنك من عمل مشروعك</p>
           <div style={{ marginBottom: '30px', borderRadius: '12px', overflow: 'hidden' }}>
@@ -444,7 +444,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px' }}
+          style={{ paddingBottom: '40px' }}
         >
           <h2 className="fw-bold text-dark mb-2" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>وحتى نقدرتطيكي السعر حسب عملتك المحلية...</h2>
           <p style={{ fontSize: '14px', color: '#666', marginBottom: '20px', textAlign: 'right' }}>من أي دولة تواصلي معنا؟</p>
@@ -703,7 +703,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px' }}
+          style={{ paddingBottom: '40px' }}
         >
           <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>اختاري طريقة الدفع</h2>
           
@@ -740,7 +740,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px' }}
+          style={{ paddingBottom: '40px' }}
         >
           {selectedPaymentMethod.code === 'visa' ? (
             <>
