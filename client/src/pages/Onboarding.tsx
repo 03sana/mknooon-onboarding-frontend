@@ -267,7 +267,7 @@ export default function Onboarding() {
                 key={idx}
                 onClick={() => { handleAnswer(6, option.title); handleContinue(); }}
                 className={`btn py-4 fw-bold text-end d-flex flex-column align-items-start ${answers[6] === option.title ? 'btn-dark' : 'btn-outline-dark'}`}
-                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'flex', width: '100%', gap: '4px', borderLeft: `4px solid ${option.color}`, borderRight: `6px solid ${option.color}` }}
+                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'flex', width: '100%', gap: '4px', borderRight: `6px solid ${option.color}` }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
