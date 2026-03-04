@@ -344,13 +344,17 @@ export default function Onboarding() {
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
           <p style={{ fontSize: '14px', color: '#666', marginBottom: '20px', textAlign: 'right' }}>شاهدي فيديو راح يمكنك من عمل مشروعك</p>
-          <div style={{ marginBottom: '30px', borderRadius: '12px', overflow: 'hidden', backgroundColor: '#1a1a1a', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ width: '60px', height: '60px', backgroundColor: '#fff', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto', marginBottom: '10px' }}>
-                <div style={{ width: '0', height: '0', borderLeft: '20px solid #1a1a1a', borderTop: '12px solid transparent', borderBottom: '12px solid transparent', marginLeft: '4px' }} />
-              </div>
-              <p style={{ color: '#fff', fontSize: '12px', margin: 0 }}>الفيديو قصير - 2 دقيقة</p>
-            </div>
+          <div style={{ marginBottom: '30px', borderRadius: '12px', overflow: 'hidden' }}>
+            <iframe
+              width="100%"
+              height="300"
+              src="https://www.youtube.com/embed/dJjFfRiy6E4"
+              title="Mknooon Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              style={{ borderRadius: '12px' }}
+            />
           </div>
           <h3 style={{ fontSize: '20px', fontWeight: 700, textAlign: 'right', marginBottom: '30px', color: '#2D2D2D' }}>مستقبلك بعد مشروعك .. أفضل</h3>
           <motion.button
