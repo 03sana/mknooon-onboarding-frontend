@@ -752,13 +752,13 @@ export default function Onboarding() {
                         const label = key;
                         
                         return (
-                          <div key={key} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', paddingBottom: '12px', borderBottom: '1px solid #ddd' }}>
-                            <div style={{ flex: 1, textAlign: 'left', marginLeft: '10px' }}>
+                          <div key={key} style={{ display: 'flex', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', paddingBottom: '12px', borderBottom: '1px solid #ddd' }}>
+                            <div style={{ flex: 1, textAlign: 'right', marginRight: '10px' }}>
                               <code style={{ backgroundColor: '#fff', padding: '6px 10px', borderRadius: '4px', fontSize: '12px', color: '#2D2D2D', wordBreak: 'break-all', display: 'block' }}>
                                 {typeof value === 'object' ? JSON.stringify(value) : String(value)}
                               </code>
                             </div>
-                            <strong style={{ fontSize: '14px', color: '#2D2D2D', minWidth: '120px', textAlign: 'right' }}>{label}:</strong>
+                            <strong style={{ fontSize: '14px', color: '#2D2D2D', minWidth: '120px', textAlign: 'left' }}>{label}:</strong>
                           </div>
                         );
                       })}
