@@ -361,7 +361,7 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 8: Placeholder */}
+      {/* Screen 8: Video */}
       {currentStep === 8 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -369,20 +369,33 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>Screen 8 Content</h2>
+          <p style={{ fontSize: '14px', color: '#666', marginBottom: '20px', textAlign: 'right' }}>شاهدي فيديو راح يمكنك من عمل مشروعك</p>
+          <div style={{ marginBottom: '30px', borderRadius: '12px', overflow: 'hidden' }}>
+            <iframe
+              width="100%"
+              height="300"
+              src="https://www.youtube.com/embed/dJjFfRiy6E4"
+              title="Mknooon Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              style={{ borderRadius: '12px' }}
+            />
+          </div>
+          <h3 style={{ fontSize: '20px', fontWeight: 700, textAlign: 'right', marginBottom: '30px', color: '#2D2D2D' }}>مستقبلك بعد مشروعك .. أفضل</h3>
           <motion.button
-            onClick={() => handleContinue()}
-            className="btn btn-dark fw-bold w-100"
-            style={{ borderRadius: '12px', padding: '12px 20px', fontSize: '16px' }}
+            onClick={handleContinue}
+            className="btn btn-dark fw-bold py-3 px-5"
+            style={{ borderRadius: '12px', fontSize: '16px', width: '100%' }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            تابعي
+            تعرفي على تكلفة الاشتراك 🚀
           </motion.button>
         </motion.div>
       )}
 
-      {/* Screen 9: Placeholder */}
+      {/* Screen 9: Placeholder - Can be filled with future content */}
       {currentStep === 9 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
