@@ -221,21 +221,34 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>ما أكبر تحدي تواجهينه؟</h2>
-          <div className="d-flex flex-column gap-2">
-            {['عدم معرفة من أين أبدأ', 'صعوبة التسويق', 'إدارة الوقت والمشروع'].map((option) => (
-              <motion.button
-                key={option}
-                onClick={() => { handleAnswer(5, option); handleContinue(); }}
-                className={`btn py-3 fw-bold text-end ${answers[5] === option ? 'btn-dark' : 'btn-outline-dark'}`}
-                style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'block', width: '100%' }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>طبيعي يكون عندك هاي المخاوف ❤️</h2>
+          <p className="text-muted mb-4" style={{ fontSize: '14px', textAlign: 'right', direction: 'rtl' }}>لذلك فرقنا يكون معك خطوة بخطوة في:</p>
+          <div className="d-flex flex-column gap-3">
+            {['كيف تبدي', 'من وين توفري المواد الخام', 'كيف تسعري منتجاتك', 'كيف تصويرهم باحترافية', 'كيف تسوقي على السوشال ميديا', 'كيف تجيبي أول طلبية فعلية'].map((item, idx) => (
+              <motion.div
+                key={idx}
+                className="d-flex align-items-center gap-3"
+                style={{ direction: 'rtl' }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: idx * 0.1 }}
               >
-                {option}
-              </motion.button>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#8B7355', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <span style={{ color: 'white', fontSize: '18px' }}>✓</span>
+                </div>
+                <span style={{ fontSize: '16px', fontWeight: 500, textAlign: 'right', flex: 1 }}>{item}</span>
+              </motion.div>
             ))}
           </div>
+          <motion.button
+            onClick={() => handleContinue()}
+            className="btn btn-dark fw-bold w-100 mt-5"
+            style={{ borderRadius: '12px', padding: '12px 20px', fontSize: '16px' }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            تابعي الرحلة
+          </motion.button>
         </motion.div>
       )}
 
