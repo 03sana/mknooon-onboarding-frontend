@@ -73,20 +73,26 @@ export default function Onboarding() {
 
   // Fetch payment methods when country is selected
   useEffect(() => {
-    if (selectedCountry && selectedBrand) {
+    if (selectedCountry) {
       const fetchPaymentMethods = async () => {
         try {
           setLoading(true);
           const response = await fetch(`${API_BASE_URL}/payment-methods?country_code=${selectedCountry.code}`);
           const data = await response.json();
           setPaymentMethods(data.payment_methods || data || []);
+          setLoading(false);
         } catch (error) {
           console.error('Error fetching payment methods:', error);
-        } finally {
           setLoading(false);
         }
       };
-      
+      fetchPaymentMethods();
+    }
+  }, [selectedCountry?.code]);
+  
+  // Fetch price when country or brand is selected
+  useEffect(() => {
+    if (selectedCountry && selectedBrand) {
       const fetchPrice = async () => {
         try {
           const response = await fetch(`${API_BASE_URL}/price?src=${selectedBrand}&country=${selectedCountry.code}`);
@@ -98,11 +104,9 @@ export default function Onboarding() {
           console.error('Error fetching price:', error);
         }
       };
-      
-      fetchPaymentMethods();
       fetchPrice();
     }
-  }, [selectedCountry, selectedBrand]);
+  }, [selectedCountry?.code, selectedBrand]);
 
   const handleAnswer = (step: number, answer: string) => {
     setAnswers({ ...answers, [step]: answer });
