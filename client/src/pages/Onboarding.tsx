@@ -38,6 +38,7 @@ export default function Onboarding() {
     notes: '',
   });
   const [deliveryFormErrors, setDeliveryFormErrors] = useState<Record<string, string>>({});
+  const [priceData, setPriceData] = useState<any>(null);
   const [brands] = useState([
     { src: 'chocodar', name: 'Chocodar' },
     { src: 'sapooon', name: 'Sapooon' },
@@ -98,7 +99,7 @@ export default function Onboarding() {
           const response = await fetch(`${API_BASE_URL}/price?src=${selectedBrand}&country=${selectedCountry.code}`);
           const data = await response.json();
           if (data.data) {
-            setSelectedCountry(prev => prev ? { ...prev, price: data.data.price, currency: data.data.currency, currency_symbol: data.data.currency_symbol } : null);
+            setPriceData(data.data);
           }
         } catch (error) {
           console.error('Error fetching price:', error);
@@ -578,8 +579,8 @@ export default function Onboarding() {
           <div style={{ backgroundColor: '#F8F7F5', padding: '12px 20px', borderRadius: '14px', marginBottom: '8px', border: '1.5px solid #E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', direction: 'rtl' }}>
             <div style={{ textAlign: 'center' }}>
               <p style={{ fontSize: '28px', fontWeight: 800, color: '#2D2D2D', margin: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-                <span>{selectedCountry.price}</span>
-                <span style={{ fontSize: '16px', color: '#666' }}>{selectedCountry.currency_symbol}</span>
+                <span>{priceData?.price || selectedCountry.price}</span>
+                <span style={{ fontSize: '16px', color: '#666' }}>{priceData?.currency_symbol || selectedCountry.currency_symbol}</span>
               </p>
             </div>
           </div>
