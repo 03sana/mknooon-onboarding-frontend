@@ -778,6 +778,7 @@ export default function Onboarding() {
               {paymentInstructions?.requires_delivery_info && (
                 <div style={{ backgroundColor: '#F8F7F5', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
                   <h3 style={{ fontSize: '16px', fontWeight: 700, textAlign: 'right', marginBottom: '15px', color: '#2D2D2D' }}>بيانات التوصيل</h3>
+                  <p style={{ fontSize: '14px', color: '#2D2D2D', marginBottom: '15px', textAlign: 'right', direction: 'rtl', lineHeight: '1.6' }}>يرجى تعبئة البيانات التاليه</p>
                   
                   <div style={{ marginBottom: '12px' }}>
                     <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px', textAlign: 'right', color: '#2D2D2D' }}>الاسم الكامل *</label>
@@ -792,7 +793,7 @@ export default function Onboarding() {
                   </div>
                   
                   <div style={{ marginBottom: '12px' }}>
-                    <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px', textAlign: 'right', color: '#2D2D2D' }}>الجوال *</label>
+                    <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px', textAlign: 'right', color: '#2D2D2D' }}>الموبايل *</label>
                     <input
                       type="tel"
                       value={deliveryForm.phone}
@@ -872,7 +873,7 @@ export default function Onboarding() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    إرسال بيانات التوصيل عبر WhatsApp
+                    ارسل البيانات
                   </motion.button>
                 </div>
               )}
