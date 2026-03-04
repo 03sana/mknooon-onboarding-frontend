@@ -504,8 +504,8 @@ export default function Onboarding() {
       )}
 
 
-      {/* Screen 11: Pricing */}
-      {currentStep === 11 && selectedCountry && (
+      {/* Screen 10: Pricing */}
+      {currentStep === 10 && selectedCountry && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -550,7 +550,7 @@ export default function Onboarding() {
           </div>
 
           <motion.button
-            onClick={() => setCurrentStep(12)}
+            onClick={() => setCurrentStep(11)}
             className="btn btn-dark fw-bold py-3 px-5"
             style={{ borderRadius: '12px', fontSize: '16px', width: '100%' }}
             whileHover={{ scale: 1.02 }}
@@ -561,8 +561,8 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 12: Decision Screen */}
-      {currentStep === 12 && (
+      {/* Screen 11: Decision Screen */}
+      {currentStep === 11 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -655,8 +655,8 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 13: Payment Method Selection */}
-      {currentStep === 13 && (
+      {/* Screen 12: Payment Methods */}
+      {currentStep === 12 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -690,8 +690,8 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 14: Payment Instructions */}
-      {currentStep === 14 && (
+      {/* Screen 13: Payment Instructions */}
+      {currentStep === 13 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -712,8 +712,8 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 15: Success */}
-      {currentStep === 15 && (
+      {/* Screen 14: Success */}
+      {currentStep === 14 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
