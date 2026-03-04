@@ -219,7 +219,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingTop: '80px', paddingBottom: '40px' }}
+          style={{ paddingTop: '0px', paddingBottom: '40px' }}
         >
           <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>طبيعي يكون عندك هاي المخاوف 🤍</h2>
           <p className="text-muted mb-4" style={{ fontSize: '14px', textAlign: 'right', direction: 'rtl' }}>لذلك فرقنا يكون معك خطوة بخطوة في:</p>
