@@ -772,15 +772,22 @@ export default function Onboarding() {
                   {paymentInstructions.fields && Object.keys(paymentInstructions.fields).length > 0 && (
                     <div style={{ backgroundColor: '#F8F7F5', padding: '20px', borderRadius: '12px', marginBottom: '20px', textAlign: 'right', direction: 'rtl' }}>
                       {Object.entries(paymentInstructions.fields).map(([key, value]: [string, any]) => {
-                        // Use the key directly as the label (already in Arabic from backend)
                         const label = key;
+                        const stringValue = typeof value === 'object' ? JSON.stringify(value) : String(value);
+                        const isUrl = stringValue.startsWith('http://') || stringValue.startsWith('https://');
                         
                         return (
                           <div key={key} style={{ display: 'flex', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', paddingBottom: '12px', borderBottom: '1px solid #ddd' }}>
                             <div style={{ flex: 1, textAlign: 'right', marginRight: '10px' }}>
-                              <code style={{ backgroundColor: '#fff', padding: '6px 10px', borderRadius: '4px', fontSize: '12px', color: '#2D2D2D', wordBreak: 'break-all', display: 'block' }}>
-                                {typeof value === 'object' ? JSON.stringify(value) : String(value)}
-                              </code>
+                              {isUrl ? (
+                                <a href={stringValue} target="_blank" rel="noopener noreferrer" style={{ color: '#0066cc', textDecoration: 'underline', wordBreak: 'break-all', display: 'block', padding: '6px 10px' }}>
+                                  {stringValue}
+                                </a>
+                              ) : (
+                                <code style={{ backgroundColor: '#fff', padding: '6px 10px', borderRadius: '4px', fontSize: '12px', color: '#2D2D2D', wordBreak: 'break-all', display: 'block' }}>
+                                  {stringValue}
+                                </code>
+                              )}
                             </div>
                             <strong style={{ fontSize: '14px', color: '#2D2D2D', minWidth: '120px', textAlign: 'left' }}>{label}:</strong>
                           </div>
