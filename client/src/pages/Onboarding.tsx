@@ -195,9 +195,9 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>ما خبرتك في مجال عملك؟</h2>
-          <div className="d-flex flex-column gap-2">
-            {['مبتدئة تماماً', 'لدي خبرة بسيطة', 'لدي خبرة جيدة'].map((option) => (
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>أكثر شيء يتخافي منه لما تفكري تبدي مشروعك ؟</h2>
+          <div className="d-flex flex-column gap-3">
+            {['ما أعرف من وين أبدأ', 'ما أعرف أماكن بيع المواد الخام', 'ما أعرف أسعر وأسوق صح', 'ما أعرف أبيع وأحقق أرباح', 'جميع ما ذكر'].map((option) => (
               <motion.button
                 key={option}
                 onClick={() => { handleAnswer(4, option); handleContinue(); }}
