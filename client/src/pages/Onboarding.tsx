@@ -169,9 +169,9 @@ export default function Onboarding() {
           className="text-end"
           style={{ paddingTop: '80px', paddingBottom: '40px' }}
         >
-          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '28px', fontWeight: 700, textAlign: 'right' }}>كم دخلك المستهدف شهرياً؟</h2>
+          <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>لما يبدأ مشروعك بنجح ويحقق إيرادات .. كيف حالة يكون دخله بالنسبة لك؟</h2>
           <div className="d-flex flex-column gap-2">
-            {['أقل من 5000 ريال', '5000 - 10000 ريال', 'أكثر من 10000 ريال'].map((option) => (
+            {['يغطي مصاريفي الشخصية', 'يساعدني في دعم عائلتي', 'يكون مشروع العمر'].map((option) => (
               <motion.button
                 key={option}
                 onClick={() => { handleAnswer(3, option); handleContinue(); }}
