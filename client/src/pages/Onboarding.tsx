@@ -5,6 +5,7 @@ interface Country {
   id: number;
   code: string;
   name: string;
+  name_ar: string;
   currency: string;
   currency_symbol: string;
 }
@@ -460,7 +461,7 @@ export default function Onboarding() {
                   <motion.button
                     key={country.id}
                     onClick={() => {
-                      handleAnswer(9, country.name);
+                      handleAnswer(9, country.name_ar);
                       setSelectedCountry(country);
                       setIsDropdownOpen(false);
                     }}
@@ -471,7 +472,7 @@ export default function Onboarding() {
                       direction: 'rtl',
                       border: 'none',
                       borderBottom: '1px solid #F0EAE0',
-                      backgroundColor: answers[9] === country.name ? '#F0EAE0' : '#FFFFFF',
+                      backgroundColor: answers[9] === country.name_ar ? '#F0EAE0' : '#FFFFFF',
                       color: '#2D2D2D',
                       fontSize: '16px',
                       fontWeight: 500,
@@ -483,7 +484,7 @@ export default function Onboarding() {
                     }}
                     whileHover={{ backgroundColor: '#F0EAE0' }}
                   >
-                    <span>{country.name}</span>
+                    <span>{country.name_ar}</span>
                   </motion.button>
                 ))}
               </motion.div>
