@@ -748,17 +748,8 @@ export default function Onboarding() {
                   {paymentInstructions.fields && Object.keys(paymentInstructions.fields).length > 0 && (
                     <div style={{ backgroundColor: '#F8F7F5', padding: '20px', borderRadius: '12px', marginBottom: '20px', textAlign: 'right', direction: 'rtl' }}>
                       {Object.entries(paymentInstructions.fields).map(([key, value]: [string, any]) => {
-                        // Map field keys to Arabic labels
-                        const fieldLabels: Record<string, string> = {
-                          email: 'البريد الإلكتروني',
-                          phone: 'الرقم',
-                          recipient: 'المستقبل',
-                          url: 'رابط الدفع',
-                          account_number: 'رقم الحساب',
-                          bank_name: 'اسم البنك',
-                          iban: 'رقم IBAN',
-                        };
-                        const label = fieldLabels[key] || key;
+                        // Use the key directly as the label (already in Arabic from backend)
+                        const label = key;
                         
                         return (
                           <div key={key} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', paddingBottom: '12px', borderBottom: '1px solid #ddd' }}>
