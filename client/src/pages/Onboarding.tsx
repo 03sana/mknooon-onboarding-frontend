@@ -38,7 +38,6 @@ export default function Onboarding() {
     notes: '',
   });
   const [deliveryFormErrors, setDeliveryFormErrors] = useState<Record<string, string>>({});
-  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [brands] = useState([
     { src: 'chocodar', name: 'Chocodar' },
     { src: 'sapooon', name: 'Sapooon' },
@@ -46,6 +45,14 @@ export default function Onboarding() {
     { src: 'shomoo3', name: 'Shomoo3' },
     { src: 'koohla', name: 'Koohla' },
   ]);
+  
+  // Extract brand from URL parameter
+  const getBrandFromUrl = () => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('src') || null;
+  };
+  
+  const selectedBrand = getBrandFromUrl();
 
   // Fetch countries on component mount
   useEffect(() => {
@@ -872,8 +879,8 @@ export default function Onboarding() {
                         return;
                       }
                       
-                      const brandName = brands.find(b => b.src === selectedBrand)?.name || 'Mknooon';
-                      const message = `مرحباً، أريد الدفع عند الاستلام.\n\nالمشروع: ${brandName}\nالمبلغ: ${selectedCountry?.price} ${selectedCountry?.currency_symbol}\nالدولة: ${selectedCountry?.name_ar}\n\nبيانات العميل:\nالاسم: ${deliveryForm.full_name}\nالموبايل: ${deliveryForm.phone}\nالمدينة: ${deliveryForm.city}\nالعنوان: ${deliveryForm.address}\nأقرب نقطة دلالة: ${deliveryForm.nearest_landmark}${deliveryForm.notes ? `\nملاحظات: ${deliveryForm.notes}` : ''}`;
+                      const brandName = brands.find(b => b.src === selectedBrand?.toLowerCase())?.name || 'Mknooon';
+                      const message = `مرحباً، أريد الدفع عند الاستلام.\n\nالمبلغ: ${selectedCountry?.price} ${selectedCountry?.currency_symbol}\nالدولة: ${selectedCountry?.name_ar}\n\nبيانات العميل:\nالاسم: ${deliveryForm.full_name}\nالموبايل: ${deliveryForm.phone}\nالمدينة: ${deliveryForm.city}\nالعنوان: ${deliveryForm.address}\nأقرب نقطة دلالة: ${deliveryForm.nearest_landmark}${deliveryForm.notes ? `\nملاحظات: ${deliveryForm.notes}` : ''}`;
                       const phone = '905344258184';
                       window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
                     }}
