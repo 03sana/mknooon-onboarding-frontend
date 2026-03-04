@@ -864,7 +864,7 @@ export default function Onboarding() {
                         return;
                       }
                       
-                      const message = `مرحباً، أريد الدفع عند الاستلام.\nالمشروع: Mknooon\nالدولة: ${selectedCountry?.name}\n\nالاسم: ${deliveryForm.full_name}\nالجوال: ${deliveryForm.phone}\nالمدينة: ${deliveryForm.city}\nالعنوان: ${deliveryForm.address}\nأقرب نقطة دلالة: ${deliveryForm.nearest_landmark}\nملاحظات: ${deliveryForm.notes}`;
+                      const message = `مرحباً، أريد الدفع عند الاستلام.\n\nالمشروع: Mknooon\nالمبلغ: ${selectedCountry?.price} ${selectedCountry?.currency_symbol}\nالدولة: ${selectedCountry?.name_ar}\n\nبيانات العميل:\nالاسم: ${deliveryForm.full_name}\nالموبايل: ${deliveryForm.phone}\nالمدينة: ${deliveryForm.city}\nالعنوان: ${deliveryForm.address}\nأقرب نقطة دلالة: ${deliveryForm.nearest_landmark}${deliveryForm.notes ? `\nملاحظات: ${deliveryForm.notes}` : ''}`;
                       const phone = '905344258184';
                       window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
                     }}
