@@ -8,6 +8,7 @@ interface Country {
   name_ar: string;
   currency: string;
   currency_symbol: string;
+  price: number;
 }
 
 interface PaymentMethod {
@@ -518,7 +519,7 @@ export default function Onboarding() {
           <div style={{ backgroundColor: '#F8F7F5', padding: '12px 20px', borderRadius: '14px', marginBottom: '8px', border: '1.5px solid #E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', direction: 'rtl' }}>
             <div style={{ textAlign: 'center' }}>
               <p style={{ fontSize: '28px', fontWeight: 800, color: '#2D2D2D', margin: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-                <span>{selectedCountry.currency}</span>
+                <span>{selectedCountry.price}</span>
                 <span style={{ fontSize: '16px', color: '#666' }}>{selectedCountry.currency_symbol}</span>
               </p>
             </div>
