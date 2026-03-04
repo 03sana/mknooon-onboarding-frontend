@@ -619,7 +619,7 @@ export default function Onboarding() {
               style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%' }}
             >
               <motion.button
-                onClick={() => setCurrentStep(13)}
+                onClick={() => setCurrentStep(12)}
                 className="btn fw-bold py-3 px-5"
                 style={{ borderRadius: '12px', fontSize: '16px', width: '100%', backgroundColor: '#2D2D2D', color: '#fff', border: 'none' }}
                 whileHover={{ scale: 1.02 }}
