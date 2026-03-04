@@ -133,7 +133,7 @@ export default function Onboarding() {
               />
             </div>
             <span style={{ fontSize: '14px', fontWeight: 600, color: '#666', minWidth: '40px', textAlign: 'right' }}>
-              {currentStep}/12
+              {currentStep}/14
             </span>
           </div>
         </div>
