@@ -734,29 +734,43 @@ export default function Onboarding() {
             </>
           ) : (
             <>
-              <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>تفاصيل الدفع</h2>
+              <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>{paymentInstructions?.title || 'تفاصيل الدفع'}</h2>
               {paymentInstructions && (
-                <div style={{ backgroundColor: '#F8F7F5', padding: '20px', borderRadius: '12px', marginBottom: '20px', textAlign: 'right', direction: 'rtl' }}>
-                  <p style={{ fontSize: '14px', color: '#2D2D2D', marginBottom: '10px' }}>
-                    <strong>طريقة الدفع:</strong> {paymentInstructions.payment_method?.name}
-                  </p>
-                  {paymentInstructions.fields && (
-                    <div>
-                      {paymentInstructions.fields.email && (
-                        <p style={{ fontSize: '14px', color: '#2D2D2D', marginBottom: '8px' }}>
-                          <strong>البريد الإلكتروني:</strong> {paymentInstructions.fields.email}
-                        </p>
-                      )}
-                      {paymentInstructions.fields.phone && (
-                        <p style={{ fontSize: '14px', color: '#2D2D2D', marginBottom: '8px' }}>
-                          <strong>الرقم:</strong> {paymentInstructions.fields.phone}
-                        </p>
-                      )}
-                      {paymentInstructions.fields.recipient && (
-                        <p style={{ fontSize: '14px', color: '#2D2D2D', marginBottom: '8px' }}>
-                          <strong>المستقبل:</strong> {paymentInstructions.fields.recipient}
-                        </p>
-                      )}
+                <div>
+                  {/* Instructions Text */}
+                  {paymentInstructions.instructions && (
+                    <p style={{ fontSize: '14px', color: '#2D2D2D', marginBottom: '20px', textAlign: 'right', direction: 'rtl', lineHeight: '1.6' }}>
+                      {paymentInstructions.instructions}
+                    </p>
+                  )}
+                  
+                  {/* Fields List */}
+                  {paymentInstructions.fields && Object.keys(paymentInstructions.fields).length > 0 && (
+                    <div style={{ backgroundColor: '#F8F7F5', padding: '20px', borderRadius: '12px', marginBottom: '20px', textAlign: 'right', direction: 'rtl' }}>
+                      {Object.entries(paymentInstructions.fields).map(([key, value]: [string, any]) => {
+                        // Map field keys to Arabic labels
+                        const fieldLabels: Record<string, string> = {
+                          email: 'البريد الإلكتروني',
+                          phone: 'الرقم',
+                          recipient: 'المستقبل',
+                          url: 'رابط الدفع',
+                          account_number: 'رقم الحساب',
+                          bank_name: 'اسم البنك',
+                          iban: 'رقم IBAN',
+                        };
+                        const label = fieldLabels[key] || key;
+                        
+                        return (
+                          <div key={key} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', paddingBottom: '12px', borderBottom: '1px solid #ddd' }}>
+                            <div style={{ flex: 1, textAlign: 'left', marginLeft: '10px' }}>
+                              <code style={{ backgroundColor: '#fff', padding: '6px 10px', borderRadius: '4px', fontSize: '12px', color: '#2D2D2D', wordBreak: 'break-all', display: 'block' }}>
+                                {typeof value === 'object' ? JSON.stringify(value) : String(value)}
+                              </code>
+                            </div>
+                            <strong style={{ fontSize: '14px', color: '#2D2D2D', minWidth: '120px', textAlign: 'right' }}>{label}:</strong>
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
