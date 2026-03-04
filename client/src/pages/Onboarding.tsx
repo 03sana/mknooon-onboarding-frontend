@@ -140,7 +140,7 @@ export default function Onboarding() {
     } else {
       if (selectedCountry) {
         try {
-          const response = await fetch(`${API_BASE_URL}/payment-instructions?country=${selectedCountry.code}&method=${method.code}&src=${selectedBrand}`);
+          const response = await fetch(`${API_BASE_URL}/payment-instructions?country=${selectedCountry.code}&method=${method.code}&src=${selectedBrand || 'Mknooon'}`);
           const data = await response.json();
           setPaymentInstructions(data);
         } catch (error) {
