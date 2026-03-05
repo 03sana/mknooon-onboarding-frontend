@@ -45,6 +45,7 @@ export default function Onboarding() {
     { src: 'cleanoosh', name: 'Cleanoosh' },
     { src: 'shomoo3', name: 'Shomoo3' },
     { src: 'koohla', name: 'Koohla' },
+    { src: 'concrete', name: 'Concrete' },
   ]);
   
   // Video IDs for each brand
@@ -54,6 +55,7 @@ export default function Onboarding() {
     'sapooon': 'NGAQzsoTc_w',
     'cleanoosh': 'dJjFfRiy6E4',
     'koohla': 'JEhGOoPrLMk',
+    'concrete': 'JW5phMz61pw',
   };
   
   // Extract brand from URL parameter
