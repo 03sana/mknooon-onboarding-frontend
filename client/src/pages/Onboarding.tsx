@@ -17,7 +17,7 @@ interface PaymentMethod {
   name: string;
 }
 
-const API_BASE_URL = 'http://localhost:8004/api';
+const API_BASE_URL = 'http://localhost:8000/api';
 
 export default function Onboarding() {
   const [currentStep, setCurrentStep] = useState(1);
