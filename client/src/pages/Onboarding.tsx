@@ -787,19 +787,10 @@ export default function Onboarding() {
                     </p>
                   )}
                   
-                  {/* QR Code */}
-                  {paymentInstructions.fields?.qr_code && (
-                    <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                      <img src={paymentInstructions.fields.qr_code} alt="QR Code" style={{ maxWidth: '300px', width: '100%', borderRadius: '12px' }} />
-                    </div>
-                  )}
-                  
                   {/* Fields List */}
                   {paymentInstructions.fields && Object.keys(paymentInstructions.fields).length > 0 && (
                     <div style={{ backgroundColor: '#F8F7F5', padding: '20px', borderRadius: '12px', marginBottom: '20px', textAlign: 'right', direction: 'rtl' }}>
                       {Object.entries(paymentInstructions.fields).map(([key, value]: [string, any]) => {
-                        // Skip QR code from fields list since it's displayed separately
-                        if (key === 'qr_code') return null;
                         
                         const label = key;
                         const stringValue = typeof value === 'object' ? JSON.stringify(value) : String(value);
