@@ -51,7 +51,7 @@ export default function Onboarding() {
   const brandVideos: Record<string, string> = {
     'chocodar': 'dJjFfRiy6E4',
     'shomoo3': 'Rj9RS6Kojx4',
-    'sapooon': 'dJjFfRiy6E4',
+    'sapooon': 'NGAQzsoTc_w',
     'cleanoosh': 'dJjFfRiy6E4',
     'koohla': 'dJjFfRiy6E4',
   };
