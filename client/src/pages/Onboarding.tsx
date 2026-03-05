@@ -47,6 +47,15 @@ export default function Onboarding() {
     { src: 'koohla', name: 'Koohla' },
   ]);
   
+  // Video IDs for each brand
+  const brandVideos: Record<string, string> = {
+    'chocodar': 'dJjFfRiy6E4',
+    'shomoo3': 'Rj9RS6Kojx4',
+    'sapooon': 'dJjFfRiy6E4',
+    'cleanoosh': 'dJjFfRiy6E4',
+    'koohla': 'dJjFfRiy6E4',
+  };
+  
   // Extract brand from URL parameter
   const getBrandFromUrl = () => {
     const params = new URLSearchParams(window.location.search);
@@ -436,7 +445,7 @@ export default function Onboarding() {
             <iframe
               width="100%"
               height="300"
-              src="https://www.youtube.com/embed/dJjFfRiy6E4"
+              src={`https://www.youtube.com/embed/${selectedBrand ? brandVideos[selectedBrand] || 'dJjFfRiy6E4' : 'dJjFfRiy6E4'}`}
               title="Mknooon Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
