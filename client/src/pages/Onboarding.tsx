@@ -53,7 +53,7 @@ export default function Onboarding() {
     'shomoo3': 'Rj9RS6Kojx4',
     'sapooon': 'NGAQzsoTc_w',
     'cleanoosh': 'dJjFfRiy6E4',
-    'koohla': 'dJjFfRiy6E4',
+    'koohla': 'JEhGOoPrLMk',
   };
   
   // Extract brand from URL parameter
