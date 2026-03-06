@@ -107,7 +107,7 @@ export default function Onboarding() {
     if (selectedCountry && selectedBrand) {
       const fetchPrice = async () => {
         try {
-          const response = await fetch(`${API_BASE_URL}/price?src=${selectedBrand}&country=${selectedCountry.code}`);
+          const response = await fetch(`${API_BASE_URL}/price?src=${selectedBrand}&country=${selectedCountry.code}&t=${new Date().getTime()}`);
           const data = await response.json();
           if (data.data) {
             setPriceData(data.data);
