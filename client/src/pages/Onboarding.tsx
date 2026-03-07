@@ -358,52 +358,78 @@ export default function Onboarding() {
           </motion.div>
         )}
 
-        {/* Screen 4: Experience Level */}
+        {/* Screen 4: Main Obstacle */}
         {currentStep === 4 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-end"
-            style={{ paddingBottom: "40px" }}
+            style={{
+              paddingBottom: "40px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+            }}
           >
+            {/* Progress Indicator */}
+            <div style={{ marginBottom: "24px", textAlign: "right", direction: "rtl" }}>
+              <div style={{ fontSize: "14px", fontWeight: 600, color: "#666", marginBottom: "8px" }}>4/14</div>
+              <div style={{ height: "4px", backgroundColor: "#e0e0e0", borderRadius: "2px", overflow: "hidden" }}>
+                <div style={{ height: "100%", backgroundColor: accentColor, width: "29%", borderRadius: "2px" }}></div>
+              </div>
+            </div>
+
+            {/* Question Text */}
             <h2
-              className="fw-bold text-dark mb-4"
+              className="fw-bold text-dark"
               style={{
                 fontSize: "24px",
                 fontWeight: 700,
                 textAlign: "right",
-                lineHeight: "1.5",
+                marginBottom: "28px",
+                marginTop: "24px",
+                lineHeight: "1.4",
               }}
             >
-              كم سنة خبرة عندك في مجال مشروعك؟
+              أكثر شيء بتخافي منه لما تفكري تبدي مشروعك ؟
             </h2>
-            <div className="d-flex flex-column gap-2">
+
+            {/* Option Cards */}
+            <div className="d-flex flex-column gap-3">
               {[
-                "مبتدئة تماماً",
-                "عندي فكرة عن المجال",
-                "عندي خبرة جيدة",
+                { emoji: "🤔", title: "ما أعرف من وين أبدأ", subtitle: "البداية الصحيحة" },
+                { emoji: "📦", title: "ما أعرف أماكن بيع المواد الخام", subtitle: "توفر المواد" },
+                { emoji: "💰", title: "ما أعرف أسعر وأسوق صح", subtitle: "التسعير والتسويق" },
+                { emoji: "📈", title: "ما أعرف أبيع وأحقق أرباح", subtitle: "المبيعات والأرباح" },
+                { emoji: "⚠️", title: "جميع ما ذكر", subtitle: "كل الخوف" },
               ].map(option => (
                 <motion.button
-                  key={option}
+                  key={option.title}
                   onClick={() => {
-                    handleAnswer(4, option);
+                    handleAnswer(4, option.title);
                     handleContinue();
                   }}
-                  className={`btn py-3 fw-bold text-end`}
                   style={{
+                    padding: "16px 16px",
                     borderRadius: "12px",
                     textAlign: "right",
+                    fontSize: "15px",
                     direction: "rtl",
                     display: "block",
                     width: "100%",
-                    border: answers[4] === option ? "2px solid " + accentColor : "1px solid #e0e0e0",
-                    backgroundColor: answers[4] === option ? "#FFF5F3" : "white",
-                    color: answers[4] === option ? accentColor : "#333",
+                    border: answers[4] === option.title ? "2px solid " + accentColor : "1px solid #e0e0e0",
+                    backgroundColor: answers[4] === option.title ? "#FFF5F3" : "white",
+                    color: answers[4] === option.title ? accentColor : "#333",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                    boxShadow: answers[4] === option.title ? "0 2px 8px rgba(217, 122, 111, 0.15)" : "0 1px 3px rgba(0,0,0,0.05)",
                   }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  {option}
+                  <span style={{ marginLeft: "8px" }}>{option.emoji}</span>
+                  {option.title}
+                  <div style={{ fontSize: "13px", fontWeight: 500, color: answers[4] === option.title ? accentColor : "#999", marginTop: "4px" }}>{option.subtitle}</div>
                 </motion.button>
               ))}
             </div>
