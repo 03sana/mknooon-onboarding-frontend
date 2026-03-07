@@ -357,7 +357,7 @@ export default function Onboarding() {
           <div className="d-flex flex-column gap-3">
             {['كيف تبدي', 'من وين توفري المواد الخام', 'كيف تسعري منتجاتك', 'كيف تصويرهم باحترافية', 'كيف تسوقي على السوشال ميديا', 'كيف تجيبي أول طلبية فعلية'].map((item, idx) => (
               <motion.div
-                key={idx}
+                key={item}
                 className="d-flex align-items-center gap-3"
                 style={{ direction: 'rtl' }}
                 initial={{ opacity: 0, x: -20 }}
@@ -393,9 +393,9 @@ export default function Onboarding() {
         >
           <h2 className="fw-bold text-dark mb-4" style={{ fontSize: '24px', fontWeight: 700, textAlign: 'right', lineHeight: '1.5' }}>تختاري شكل علامتك الخاصة...أي سؤال أقرب لشخصيتك؟</h2>
           <div className="d-flex flex-column gap-3">
-            {[{ title: 'فاخرة وفورية', desc: 'أنيقة، رائقة، رافية', color: '#D4AF37' }, { title: 'عصرية وملموسة', desc: 'حديثة، عصرية، ملموسة', color: '#4A90E2' }, { title: 'منزلية دافئة', desc: 'خصوصية، شخصية، دافئة', color: '#8B6F47' }].map((option, idx) => (
+            {[{ title: 'فاخرة وفورية', desc: 'أنيقة، رائقة، رافية', color: '#D4AF37' }, { title: 'عصرية وملموسة', desc: 'حديثة، عصرية، ملموسة', color: '#4A90E2' }, { title: 'منزلية دافئة', desc: 'خصوصية، شخصية، دافئة', color: '#8B6F47' }].map((option) => (
               <motion.button
-                key={idx}
+                key={option.title}
                 onClick={() => { handleAnswer(6, option.title); handleContinue(); }}
                 className={`btn py-4 fw-bold text-end d-flex flex-column align-items-start ${answers[6] === option.title ? 'btn-dark' : 'btn-outline-dark'}`}
                 style={{ borderRadius: '12px', textAlign: 'right', direction: 'rtl', display: 'flex', width: '100%', gap: '4px', borderRight: `6px solid ${option.color}` }}
