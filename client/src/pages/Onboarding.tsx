@@ -269,12 +269,13 @@ export default function Onboarding() {
           </div>
 
           {/* Illustration */}
-          <div style={{ marginTop: "20px", marginBottom: "20px" }}>
+          <div style={{ marginTop: "30px", marginBottom: "30px", flex: "1", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <img
               src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-illustration-Jjr8BYJ3cLy3GfsrVXgqap.webp"
               alt="Starting your project"
               style={{
-                maxWidth: "160px",
+                maxWidth: "220px",
+                width: "100%",
                 height: "auto",
                 margin: "0 auto",
                 display: "block",
@@ -364,21 +365,14 @@ export default function Onboarding() {
             justifyContent: "flex-start",
           }}
         >
-          {/* Progress Indicator */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
-            <div style={{ flex: 1, height: "3px", backgroundColor: "#e0e0e0", borderRadius: "2px", marginRight: "12px" }}>
-              <div style={{ height: "100%", width: "14.28%", backgroundColor: "#D97A6F", borderRadius: "2px", transition: "width 0.3s ease" }} />
-            </div>
-            <span style={{ fontSize: "14px", fontWeight: 600, color: "#666", minWidth: "35px", textAlign: "right" }}>2/14</span>
-          </div>
-
           {/* Illustration */}
-          <div style={{ marginBottom: "24px", textAlign: "center" }}>
+          <div style={{ marginTop: "20px", marginBottom: "32px", flex: "1", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <img
               src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen2-illustration-itsYYxfAWg2Zsd8dZkrh4n.webp"
               alt="Planning and timing"
               style={{
-                maxWidth: "140px",
+                maxWidth: "240px",
+                width: "100%",
                 height: "auto",
                 margin: "0 auto",
                 display: "block",
