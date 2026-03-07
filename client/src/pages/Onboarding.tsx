@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import JourneyBackground from "../components/JourneyBackground";
 
 interface Country {
   id: number;
@@ -43,11 +44,22 @@ export default function Onboarding() {
     Record<string, string>
   >({});
   const [priceData, setPriceData] = useState<any>(null);
+  const brandColors: Record<string, string> = {
+    chocodar: "#6B3F2A",
+    sapooon: "#4A7C59",
+    cleanoosh: "#2C5F8D",
+    shomoo3: "#8B6F47",
+    koohla: "#C85A54",
+    concrete: "#5A5A5A",
+  };
+
   const [brands] = useState([
     { src: "chocodar", name: "Chocodar" },
     { src: "sapooon", name: "Sapooon" },
     { src: "cleanoosh", name: "Cleanoosh" },
     { src: "shomoo3", name: "Shomoo3" },
+    { src: "koohla", name: "Koohla" },
+    { src: "concrete", name: "Concrete" },
     { src: "koohla", name: "Koohla" },
     { src: "concrete", name: "Concrete" },
   ]);
@@ -201,7 +213,9 @@ export default function Onboarding() {
   const progressPercentage = (currentStep / 14) * 100;
 
   return (
-    <div
+    <>
+      <JourneyBackground accentColor={selectedBrand ? (brandColors[selectedBrand] || "#8B7355") : "#8B7355"} />
+      <div
       className="container-fluid bg-light h-[100svh] overflow-y-auto"
       style={{ paddingBottom: "40px" }}
     >
@@ -1963,5 +1977,6 @@ export default function Onboarding() {
         </div>
       )}
     </div>
+    </>
   );
 }
