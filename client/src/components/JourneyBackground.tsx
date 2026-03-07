@@ -38,7 +38,7 @@ export default function JourneyBackground({ accentColor = '#8B7355' }: JourneyBa
               stroke: ${accentColor};
               stroke-width: 2;
               stroke-dasharray: 8, 6;
-              opacity: 0.4;
+              opacity: 0.7;
             }
             .doodle-icon {
               fill: none;
@@ -46,11 +46,11 @@ export default function JourneyBackground({ accentColor = '#8B7355' }: JourneyBa
               stroke-width: 1.5;
               stroke-linecap: round;
               stroke-linejoin: round;
-              opacity: 0.6;
+              opacity: 0.8;
             }
             .decorative-shape {
               fill: ${accentColor};
-              opacity: 0.15;
+              opacity: 0.25;
             }
           `}</style>
         </defs>
