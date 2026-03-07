@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import AnimatedFirstScreen from "../components/AnimatedFirstScreen";
+import AnimatedFirstScreenMobile from "../components/AnimatedFirstScreenMobile";
 
 interface Country {
   id: number;
@@ -44,7 +44,7 @@ export default function Onboarding() {
     Record<string, string>
   >({});
   const [priceData, setPriceData] = useState<any>(null);
-  const journeyBackgroundImage = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/onboarding-journey-bg-feminine-LTtn2FeU6BtBZGJD3hSNJa.webp";
+
   const [brands] = useState([
     { src: "chocodar", name: "Chocodar" },
     { src: "sapooon", name: "Sapooon" },
@@ -204,10 +204,10 @@ export default function Onboarding() {
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100svh" }}>
-      {/* Animated background for screen 1 */}
+      {/* Animated background for screen 1 - Mobile only */}
       {currentStep === 1 && (
-        <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0 }}>
-          <AnimatedFirstScreen backgroundImage={journeyBackgroundImage} />
+        <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0, display: window.innerWidth <= 768 ? "block" : "none" }}>
+          <AnimatedFirstScreenMobile />
         </div>
       )}
       
