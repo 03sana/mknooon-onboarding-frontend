@@ -243,7 +243,7 @@ export default function Onboarding() {
                 style={{
                   height: "100%",
                   width: `${progressPercentage}%`,
-                  backgroundColor: "#2D2D2D",
+                  backgroundColor: "#d97a6f",
                   borderRadius: "2px",
                   transition: "width 0.3s ease",
                 }}
@@ -369,20 +369,20 @@ export default function Onboarding() {
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
           style={{
-            paddingTop: "20px",
-            paddingBottom: "40px",
+            paddingTop: "16px",
+            paddingBottom: "20px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-start",
           }}
         >
           {/* Illustration */}
-          <div style={{ marginTop: "8px", marginBottom: "20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ marginTop: "4px", marginBottom: "12px", display: "flex", alignItems: "center", justifyContent: "center", height: "140px" }}>
             <img
               src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen2-illust_cdf593c1.png"
               alt="Planning and timing"
               style={{
-                maxWidth: "280px",
+                maxWidth: "240px",
                 width: "100%",
                 height: "auto",
                 margin: "0 auto",
@@ -395,11 +395,11 @@ export default function Onboarding() {
           <h2
             className="fw-bold text-dark"
             style={{
-              fontSize: "24px",
+              fontSize: "22px",
               fontWeight: 700,
               textAlign: "right",
-              marginBottom: "28px",
-              lineHeight: "1.4",
+              marginBottom: "16px",
+              lineHeight: "1.3",
             }}
           >
             لو كانت التفاصيل واضحة وسهلة
@@ -507,22 +507,16 @@ export default function Onboarding() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-start",
+            height: "635px",
           }}
         >
-          {/* Progress Indicator */}
-          <div style={{ marginBottom: "24px", textAlign: "right", direction: "rtl" }}>
-            <div style={{ fontSize: "14px", fontWeight: 600, color: "#666", marginBottom: "8px" }}>3/14</div>
-            <div style={{ height: "4px", backgroundColor: "#e0e0e0", borderRadius: "2px", overflow: "hidden" }}>
-              <div style={{ height: "100%", backgroundColor: selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F", width: "21%", borderRadius: "2px" }}></div>
-            </div>
-          </div>
           {/* Illustration */}
-          <div style={{ marginTop: "6px", marginBottom: "14px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ marginTop: "4px", marginBottom: "12px", display: "flex", alignItems: "center", justifyContent: "center", height: "126px" }}>
             <img
               src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen3-illust_a2ce56ee.png"
               alt="Income and financial goals"
               style={{
-                maxWidth: "280px",
+                maxWidth: "300px",
                 width: "100%",
                 height: "auto",
                 margin: "0 auto",
@@ -534,12 +528,12 @@ export default function Onboarding() {
           <h2
             className="fw-bold text-dark"
             style={{
-              fontSize: "24px",
+              fontSize: "22px",
               fontWeight: 700,
               textAlign: "right",
-              marginBottom: "28px",
-              marginTop: "12px",
-              lineHeight: "1.4",
+              marginBottom: "12px",
+              marginTop: "4px",
+              lineHeight: "1.3",
             }}
           >
             لما يبدأ مشروعك بنجح ويحقق إيرادات .. كيف حالة يكون دخله بالنسبة لك؟
@@ -595,26 +589,22 @@ export default function Onboarding() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-start",
+            height: "635px",
           }}
         >
-          {/* Progress Indicator */}
-          <div style={{ marginBottom: "24px", textAlign: "right", direction: "rtl" }}>
-            <div style={{ fontSize: "14px", fontWeight: 600, color: "#666", marginBottom: "8px" }}>4/14</div>
-            <div style={{ height: "4px", backgroundColor: "#e0e0e0", borderRadius: "2px", overflow: "hidden" }}>
-              <div style={{ height: "100%", backgroundColor: selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F", width: "29%", borderRadius: "2px" }}></div>
-            </div>
-          </div>
           {/* Illustration */}
-          <div style={{ marginTop: "6px", marginBottom: "14px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ marginTop: "4px", marginBottom: "12px", display: "flex", alignItems: "center", justifyContent: "center", height: "140px" }}>
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/Clipboard_0_00783489_b450a932.png"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen4_cropped_b474918b.png"
               alt="Main obstacles and challenges"
               style={{
-                maxWidth: "300px",
+                maxWidth: "280px",
                 width: "100%",
                 height: "auto",
                 margin: "0 auto",
                 display: "block",
+                backgroundColor: "transparent",
+                filter: "drop-shadow(0 0 0px rgba(0,0,0,0))",
               }}
             />
           </div>
@@ -622,12 +612,12 @@ export default function Onboarding() {
           <h2
             className="fw-bold text-dark"
             style={{
-              fontSize: "24px",
+              fontSize: "22px",
               fontWeight: 700,
               textAlign: "right",
-              marginBottom: "28px",
-              marginTop: "24px",
-              lineHeight: "1.4",
+              marginBottom: "14px",
+              marginTop: "6px",
+              lineHeight: "1.3",
             }}
           >
             أكثر شيء بتخافي منه لما تفكري تبدي مشروعك ؟
