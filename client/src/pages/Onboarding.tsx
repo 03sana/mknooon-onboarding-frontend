@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import AnimatedFirstScreen from "../components/AnimatedFirstScreen";
 
 interface Country {
   id: number;
@@ -43,6 +44,7 @@ export default function Onboarding() {
     Record<string, string>
   >({});
   const [priceData, setPriceData] = useState<any>(null);
+  const journeyBackgroundImage = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/onboarding-journey-bg-1-ebatYeh5rdY69Mv7m3vMFF.webp";
   const [brands] = useState([
     { src: "chocodar", name: "Chocodar" },
     { src: "sapooon", name: "Sapooon" },
@@ -201,10 +203,18 @@ export default function Onboarding() {
   const progressPercentage = (currentStep / 14) * 100;
 
   return (
-    <div
-      className="container-fluid bg-light h-[100svh] overflow-y-auto"
-      style={{ paddingBottom: "40px" }}
-    >
+    <div style={{ position: "relative", width: "100%", height: "100svh" }}>
+      {/* Animated background for screen 1 */}
+      {currentStep === 1 && (
+        <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0 }}>
+          <AnimatedFirstScreen backgroundImage={journeyBackgroundImage} />
+        </div>
+      )}
+      
+      <div
+        className="container-fluid h-[100svh] overflow-y-auto"
+        style={{ paddingBottom: "40px", backgroundColor: currentStep === 1 ? "transparent" : "#f5f5f5", position: "relative", zIndex: 10 }}
+      >
       {/* Progress Bar - Hidden on Screen 1 and decision screens */}
       {currentStep > 1 && currentStep !== 11 && currentStep !== 15 && (
         <div style={{ paddingTop: "20px", paddingBottom: "20px" }}>
@@ -1962,6 +1972,7 @@ export default function Onboarding() {
           </motion.button>
         </div>
       )}
+      </div>
     </div>
   );
 }
