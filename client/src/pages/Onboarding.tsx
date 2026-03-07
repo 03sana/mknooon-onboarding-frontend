@@ -243,7 +243,7 @@ export default function Onboarding() {
                 style={{
                   height: "100%",
                   width: `${progressPercentage}%`,
-                  backgroundColor: "#2D2D2D",
+                  backgroundColor: "#d97a6f",
                   borderRadius: "2px",
                   transition: "width 0.3s ease",
                 }}
@@ -270,25 +270,41 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center d-flex flex-column justify-content-between h-[100svh]"
-          style={{ paddingTop: "60px", paddingBottom: "60px" }}
+          style={{ paddingTop: "24px", paddingBottom: "74px", height: "610px" }}
         >
-          <div className="mb-3">
+          {/* App Name */}
+          <div>
             <h1
               className="fw-bold text-dark"
-              style={{ fontSize: "18px", fontWeight: 800, marginBottom: "0" }}
+              style={{ fontSize: "20px", fontWeight: 800, marginBottom: "0" }}
             >
               Mknooon
             </h1>
           </div>
-
-          <div className="flex-grow-1 d-flex flex-column justify-content-center">
-            <h2
-              className="fw-bold text-dark mb-4"
+          {/* Illustration */}
+          <div style={{ marginTop: "8px", marginBottom: "12px", display: "flex", alignItems: "center", justifyContent: "center", height: "187px", marginRight: "12px", marginLeft: "-16px" }}>
+            <img
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-illust_f92c73f6.png"
+              alt="Starting your project"
               style={{
-                fontSize: "36px",
+                maxWidth: "260px",
+                width: "100%",
+                height: "auto",
+                margin: "0 auto",
+                display: "block",
+              }}
+            />
+          </div>
+          {/* Title and Subtitle */}
+          <div style={{ marginBottom: "16px" }}>
+            <h2
+              className="fw-bold text-dark"
+              style={{
+                fontSize: "28px",
                 lineHeight: "1.2",
                 fontWeight: 800,
                 letterSpacing: "-0.5px",
+                marginBottom: "8px",
               }}
             >
               رحلتك لإطلاق
@@ -296,42 +312,49 @@ export default function Onboarding() {
               مشروعك تبدأ الآن
             </h2>
             <p
-              className="text-muted mb-2"
               style={{
-                fontSize: "16px",
+                fontSize: "15px",
                 lineHeight: "1.6",
                 color: "#666",
-                fontWeight: 600,
+                fontWeight: 500,
+                marginBottom: "8px",
               }}
             >
               3 دقائق فقط... وتعرّفي فيها ..
             </p>
             <p
-              className="text-muted mb-6"
               style={{
-                fontSize: "16px",
+                fontSize: "15px",
                 lineHeight: "1.6",
                 color: "#666",
-                fontWeight: 600,
+                fontWeight: 500,
               }}
             >
-              هل انت جاهزة لإطلاق مشروعك ؟
+              هل أنت جاهزة لإطلاق مشروعك ؟
             </p>
           </div>
-
+          {/* CTA Button and Social Proof */}
           <div>
             <motion.button
               onClick={handleContinue}
-              className="btn btn-dark fw-bold py-3 px-5"
-              style={{ borderRadius: "12px", fontSize: "16px", width: "100%" }}
+              className="fw-bold"
+              style={{
+                borderRadius: "12px",
+                fontSize: "16px",
+                width: "100%",
+                height: "52px",
+                backgroundColor: selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F",
+                color: "white",
+                border: "none",
+                fontWeight: 700,
+              }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               تعرفي على الفرصة
             </motion.button>
             <p
-              className="text-muted mt-4"
-              style={{ fontSize: "14px", color: "#999" }}
+              style={{ fontSize: "13px", color: "#999", marginTop: "16px", marginBottom: "0" }}
             >
               أكثر من 11000 امرأة بدأت رحلتها
             </p>
@@ -346,78 +369,129 @@ export default function Onboarding() {
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
           style={{
-            paddingBottom: "40px",
+            paddingTop: "16px",
+            paddingBottom: "20px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-start",
           }}
         >
+          {/* Illustration */}
+          <div style={{ marginTop: "4px", marginBottom: "12px", display: "flex", alignItems: "center", justifyContent: "center", height: "140px" }}>
+            <img
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen2-illust_cdf593c1.png"
+              alt="Planning and timing"
+              style={{
+                maxWidth: "240px",
+                width: "100%",
+                height: "auto",
+                margin: "0 auto",
+                display: "block",
+              }}
+            />
+          </div>
+
+          {/* Question Text */}
           <h2
-            className="fw-bold text-dark mb-4"
-            style={{ fontSize: "28px", fontWeight: 700, textAlign: "right" }}
+            className="fw-bold text-dark"
+            style={{
+              fontSize: "22px",
+              fontWeight: 700,
+              textAlign: "right",
+              marginBottom: "16px",
+              lineHeight: "1.3",
+            }}
           >
             لو كانت التفاصيل واضحة وسهلة
             <br />
             ...متى حابة تطلقي مشروعك؟
           </h2>
-          <div className="d-flex flex-column gap-2">
+
+          {/* Option Cards */}
+          <div className="d-flex flex-column gap-3">
             <motion.button
               onClick={() => {
                 handleAnswer(2, "خلال 30 يوم");
                 handleContinue();
               }}
-              className={`btn py-3 fw-bold text-end ${answers[2] === "خلال 30 يوم" ? "btn-dark" : "btn-outline-dark"}`}
               style={{
+                padding: "16px 16px",
                 borderRadius: "12px",
                 textAlign: "right",
-                fontSize: "16px",
+                fontSize: "15px",
                 direction: "rtl",
                 display: "block",
                 width: "100%",
+                border: answers[2] === "خلال 30 يوم" ? "2px solid #D97A6F" : "1px solid #e0e0e0",
+                backgroundColor: answers[2] === "خلال 30 يوم" ? "#FFF5F3" : "white",
+                color: answers[2] === "خلال 30 يوم" ? "#D97A6F" : "#333",
+                fontWeight: 600,
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+                boxShadow: answers[2] === "خلال 30 يوم" ? "0 2px 8px rgba(217, 122, 111, 0.15)" : "0 1px 3px rgba(0,0,0,0.05)",
               }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <span style={{ marginLeft: "8px" }}>✨</span>
+              <span style={{ marginLeft: "8px" }}>🚀</span>
               خلال 30 يوم
+              <div style={{ fontSize: "13px", fontWeight: 500, color: answers[2] === "خلال 30 يوم" ? "#D97A6F" : "#999", marginTop: "4px" }}>ابدئي بسرعة</div>
             </motion.button>
             <motion.button
               onClick={() => {
                 handleAnswer(2, "خلال 2-3 أشهر");
                 handleContinue();
               }}
-              className={`btn py-3 fw-bold text-end ${answers[2] === "خلال 2-3 أشهر" ? "btn-dark" : "btn-outline-dark"}`}
               style={{
+                padding: "16px 16px",
                 borderRadius: "12px",
                 textAlign: "right",
-                fontSize: "16px",
+                fontSize: "15px",
                 direction: "rtl",
                 display: "block",
                 width: "100%",
+                border: answers[2] === "خلال 2-3 أشهر" ? "2px solid #D97A6F" : "1px solid #e0e0e0",
+                backgroundColor: answers[2] === "خلال 2-3 أشهر" ? "#FFF5F3" : "white",
+                color: answers[2] === "خلال 2-3 أشهر" ? "#D97A6F" : "#333",
+                fontWeight: 600,
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+                boxShadow: answers[2] === "خلال 2-3 أشهر" ? "0 2px 8px rgba(217, 122, 111, 0.15)" : "0 1px 3px rgba(0,0,0,0.05)",
               }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
+              <span style={{ marginLeft: "8px" }}>📅</span>
               خلال 2-3 أشهر
+              <div style={{ fontSize: "13px", fontWeight: 500, color: answers[2] === "خلال 2-3 أشهر" ? "#D97A6F" : "#999", marginTop: "4px" }}>تخطيط بهدوء</div>
             </motion.button>
             <motion.button
               onClick={() => {
                 handleAnswer(2, "ما زلت أستكشف الفكرة");
                 handleContinue();
               }}
-              className={`btn py-3 fw-bold text-end ${answers[2] === "ما زلت أستكشف الفكرة" ? "btn-dark" : "btn-outline-dark"}`}
               style={{
+                padding: "16px 16px",
                 borderRadius: "12px",
                 textAlign: "right",
-                fontSize: "16px",
+                fontSize: "15px",
                 direction: "rtl",
                 display: "block",
                 width: "100%",
+                border: answers[2] === "ما زلت أستكشف الفكرة" ? "2px solid #D97A6F" : "1px solid #e0e0e0",
+                backgroundColor: answers[2] === "ما زلت أستكشف الفكرة" ? "#FFF5F3" : "white",
+                color: answers[2] === "ما زلت أستكشف الفكرة" ? "#D97A6F" : "#333",
+                fontWeight: 600,
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+                boxShadow: answers[2] === "ما زلت أستكشف الفكرة" ? "0 2px 8px rgba(217, 122, 111, 0.15)" : "0 1px 3px rgba(0,0,0,0.05)",
               }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
+              <span style={{ marginLeft: "8px" }}>💡</span>
               ما زلت أستكشف الفكرة
+              <div style={{ fontSize: "13px", fontWeight: 500, color: answers[2] === "ما زلت أستكشف الفكرة" ? "#D97A6F" : "#999", marginTop: "4px" }}>أبحث عن الإلهام</div>
             </motion.button>
           </div>
         </motion.div>
@@ -428,95 +502,163 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-end"
-          style={{ paddingBottom: "40px" }}
+          style={{
+            paddingBottom: "40px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            height: "635px",
+          }}
         >
+          {/* Illustration */}
+          <div style={{ marginTop: "4px", marginBottom: "12px", display: "flex", alignItems: "center", justifyContent: "center", height: "126px" }}>
+            <img
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen3-illust_a2ce56ee.png"
+              alt="Income and financial goals"
+              style={{
+                maxWidth: "300px",
+                width: "100%",
+                height: "auto",
+                margin: "0 auto",
+                display: "block",
+              }}
+            />
+          </div>
+          {/* Question Text */}
           <h2
-            className="fw-bold text-dark mb-4"
+            className="fw-bold text-dark"
             style={{
-              fontSize: "24px",
+              fontSize: "22px",
               fontWeight: 700,
               textAlign: "right",
-              lineHeight: "1.5",
+              marginBottom: "12px",
+              marginTop: "4px",
+              lineHeight: "1.3",
             }}
           >
             لما يبدأ مشروعك بنجح ويحقق إيرادات .. كيف حالة يكون دخله بالنسبة لك؟
           </h2>
-          <div className="d-flex flex-column gap-2">
+          {/* Option Cards */}
+          <div className="d-flex flex-column gap-3">
             {[
-              "يغطي مصاريفي الشخصية",
-              "يساعدني في دعم عائلتي",
-              "يكون مشروع العمر",
+              { emoji: "💰", title: "يغطي مصاريفي الشخصية", subtitle: "استقلالية مالية" },
+              { emoji: "👨‍👩‍👧", title: "يساعدني في دعم عائلتي", subtitle: "دعم الأحبة" },
+              { emoji: "🎯", title: "يكون مشروع العمر", subtitle: "حلم كبير" },
             ].map(option => (
               <motion.button
-                key={option}
+                key={option.title}
                 onClick={() => {
-                  handleAnswer(3, option);
+                  handleAnswer(3, option.title);
                   handleContinue();
                 }}
-                className={`btn py-3 fw-bold text-end ${answers[3] === option ? "btn-dark" : "btn-outline-dark"}`}
                 style={{
+                  padding: "16px 16px",
                   borderRadius: "12px",
                   textAlign: "right",
+                  fontSize: "15px",
                   direction: "rtl",
                   display: "block",
                   width: "100%",
+                  border: answers[3] === option.title ? "2px solid " + (selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F") : "1px solid #e0e0e0",
+                  backgroundColor: answers[3] === option.title ? "#FFF5F3" : "white",
+                  color: answers[3] === option.title ? (selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F") : "#333",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  transition: "all 0.2s ease",
+                  boxShadow: answers[3] === option.title ? "0 2px 8px rgba(217, 122, 111, 0.15)" : "0 1px 3px rgba(0,0,0,0.05)",
                 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                {option}
+                <span style={{ marginLeft: "8px" }}>{option.emoji}</span>
+                {option.title}
+                <div style={{ fontSize: "13px", fontWeight: 500, color: answers[3] === option.title ? (selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F") : "#999", marginTop: "4px" }}>{option.subtitle}</div>
               </motion.button>
             ))}
           </div>
         </motion.div>
       )}
 
-      {/* Screen 4: Experience Level */}
+       {/* Screen 4: Main Obstacle */}
       {currentStep === 4 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-end"
-          style={{ paddingBottom: "40px" }}
+          style={{
+            paddingBottom: "40px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            height: "636px",
+          }}
         >
+          {/* Illustration */}
+          <div style={{ marginTop: "4px", marginBottom: "12px", display: "flex", alignItems: "center", justifyContent: "center", height: "140px" }}>
+            <img
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen4_cropped_b474918b.png"
+              alt="Main obstacles and challenges"
+              style={{
+                maxWidth: "280px",
+                width: "100%",
+                height: "auto",
+                margin: "0 auto",
+                display: "block",
+                backgroundColor: "transparent",
+                filter: "drop-shadow(0 0 0px rgba(0,0,0,0))",
+              }}
+            />
+          </div>
+          {/* Question Text */}
           <h2
-            className="fw-bold text-dark mb-4"
+            className="fw-bold text-dark"
             style={{
-              fontSize: "24px",
+              fontSize: "22px",
               fontWeight: 700,
               textAlign: "right",
-              lineHeight: "1.5",
+              marginBottom: "14px",
+              marginTop: "6px",
+              lineHeight: "1.3",
             }}
           >
-            أكثر شيء يتخافي منه لما تفكري تبدي مشروعك ؟
+            أكثر شيء بتخافي منه لما تفكري تبدي مشروعك ؟
           </h2>
+          {/* Option Cards */}
           <div className="d-flex flex-column gap-3">
             {[
-              "ما أعرف من وين أبدأ",
-              "ما أعرف أماكن بيع المواد الخام",
-              "ما أعرف أسعر وأسوق صح",
-              "ما أعرف أبيع وأحقق أرباح",
-              "جميع ما ذكر",
+              { emoji: "🤔", title: "ما أعرف من وين أبدأ", subtitle: "البداية الصحيحة" },
+              { emoji: "📦", title: "ما أعرف أماكن بيع المواد الخام", subtitle: "توفر المواد" },
+              { emoji: "💰", title: "ما أعرف أسعر وأسوق صح", subtitle: "التسعير والتسويق" },
+              { emoji: "📈", title: "ما أعرف أبيع وأحقق أرباح", subtitle: "المبيعات والأرباح" },
+              { emoji: "⚠️", title: "جميع ما ذكر", subtitle: "كل الخوف" },
             ].map(option => (
               <motion.button
-                key={option}
+                key={option.title}
                 onClick={() => {
-                  handleAnswer(4, option);
+                  handleAnswer(4, option.title);
                   handleContinue();
                 }}
-                className={`btn py-3 fw-bold text-end ${answers[4] === option ? "btn-dark" : "btn-outline-dark"}`}
                 style={{
+                  padding: "16px 16px",
                   borderRadius: "12px",
                   textAlign: "right",
+                  fontSize: "15px",
                   direction: "rtl",
                   display: "block",
                   width: "100%",
+                  border: answers[4] === option.title ? "2px solid " + (selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F") : "1px solid #e0e0e0",
+                  backgroundColor: answers[4] === option.title ? "#FFF5F3" : "white",
+                  color: answers[4] === option.title ? (selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F") : "#333",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  transition: "all 0.2s ease",
+                  boxShadow: answers[4] === option.title ? "0 2px 8px rgba(217, 122, 111, 0.15)" : "0 1px 3px rgba(0,0,0,0.05)",
                 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                {option}
+                <span style={{ marginLeft: "8px" }}>{option.emoji}</span>
+                {option.title}
+                <div style={{ fontSize: "13px", fontWeight: 500, color: answers[4] === option.title ? (selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F") : "#999", marginTop: "4px" }}>{option.subtitle}</div>
               </motion.button>
             ))}
           </div>
@@ -528,77 +670,98 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-end"
-          style={{ paddingTop: "0px", paddingBottom: "40px" }}
+          style={{
+            paddingBottom: "40px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+          }}
         >
+          {/* Question Text */}
           <h2
-            className="fw-bold text-dark mb-4"
+            className="fw-bold text-dark"
             style={{
-              fontSize: "24px",
+              fontSize: "22px",
               fontWeight: 700,
               textAlign: "right",
-              lineHeight: "1.5",
+              marginBottom: "28px",
+              marginTop: "0px",
+              lineHeight: "1.4",
             }}
           >
             طبيعي يكون عندك هاي المخاوف 🤍
           </h2>
           <p
             className="text-muted mb-4"
-            style={{ fontSize: "14px", textAlign: "right", direction: "rtl" }}
+            style={{ fontSize: "14px", textAlign: "right", direction: "rtl", marginTop: "-24px", marginBottom: "13px" }}
           >
             لذلك فرقنا يكون معك خطوة بخطوة في:
           </p>
-          <div className="d-flex flex-column gap-3">
+          {/* Checklist Items */}
+          <div className="d-flex flex-column gap-3" style={{ marginBottom: "0px" }}>
             {[
-              "كيف تبدي",
-              "من وين توفري المواد الخام",
-              "كيف تسعري منتجاتك",
-              "كيف تصويرهم باحترافية",
-              "كيف تسوقي على السوشال ميديا",
-              "كيف تجيبي أول طلبية فعلية",
+              { emoji: "🎯", title: "كيف تبدي" },
+              { emoji: "📦", title: "من وين توفري المواد الخام" },
+              { emoji: "💰", title: "كيف تسعري منتجاتك" },
+              { emoji: "📸", title: "كيف تصوريهم باحترافية" },
+              { emoji: "📱", title: "كيف تسوقي على السوشال ميديا" },
+              { emoji: "🛒", title: "كيف تجيبي أول طلبية" },
             ].map((item, idx) => (
               <motion.div
                 key={idx}
-                className="d-flex align-items-center gap-3"
-                style={{ direction: "rtl" }}
+                style={{
+                  padding: "12px 16px",
+                  textAlign: "right",
+                  fontSize: "15px",
+                  direction: "rtl",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  width: "100%",
+                  backgroundColor: "#f5f5f5",
+                  borderRadius: "12px",
+                }}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: idx * 0.1 }}
               >
                 <div
                   style={{
-                    width: "32px",
-                    height: "32px",
+                    width: "28px",
+                    height: "28px",
                     borderRadius: "50%",
-                    backgroundColor: "#8B7355",
+                    backgroundColor: selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     flexShrink: 0,
+                    color: "white",
+                    fontSize: "14px",
+                    fontWeight: "bold",
                   }}
                 >
-                  <span style={{ color: "white", fontSize: "18px" }}>✓</span>
+                  ✓
                 </div>
-                <span
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: 500,
-                    textAlign: "right",
-                    flex: 1,
-                  }}
-                >
-                  {item}
-                </span>
+                <div style={{ flex: 1 }}>
+                  <span style={{ fontWeight: 600, color: "#333" }}>{item.title} {item.emoji}</span>
+                </div>
               </motion.div>
             ))}
           </div>
+          {/* Continue Button */}
           <motion.button
             onClick={() => handleContinue()}
-            className="btn btn-dark fw-bold w-100 mt-5"
             style={{
+              padding: "14px 24px",
               borderRadius: "12px",
-              padding: "12px 20px",
               fontSize: "16px",
+              fontWeight: 600,
+              border: "none",
+              backgroundColor: selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F",
+              color: "white",
+              cursor: "pointer",
+              width: "100%",
+              transition: "all 0.2s ease",
             }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
