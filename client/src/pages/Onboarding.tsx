@@ -217,7 +217,7 @@ export default function Onboarding() {
       <JourneyBackground accentColor={selectedBrand ? (brandColors[selectedBrand] || "#8B7355") : "#8B7355"} />
       <div
       className="container-fluid bg-light h-[100svh] overflow-y-auto"
-      style={{ paddingBottom: "40px" }}
+      style={{ paddingBottom: "40px", position: "relative", zIndex: 10 }}
     >
       {/* Progress Bar - Hidden on Screen 1 and decision screens */}
       {currentStep > 1 && currentStep !== 11 && currentStep !== 15 && (

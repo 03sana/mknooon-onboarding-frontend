@@ -13,9 +13,10 @@ export default function JourneyBackground({ accentColor = '#8B7355' }: JourneyBa
         left: 0,
         width: '100%',
         height: '100%',
-        zIndex: -1,
+        zIndex: 0,
         overflow: 'hidden',
         backgroundColor: '#FAFAF8',
+        pointerEvents: 'none',
       }}
     >
       <svg
