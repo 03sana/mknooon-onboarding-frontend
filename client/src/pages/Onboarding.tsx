@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import AnimatedFirstScreenMobile from "../components/AnimatedFirstScreenMobile";
+import WelcomeScreen from "../components/WelcomeScreen";
 
 interface Country {
   id: number;
@@ -204,12 +204,7 @@ export default function Onboarding() {
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100svh" }}>
-      {/* Animated background for screen 1 - Mobile only */}
-      {currentStep === 1 && (
-        <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0, display: window.innerWidth <= 768 ? "block" : "none" }}>
-          <AnimatedFirstScreenMobile />
-        </div>
-      )}
+      {/* Screen 1 - Welcome Screen */}
       
       <div
         className="container-fluid h-[100svh] overflow-y-auto"
@@ -260,79 +255,9 @@ export default function Onboarding() {
         </div>
       )}
 
-      {/* Screen 1: Entry */}
+      {/* Screen 1: Welcome Screen */}
       {currentStep === 1 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center d-flex flex-column justify-content-between h-[100svh]"
-          style={{ paddingTop: "60px", paddingBottom: "60px" }}
-        >
-          <div className="mb-3">
-            <h1
-              className="fw-bold text-dark"
-              style={{ fontSize: "18px", fontWeight: 800, marginBottom: "0" }}
-            >
-              Mknooon
-            </h1>
-          </div>
-
-          <div className="flex-grow-1 d-flex flex-column justify-content-center">
-            <h2
-              className="fw-bold text-dark mb-4"
-              style={{
-                fontSize: "36px",
-                lineHeight: "1.2",
-                fontWeight: 800,
-                letterSpacing: "-0.5px",
-              }}
-            >
-              رحلتك لإطلاق
-              <br />
-              مشروعك تبدأ الآن
-            </h2>
-            <p
-              className="text-muted mb-2"
-              style={{
-                fontSize: "16px",
-                lineHeight: "1.6",
-                color: "#666",
-                fontWeight: 600,
-              }}
-            >
-              3 دقائق فقط... وتعرّفي فيها ..
-            </p>
-            <p
-              className="text-muted mb-6"
-              style={{
-                fontSize: "16px",
-                lineHeight: "1.6",
-                color: "#666",
-                fontWeight: 600,
-              }}
-            >
-              هل انت جاهزة لإطلاق مشروعك ؟
-            </p>
-          </div>
-
-          <div>
-            <motion.button
-              onClick={handleContinue}
-              className="btn btn-dark fw-bold py-3 px-5"
-              style={{ borderRadius: "12px", fontSize: "16px", width: "100%" }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              تعرفي على الفرصة
-            </motion.button>
-            <p
-              className="text-muted mt-4"
-              style={{ fontSize: "14px", color: "#999" }}
-            >
-              أكثر من 11000 امرأة بدأت رحلتها
-            </p>
-          </div>
-        </motion.div>
+        <WelcomeScreen onContinue={handleContinue} selectedBrand={selectedBrand} />
       )}
 
       {/* Screen 2: Launch Timing */}
