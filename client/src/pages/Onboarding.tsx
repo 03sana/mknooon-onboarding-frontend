@@ -589,7 +589,7 @@ export default function Onboarding() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-start",
-            height: "635px",
+            height: "636px",
           }}
         >
           {/* Illustration */}
@@ -677,18 +677,11 @@ export default function Onboarding() {
             justifyContent: "flex-start",
           }}
         >
-          {/* Progress Indicator */}
-          <div style={{ marginBottom: "24px", textAlign: "right", direction: "rtl" }}>
-            <div style={{ fontSize: "14px", fontWeight: 600, color: "#666", marginBottom: "8px" }}>5/14</div>
-            <div style={{ height: "4px", backgroundColor: "#e0e0e0", borderRadius: "2px", overflow: "hidden" }}>
-              <div style={{ height: "100%", backgroundColor: selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F", width: "36%", borderRadius: "2px" }}></div>
-            </div>
-          </div>
           {/* Question Text */}
           <h2
             className="fw-bold text-dark"
             style={{
-              fontSize: "24px",
+              fontSize: "22px",
               fontWeight: 700,
               textAlign: "right",
               marginBottom: "28px",
@@ -700,12 +693,12 @@ export default function Onboarding() {
           </h2>
           <p
             className="text-muted mb-4"
-            style={{ fontSize: "14px", textAlign: "right", direction: "rtl", marginBottom: "24px" }}
+            style={{ fontSize: "14px", textAlign: "right", direction: "rtl", marginTop: "-24px", marginBottom: "13px" }}
           >
             لذلك فرقنا يكون معك خطوة بخطوة في:
           </p>
           {/* Checklist Items */}
-          <div className="d-flex flex-column gap-3" style={{ marginBottom: "32px" }}>
+          <div className="d-flex flex-column gap-3" style={{ marginBottom: "0px" }}>
             {[
               { emoji: "🎯", title: "كيف تبدي" },
               { emoji: "📦", title: "من وين توفري المواد الخام" },
@@ -717,7 +710,7 @@ export default function Onboarding() {
               <motion.div
                 key={idx}
                 style={{
-                  padding: "12px 0",
+                  padding: "12px 16px",
                   textAlign: "right",
                   fontSize: "15px",
                   direction: "rtl",
@@ -725,6 +718,8 @@ export default function Onboarding() {
                   alignItems: "center",
                   gap: "12px",
                   width: "100%",
+                  backgroundColor: "#f5f5f5",
+                  borderRadius: "12px",
                 }}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
