@@ -271,7 +271,7 @@ export default function Onboarding() {
           {/* Illustration */}
           <div style={{ marginTop: "30px", marginBottom: "30px", flex: "1", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-illust_a3127557.png"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-illust_f92c73f6.png"
               alt="Starting your project"
               style={{
                 maxWidth: "220px",
@@ -368,7 +368,7 @@ export default function Onboarding() {
           {/* Illustration */}
           <div style={{ marginTop: "20px", marginBottom: "32px", flex: "1", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen2-illust_3c6cc08b.png"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen2-illust_cdf593c1.png"
               alt="Planning and timing"
               style={{
                 maxWidth: "240px",
