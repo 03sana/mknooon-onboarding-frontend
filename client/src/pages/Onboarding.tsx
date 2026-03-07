@@ -44,7 +44,7 @@ export default function Onboarding() {
     Record<string, string>
   >({});
   const [priceData, setPriceData] = useState<any>(null);
-  const journeyBackgroundImage = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/onboarding-journey-bg-1-ebatYeh5rdY69Mv7m3vMFF.webp";
+  const journeyBackgroundImage = "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/onboarding-journey-bg-feminine-LTtn2FeU6BtBZGJD3hSNJa.webp";
   const [brands] = useState([
     { src: "chocodar", name: "Chocodar" },
     { src: "sapooon", name: "Sapooon" },
