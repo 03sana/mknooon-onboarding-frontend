@@ -755,7 +755,7 @@ export default function Onboarding() {
               fontSize: "16px",
               fontWeight: 600,
               border: "none",
-              backgroundColor: selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F",
+              backgroundColor: "#d97a6f",
               color: "white",
               cursor: "pointer",
               width: "100%",
