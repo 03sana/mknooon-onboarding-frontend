@@ -270,7 +270,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center d-flex flex-column justify-content-between h-[100svh]"
-          style={{ paddingTop: "40px", paddingBottom: "40px" }}
+          style={{ paddingTop: "24px", paddingBottom: "74px", height: "610px" }}
         >
           {/* App Name */}
           <div>
@@ -282,12 +282,12 @@ export default function Onboarding() {
             </h1>
           </div>
           {/* Illustration */}
-          <div style={{ marginTop: "12px", marginBottom: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ marginTop: "8px", marginBottom: "12px", display: "flex", alignItems: "center", justifyContent: "center", height: "187px", marginRight: "12px", marginLeft: "-16px" }}>
             <img
               src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-illust_f92c73f6.png"
               alt="Starting your project"
               style={{
-                maxWidth: "200px",
+                maxWidth: "260px",
                 width: "100%",
                 height: "auto",
                 margin: "0 auto",
@@ -296,15 +296,15 @@ export default function Onboarding() {
             />
           </div>
           {/* Title and Subtitle */}
-          <div style={{ marginBottom: "28px" }}>
+          <div style={{ marginBottom: "16px" }}>
             <h2
               className="fw-bold text-dark"
               style={{
-                fontSize: "32px",
-                lineHeight: "1.3",
+                fontSize: "28px",
+                lineHeight: "1.2",
                 fontWeight: 800,
                 letterSpacing: "-0.5px",
-                marginBottom: "12px",
+                marginBottom: "8px",
               }}
             >
               رحلتك لإطلاق
@@ -382,7 +382,7 @@ export default function Onboarding() {
               src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen2-illust_cdf593c1.png"
               alt="Planning and timing"
               style={{
-                maxWidth: "220px",
+                maxWidth: "280px",
                 width: "100%",
                 height: "auto",
                 margin: "0 auto",
@@ -517,12 +517,12 @@ export default function Onboarding() {
             </div>
           </div>
           {/* Illustration */}
-          <div style={{ marginTop: "8px", marginBottom: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ marginTop: "6px", marginBottom: "14px", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <img
               src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen3-illust_a2ce56ee.png"
               alt="Income and financial goals"
               style={{
-                maxWidth: "220px",
+                maxWidth: "280px",
                 width: "100%",
                 height: "auto",
                 margin: "0 auto",
@@ -605,12 +605,12 @@ export default function Onboarding() {
             </div>
           </div>
           {/* Illustration */}
-          <div style={{ marginTop: "8px", marginBottom: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ marginTop: "6px", marginBottom: "14px", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <img
               src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/Clipboard_0_00783489_b450a932.png"
               alt="Main obstacles and challenges"
               style={{
-                maxWidth: "260px",
+                maxWidth: "300px",
                 width: "100%",
                 height: "auto",
                 margin: "0 auto",
