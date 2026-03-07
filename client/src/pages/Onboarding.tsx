@@ -381,7 +381,7 @@ export default function Onboarding() {
             {/* Illustration */}
             <div style={{ marginTop: "0px", marginBottom: "0px", display: "flex", alignItems: "center", justifyContent: "center", minHeight: "auto" }}>
               <img
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/Clipboard_0_59ADE9C4_b3a7b871.png"
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/Clipboard_0_00783489_b450a932.png"
                 alt="Main obstacles and challenges"
                 style={{
                   maxWidth: "300px",
