@@ -66,14 +66,24 @@ export default function Onboarding() {
   
   const selectedBrand = getBrandFromUrl();
 
-  // Fetch countries on component mount
+  // Fetch countries when brand is selected
   useEffect(() => {
     const fetchCountries = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_BASE_URL}/countries-list`);
-        const data = await response.json();
-        setCountries(data);
+        if (selectedBrand) {
+          // Fetch brand-specific countries with updated currency data
+          const response = await fetch(`${API_BASE_URL}/countries?src=${selectedBrand}&t=${new Date().getTime()}`);
+          const data = await response.json();
+          if (data.data && data.data.countries) {
+            setCountries(data.data.countries);
+          }
+        } else {
+          // Fallback to countries list if no brand selected
+          const response = await fetch(`${API_BASE_URL}/countries-list`);
+          const data = await response.json();
+          setCountries(data);
+        }
       } catch (error) {
         console.error('Error fetching countries:', error);
       } finally {
@@ -81,7 +91,7 @@ export default function Onboarding() {
       }
     };
     fetchCountries();
-  }, []);
+  }, [selectedBrand]);
 
   // Fetch payment methods when country is selected
   useEffect(() => {
@@ -106,11 +116,16 @@ export default function Onboarding() {
   useEffect(() => {
     if (selectedCountry && selectedBrand) {
       const fetchPrice = async () => {
+        console.log("Fetching price for:", selectedBrand, selectedCountry?.code);
         try {
           const response = await fetch(`${API_BASE_URL}/price?src=${selectedBrand}&country=${selectedCountry.code}&t=${new Date().getTime()}`);
           const data = await response.json();
           if (data.data) {
+            console.log("Price data received:", data.data);
             setPriceData(data.data);
+            console.log("Price state updated to:", data.data.price);
+          } else {
+            console.log("No data in response:", data);
           }
         } catch (error) {
           console.error('Error fetching price:', error);
