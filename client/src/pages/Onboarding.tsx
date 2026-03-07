@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import JourneyBackground from "../components/JourneyBackground";
 
 interface Country {
   id: number;
@@ -214,7 +213,6 @@ export default function Onboarding() {
 
   return (
     <>
-      <JourneyBackground accentColor={selectedBrand ? (brandColors[selectedBrand] || "#8B7355") : "#8B7355"} />
       <div
       className="container-fluid bg-light h-[100svh] overflow-y-auto"
       style={{ paddingBottom: "40px", position: "relative", zIndex: 10 }}
