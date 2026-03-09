@@ -293,15 +293,15 @@ export default function Onboarding() {
           </div>
 
           {/* Title and Subtitle */}
-          <div style={{ marginBottom: "16px" }}>
+          <div style={{ marginBottom: "12px" }}>
             <h2
               className="fw-bold text-dark"
               style={{
-                fontSize: "28px",
-                lineHeight: "1.2",
+                fontSize: "24px",
+                lineHeight: "1.3",
                 fontWeight: 800,
                 letterSpacing: "-0.5px",
-                marginBottom: "8px",
+                marginBottom: "6px",
               }}
             >
               رحلتك لإطلاق
@@ -310,19 +310,19 @@ export default function Onboarding() {
             </h2>
             <p
               style={{
-                fontSize: "15px",
-                lineHeight: "1.6",
+                fontSize: "13px",
+                lineHeight: "1.4",
                 color: "#666",
                 fontWeight: 500,
-                marginBottom: "8px",
+                marginBottom: "4px",
               }}
             >
               3 دقائق فقط... وتعرّفي فيها ..
             </p>
             <p
               style={{
-                fontSize: "15px",
-                lineHeight: "1.6",
+                fontSize: "13px",
+                lineHeight: "1.4",
                 color: "#666",
                 fontWeight: 500,
               }}
@@ -337,9 +337,9 @@ export default function Onboarding() {
               className="fw-bold"
               style={{
                 borderRadius: "12px",
-                fontSize: "16px",
-                width: "100%",
-                height: "52px",
+                fontSize: "15px",
+                width: "85%",
+                height: "48px",
                 backgroundColor: "#d97a6f",
                 color: "white",
                 border: "none",
@@ -351,7 +351,7 @@ export default function Onboarding() {
               تعرفي على الفرصة
             </motion.button>
             <p
-              style={{ fontSize: "13px", color: "#999", marginTop: "16px", marginBottom: "0" }}
+              style={{ fontSize: "12px", color: "#999", marginTop: "12px", marginBottom: "0" }}
             >
               أكثر من 11000 امرأة بدأت رحلتها
             </p>
