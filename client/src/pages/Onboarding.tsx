@@ -1800,7 +1800,6 @@ export default function Onboarding() {
             justifyContent: "center",
             alignItems: "center",
             padding: "20px",
-            minHeight: "100vh",
           }}
         >
           <div
@@ -2313,11 +2312,11 @@ export default function Onboarding() {
                         "_blank"
                       );
                     }}
-                    className="btn fw-bold w-100 mt-4"
+                    className="btn fw-bold mt-4"
                     style={{
                       borderRadius: "12px",
-                      padding: "12px 20px",
-                      fontSize: "16px",
+                      padding: "12px 16px",
+                      fontSize: "14px",
                       backgroundColor: "#25D366",
                       color: "#fff",
                       border: "none",
@@ -2325,6 +2324,8 @@ export default function Onboarding() {
                       alignItems: "center",
                       justifyContent: "center",
                       gap: "8px",
+                      width: "100%",
+                      boxSizing: "border-box",
                     }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -2349,11 +2350,11 @@ export default function Onboarding() {
                         "_blank"
                       );
                     }}
-                    className="btn fw-bold w-100 mt-4"
+                    className="btn fw-bold mt-4"
                     style={{
                       borderRadius: "12px",
-                      padding: "12px 20px",
-                      fontSize: "16px",
+                      padding: "12px 16px",
+                      fontSize: "14px",
                       backgroundColor: "#25D366",
                       color: "#fff",
                       border: "none",
@@ -2361,6 +2362,8 @@ export default function Onboarding() {
                       alignItems: "center",
                       justifyContent: "center",
                       gap: "8px",
+                      width: "100%",
+                      boxSizing: "border-box",
                     }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
