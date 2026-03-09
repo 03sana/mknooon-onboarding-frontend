@@ -1579,8 +1579,11 @@ export default function Onboarding() {
                 flexDirection: "column",
                 gap: "12px",
                 width: "100%",
+                maxWidth: "400px",
+                margin: "0 auto",
               }}
             >
+              {/* Primary Button - Subscribe Now */}
               <motion.button
                 onClick={() => setCurrentStep(12)}
                 className="btn fw-bold py-3 px-5"
@@ -1588,15 +1591,18 @@ export default function Onboarding() {
                   borderRadius: "12px",
                   fontSize: "16px",
                   width: "100%",
-                  backgroundColor: "#2D2D2D",
+                  backgroundColor: "#d97a6f",
                   color: "#fff",
                   border: "none",
+                  fontWeight: 600,
                 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                ابدأ مشروعي الآن 🚀
+                اشتركي الآن
               </motion.button>
+
+              {/* Secondary Button - Question */}
               <motion.button
                 onClick={openWhatsApp}
                 className="btn fw-bold py-3 px-5"
@@ -1604,26 +1610,35 @@ export default function Onboarding() {
                   borderRadius: "12px",
                   fontSize: "16px",
                   width: "100%",
-                  backgroundColor: "#fff",
+                  backgroundColor: "transparent",
                   color: "#2D2D2D",
-                  border: "1.5px solid #E8E4DC",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "8px",
+                  border: "1.5px solid #d97a6f",
+                  fontWeight: 600,
                 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-4.946 1.347l-.355.192-.368-.06a9.879 9.879 0 00-3.464.608l.564 2.173 1.888-.959a9.877 9.877 0 018.368 2.52c.248.248.456.509.62.783l2.04-1.294a9.884 9.884 0 00-3.348-5.17z" />
-                </svg>
                 عندي سؤال قبل الاشتراك
+              </motion.button>
+
+              {/* Tertiary Button - Not Ready */}
+              <motion.button
+                onClick={() => setCurrentStep(1)}
+                className="btn fw-bold py-3 px-5"
+                style={{
+                  borderRadius: "12px",
+                  fontSize: "16px",
+                  width: "100%",
+                  backgroundColor: "transparent",
+                  color: "#999",
+                  border: "none",
+                  fontWeight: 600,
+                  textDecoration: "underline",
+                }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                ما أنا مستعدة حالياً
               </motion.button>
             </motion.div>
           </motion.div>
