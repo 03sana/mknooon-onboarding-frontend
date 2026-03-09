@@ -271,8 +271,9 @@ export default function Onboarding() {
           style={{
             paddingTop: "24px",
             paddingBottom: "74px",
-            height: "610px",
-            backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-bg-pattern-VHZMcfgg6pEF7bBU2rxmKx.webp')",
+            minHeight: "100vh",
+            width: "100%",
+            backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-bg-pattern-VKapPoVLZxxR2UhnKeaBBV.webp')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
