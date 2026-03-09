@@ -272,7 +272,7 @@ export default function Onboarding() {
             paddingTop: "24px",
             paddingBottom: "74px",
             height: "610px",
-            backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-bg-pattern-bEEgcvhntCeqi8jPurmmWy.webp')",
+            backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-bg-pattern-VHZMcfgg6pEF7bBU2rxmKx.webp')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
