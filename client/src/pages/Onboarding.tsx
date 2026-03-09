@@ -1159,41 +1159,58 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-end"
-          style={{ paddingBottom: "40px" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+            padding: "20px",
+          }}
         >
-          <h2
-            className="fw-bold text-dark mb-2"
+          <div
             style={{
-              fontSize: "24px",
-              fontWeight: 700,
-              textAlign: "right",
-              lineHeight: "1.5",
+              backgroundColor: "rgba(255, 255, 255, 0.70)",
+              borderRadius: "20px",
+              padding: "48px 32px",
+              border: "1px solid rgba(200, 200, 200, 0.3)",
+              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
+              maxWidth: "450px",
+              width: "100%",
             }}
           >
-            وحتى نقدرتطيكي السعر حسب عملتك المحلية...
-          </h2>
-          <p
-            style={{
-              fontSize: "14px",
-              color: "#666",
-              marginBottom: "20px",
-              textAlign: "right",
-            }}
-          >
-            من أي دولة تواصلي معنا؟
-          </p>
-          <p
-            style={{
-              fontSize: "12px",
-              color: "#999",
-              marginBottom: "20px",
-              textAlign: "right",
-            }}
-          >
-            اختاري دولتك
-          </p>
-          <div style={{ position: "relative", marginBottom: "20px" }}>
-            <motion.button
+            <h2
+              className="fw-bold text-dark mb-2"
+              style={{
+                fontSize: "24px",
+                fontWeight: 700,
+                textAlign: "right",
+                lineHeight: "1.5",
+              }}
+            >
+              وحتى نقدرتطيكي السعر حسب عملتك المحلية...
+            </h2>
+            <p
+              style={{
+                fontSize: "14px",
+                color: "#666",
+                marginBottom: "20px",
+                textAlign: "right",
+              }}
+            >
+              من أي دولة تواصلي معنا؟
+            </p>
+            <p
+              style={{
+                fontSize: "12px",
+                color: "#999",
+                marginBottom: "20px",
+                textAlign: "right",
+              }}
+            >
+              اختاري دولتك
+            </p>
+            <div style={{ position: "relative", marginBottom: "20px", width: "100%" }}>
+              <motion.button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               style={{
                 width: "100%",
@@ -1287,21 +1304,7 @@ export default function Onboarding() {
               </motion.div>
             )}
           </div>
-          <motion.button
-            onClick={handleContinue}
-            disabled={!answers[9]}
-            className="btn btn-dark fw-bold py-3 px-5"
-            style={{
-              borderRadius: "12px",
-              fontSize: "16px",
-              width: "100%",
-              opacity: !answers[9] ? 0.5 : 1,
-            }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            متابعة
-          </motion.button>
+          </div>
         </motion.div>
       )}
 
