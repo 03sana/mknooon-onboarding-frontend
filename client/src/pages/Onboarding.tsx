@@ -1335,9 +1335,11 @@ export default function Onboarding() {
           style={{
             display: "flex",
             justifyContent: "center",
-            alignItems: "center",
+            alignItems: "flex-start",
             minHeight: "100vh",
             padding: "20px",
+            paddingTop: "40px",
+            overflowY: "auto",
           }}
         >
           <div
@@ -1349,7 +1351,7 @@ export default function Onboarding() {
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
               maxWidth: "450px",
               width: "100%",
-
+              marginBottom: "40px",
             }}
           >
             <h2
