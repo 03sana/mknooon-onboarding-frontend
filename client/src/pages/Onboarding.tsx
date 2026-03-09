@@ -920,7 +920,7 @@ export default function Onboarding() {
           {/* Card Container */}
           <div
             style={{
-              backgroundColor: "rgba(255, 255, 255, 0.85)",
+              backgroundColor: "rgba(255, 255, 255, 0.70)",
               borderRadius: "20px",
               padding: "48px 32px",
               border: "1px solid rgba(200, 200, 200, 0.3)",
@@ -947,7 +947,7 @@ export default function Onboarding() {
                   r="90"
                   fill="none"
                   stroke="#e0e0e0"
-                  strokeWidth="8"
+                  strokeWidth="12"
                 />
                 <motion.circle
                   cx="100"
@@ -955,7 +955,7 @@ export default function Onboarding() {
                   r="90"
                   fill="none"
                   stroke="#d97a6f"
-                  strokeWidth="8"
+                  strokeWidth="12"
                   strokeLinecap="round"
                   initial={{
                     strokeDasharray: "565.48px",
