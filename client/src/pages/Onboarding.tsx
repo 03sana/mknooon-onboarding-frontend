@@ -299,7 +299,7 @@ export default function Onboarding() {
             {/* Card - Centered */}
             <div
               style={{
-                backgroundColor: "rgba(255, 255, 255, 0.35)",
+                backgroundColor: "rgba(255, 255, 255, 0.85)",
                 borderRadius: "28px",
                 padding: "48px 28px",
                 border: "none",
