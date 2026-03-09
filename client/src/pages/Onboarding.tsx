@@ -802,19 +802,19 @@ export default function Onboarding() {
               {
                 title: "فاخرة وفريدة",
                 subtitle: "أنيقة، راقية، فاخرة",
-                icon: "💎",
+                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-luxury-doodle-652TeZvNCu58EgkmmnXX7P.webp",
                 accentColor: "#D4AF37",
               },
               {
                 title: "عصرية وملموسة",
                 subtitle: "حديثة، عصرية، ملموسة",
-                icon: "🚀",
+                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-modern-doodle-Gjx8qYsaxkebgWfhvjCiPb.webp",
                 accentColor: "#4A90E2",
               },
               {
                 title: "منزلية دافئة",
                 subtitle: "خصوصية، شخصية، دافئة",
-                icon: "🏠",
+                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-cozy-doodle-YPrH2S9KkHih6b5w5VFNbs.webp",
                 accentColor: "#8B6F47",
               },
             ].map((option, idx) => (
@@ -840,21 +840,26 @@ export default function Onboarding() {
                 whileHover={{ scale: 1.02, backgroundColor: "#FFF5F3" }}
                 whileTap={{ scale: 0.98 }}
               >
-                {/* Icon */}
+                {/* Illustration Doodle */}
                 <div
                   style={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "8px",
-                    backgroundColor: option.accentColor,
+                    width: "56px",
+                    height: "56px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: "24px",
                     flexShrink: 0,
                   }}
                 >
-                  {option.icon}
+                  <img
+                    src={option.illustration}
+                    alt={option.title}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "contain",
+                    }}
+                  />
                 </div>
                 {/* Text Content */}
                 <div
