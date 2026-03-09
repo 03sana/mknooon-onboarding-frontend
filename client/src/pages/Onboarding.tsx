@@ -2368,7 +2368,7 @@ export default function Onboarding() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    أرسل الإيصال عبر WhatsApp
+                    أرسل الإيصال
                   </motion.button>
                 )}
               <motion.button
