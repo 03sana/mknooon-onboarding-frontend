@@ -953,56 +953,77 @@ export default function Onboarding() {
                 fontWeight="700"
                 fill="#1a1a1a"
               >
-                75%
+                78%
               </text>
             </svg>
           </motion.div>
 
-          {/* Title and Message */}
-          <h2
-            style={{
-              fontSize: "22px",
-              fontWeight: 700,
-              color: "#1a1a1a",
-              textAlign: "center",
-              marginBottom: "8px",
-              marginTop: "0",
-            }}
-          >
-            جاهزيتك عالية جداً! 🎉
-          </h2>
-          <p
-            style={{
-              fontSize: "14px",
-              color: "#666",
-              textAlign: "center",
-              marginBottom: "32px",
-              marginTop: "0",
-              maxWidth: "350px",
-            }}
-          >
-            أنتِ مستعدة لبدء رحلتك وتحقيق أحلامك في عالم الأعمال
-          </p>
+          {/* Content Section */}
+          <div style={{ width: "100%", maxWidth: "400px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            {/* Title with emoji */}
+            <h2
+              style={{
+                fontSize: "18px",
+                fontWeight: 700,
+                color: "#1a1a1a",
+                textAlign: "center",
+                marginBottom: "12px",
+                marginTop: "0",
+              }}
+            >
+              🚀 جاهزيتك لإطلاق مشروعك
+            </h2>
 
-          {/* Continue Button */}
+            {/* Subtitle with emoji */}
+            <h3
+              style={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#1a1a1a",
+                textAlign: "center",
+                marginBottom: "16px",
+                marginTop: "0",
+              }}
+            >
+              ✨ جاهزيتك ممتازة
+            </h3>
+
+            {/* Description */}
+            <p
+              style={{
+                fontSize: "14px",
+                color: "#666",
+                textAlign: "center",
+                marginBottom: "32px",
+                marginTop: "0",
+                lineHeight: "1.6",
+              }}
+            >
+              إذا خليتي احكيلي الآن كيف تحول هذه الجاهزية إلى مشروع حقيقي خلال 30 يوم.
+            </p>
+          </div>
+
+          {/* Continue Button - Centered */}
           <motion.button
             onClick={() => handleContinue()}
             style={{
               padding: "14px 32px",
               borderRadius: "12px",
               border: "none",
-              backgroundColor: "#d97a6f",
+              backgroundColor: "#1a1a1a",
               color: "white",
               fontSize: "16px",
               fontWeight: 600,
               cursor: "pointer",
               width: "100%",
               maxWidth: "280px",
+              margin: "0 auto",
+              display: "block",
             }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            تابعي
+            اضغطي هنا
           </motion.button>
         </motion.div>
       )}
