@@ -912,54 +912,71 @@ export default function Onboarding() {
             paddingRight: "20px",
             minHeight: "100vh",
             width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          {/* Circular Progress */}
-          <motion.div style={{ marginBottom: "32px" }}>
-            <svg
-              width="160"
-              height="160"
-              viewBox="0 0 200 200"
-              style={{ margin: "0 auto", display: "block" }}
-            >
-              <circle
-                cx="100"
-                cy="100"
-                r="90"
-                fill="none"
-                stroke="#e0e0e0"
-                strokeWidth="8"
-              />
-              <motion.circle
-                cx="100"
-                cy="100"
-                r="90"
-                fill="none"
-                stroke="#d97a6f"
-                strokeWidth="8"
-                strokeLinecap="round"
-                initial={{
-                  strokeDasharray: "565.48px",
-                  strokeDashoffset: "565.48px",
-                }}
-                animate={{ strokeDashoffset: "141.37px" }}
-                transition={{ duration: 2, ease: "easeInOut" }}
-              />
-              <text
-                x="100"
-                y="110"
-                textAnchor="middle"
-                fontSize="48"
-                fontWeight="700"
-                fill="#1a1a1a"
+          {/* Card Container */}
+          <div
+            style={{
+              backgroundColor: "rgba(255, 255, 255, 0.85)",
+              borderRadius: "20px",
+              padding: "48px 32px",
+              border: "1px solid rgba(200, 200, 200, 0.3)",
+              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
+              maxWidth: "450px",
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
+            }}
+          >
+            {/* Circular Progress */}
+            <motion.div style={{ marginBottom: "32px" }}>
+              <svg
+                width="160"
+                height="160"
+                viewBox="0 0 200 200"
+                style={{ margin: "0 auto", display: "block" }}
               >
-                78%
-              </text>
-            </svg>
-          </motion.div>
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="90"
+                  fill="none"
+                  stroke="#e0e0e0"
+                  strokeWidth="8"
+                />
+                <motion.circle
+                  cx="100"
+                  cy="100"
+                  r="90"
+                  fill="none"
+                  stroke="#d97a6f"
+                  strokeWidth="8"
+                  strokeLinecap="round"
+                  initial={{
+                    strokeDasharray: "565.48px",
+                    strokeDashoffset: "565.48px",
+                  }}
+                  animate={{ strokeDashoffset: "141.37px" }}
+                  transition={{ duration: 2, ease: "easeInOut" }}
+                />
+                <text
+                  x="100"
+                  y="110"
+                  textAnchor="middle"
+                  fontSize="48"
+                  fontWeight="700"
+                  fill="#d97a6f"
+                >
+                  78%
+                </text>
+              </svg>
+            </motion.div>
 
-          {/* Content Section */}
-          <div style={{ width: "100%", maxWidth: "400px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
             {/* Title with emoji */}
             <h2
               style={{
@@ -979,7 +996,7 @@ export default function Onboarding() {
               style={{
                 fontSize: "16px",
                 fontWeight: 600,
-                color: "#1a1a1a",
+                color: "#d97a6f",
                 textAlign: "center",
                 marginBottom: "16px",
                 marginTop: "0",
@@ -1001,30 +1018,30 @@ export default function Onboarding() {
             >
               إذا خليتي احكيلي الآن كيف تحول هذه الجاهزية إلى مشروع حقيقي خلال 30 يوم.
             </p>
-          </div>
 
-          {/* Continue Button - Centered */}
-          <motion.button
-            onClick={() => handleContinue()}
-            style={{
-              padding: "14px 32px",
-              borderRadius: "12px",
-              border: "none",
-              backgroundColor: "#1a1a1a",
-              color: "white",
-              fontSize: "16px",
-              fontWeight: 600,
-              cursor: "pointer",
-              width: "100%",
-              maxWidth: "280px",
-              margin: "0 auto",
-              display: "block",
-            }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            اضغطي هنا
-          </motion.button>
+            {/* Continue Button - Centered */}
+            <motion.button
+              onClick={() => handleContinue()}
+              style={{
+                padding: "14px 32px",
+                borderRadius: "12px",
+                border: "none",
+                backgroundColor: "#d97a6f",
+                color: "white",
+                fontSize: "16px",
+                fontWeight: 600,
+                cursor: "pointer",
+                width: "100%",
+                maxWidth: "280px",
+                margin: "0 auto",
+                display: "block",
+              }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              اضغطي هنا
+            </motion.button>
+          </div>
         </motion.div>
       )}
 
