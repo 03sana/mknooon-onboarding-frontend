@@ -1377,8 +1377,8 @@ export default function Onboarding() {
             {/* Price Display */}
             <div
               style={{
-                backgroundColor: "rgba(217, 122, 111, 0.1)",
-                padding: "20px",
+                backgroundColor: "transparent",
+                padding: "24px 20px",
                 borderRadius: "14px",
                 marginBottom: "20px",
                 border: "2px solid #d97a6f",
@@ -1388,29 +1388,34 @@ export default function Onboarding() {
               <p
                 style={{
                   fontSize: "12px",
-                  color: "#666",
-                  margin: "0 0 8px 0",
+                  color: "#999",
+                  margin: "0 0 12px 0",
+                  fontWeight: 500,
                 }}
               >
                 السعر النهائي
               </p>
-              <p
-                style={{
-                  fontSize: "36px",
-                  fontWeight: 800,
-                  color: "#d97a6f",
-                  margin: "0",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "8px",
-                }}
-              >
-                <span>{priceData?.price}</span>
-                <span style={{ fontSize: "20px" }}>
-                  {priceData?.currency_symbol}
-                </span>
-              </p>
+              {priceData?.price ? (
+                <p
+                  style={{
+                    fontSize: "40px",
+                    fontWeight: 900,
+                    color: "#d97a6f",
+                    margin: "0",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "6px",
+                  }}
+                >
+                  <span>{priceData.price}</span>
+                  <span style={{ fontSize: "22px" }}>
+                    {priceData.currency_symbol}
+                  </span>
+                </p>
+              ) : (
+                <p style={{ color: "#999", fontSize: "14px" }}>جاري التحميل...</p>
+              )}
             </div>
 
             <p
@@ -1424,8 +1429,16 @@ export default function Onboarding() {
               يشمل 5 دورات:
             </p>
 
-            {/* Courses List */}
-            <div style={{ textAlign: "right", marginBottom: "20px" }}>
+            {/* Courses Card */}
+            <div
+              style={{
+                backgroundColor: "rgba(217, 122, 111, 0.05)",
+                border: "1px solid rgba(217, 122, 111, 0.2)",
+                borderRadius: "14px",
+                padding: "16px",
+                marginBottom: "20px",
+              }}
+            >
               {[
                 "الدورة الاحترافية",
                 "تسعير المنتجات",
@@ -1438,9 +1451,9 @@ export default function Onboarding() {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "8px",
-                    margin: "8px 0",
-                    fontSize: "13px",
+                    gap: "10px",
+                    margin: "10px 0",
+                    fontSize: "14px",
                     color: "#2D2D2D",
                     direction: "rtl",
                   }}
@@ -1449,6 +1462,7 @@ export default function Onboarding() {
                     style={{
                       color: "#d97a6f",
                       fontWeight: "bold",
+                      fontSize: "18px",
                     }}
                   >
                     ✓
