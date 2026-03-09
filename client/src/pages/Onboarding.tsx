@@ -215,7 +215,18 @@ export default function Onboarding() {
     <>
       <div
         className="container-fluid h-[100svh] overflow-y-auto"
-        style={{ paddingBottom: "40px", position: "relative", zIndex: 10, backgroundColor: "transparent" }}
+        style={{
+          paddingBottom: "40px",
+          position: "relative",
+          zIndex: 10,
+          backgroundColor: "transparent",
+          backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-bg-pattern-gtuN3TCCUfUab9ymxFpqgz.webp')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          minHeight: "100vh",
+        }}
       >
         {/* Progress Bar - Hidden on Screen 1 and decision screens */}
         {currentStep > 1 && currentStep !== 11 && currentStep !== 15 && (
@@ -275,11 +286,6 @@ export default function Onboarding() {
               paddingRight: "20px",
               minHeight: "100vh",
               width: "100%",
-              backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-bg-pattern-gtuN3TCCUfUab9ymxFpqgz.webp')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              backgroundAttachment: "fixed",
             }}
           >
             {/* App Name - Top */}
@@ -407,11 +413,6 @@ export default function Onboarding() {
               paddingRight: "20px",
               minHeight: "100vh",
               width: "100%",
-              backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), url('https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-bg-pattern-gtuN3TCCUfUab9ymxFpqgz.webp')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              backgroundAttachment: "fixed",
             }}
           >
             {/* Question */}
