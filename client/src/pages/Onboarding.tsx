@@ -414,25 +414,6 @@ export default function Onboarding() {
               backgroundAttachment: "fixed",
             }}
           >
-            {/* Card Container */}
-            <div
-              style={{
-                backgroundColor: "rgba(255, 255, 255, 0.85)",
-                borderRadius: "28px",
-                padding: "48px 28px",
-                border: "1px solid rgba(200, 200, 200, 0.3)",
-                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
-                minHeight: "auto",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-                maxWidth: "85%",
-                width: "100%",
-                gap: "16px",
-              }}
-            >
             {/* Question */}
             <h2
               style={{
@@ -497,7 +478,6 @@ export default function Onboarding() {
               >
                 رجوع
               </motion.button>
-            </div>
             </div>
           </motion.div>
         )}
