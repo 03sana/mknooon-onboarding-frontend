@@ -660,35 +660,44 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
+          className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
           style={{
-            paddingBottom: "40px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
+            paddingTop: "0px",
+            paddingBottom: "140px",
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            minHeight: "100vh",
+            width: "100%",
           }}
         >
-          {/* Question Text */}
+          {/* Title */}
           <h2
-            className="fw-bold text-dark"
             style={{
-              fontSize: "22px",
+              fontSize: "18px",
               fontWeight: 700,
-              textAlign: "right",
-              marginBottom: "28px",
-              marginTop: "0px",
-              lineHeight: "1.4",
+              color: "#1a1a1a",
+              textAlign: "center",
+              marginBottom: "16px",
+              marginTop: "0",
+              lineHeight: "1.6",
             }}
           >
             طبيعي يكون عندك هاي المخاوف 🤍
           </h2>
           <p
-            className="text-muted mb-4"
-            style={{ fontSize: "14px", textAlign: "right", direction: "rtl", marginTop: "-24px", marginBottom: "13px" }}
+            style={{
+              fontSize: "14px",
+              color: "#666",
+              textAlign: "center",
+              marginBottom: "16px",
+              marginTop: "0",
+            }}
           >
             لذلك فرقنا يكون معك خطوة بخطوة في:
           </p>
+
           {/* Checklist Items */}
-          <div className="d-flex flex-column gap-3" style={{ marginBottom: "0px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px", width: "100%" }}>
             {[
               { emoji: "🎯", title: "كيف تبدي" },
               { emoji: "📦", title: "من وين توفري المواد الخام" },
@@ -708,8 +717,9 @@ export default function Onboarding() {
                   alignItems: "center",
                   gap: "12px",
                   width: "100%",
-                  backgroundColor: "#f5f5f5",
+                  backgroundColor: "#f9f9f9",
                   borderRadius: "12px",
+                  border: "1px solid #e0e0e0",
                 }}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -738,26 +748,45 @@ export default function Onboarding() {
               </motion.div>
             ))}
           </div>
-          {/* Continue Button */}
-          <motion.button
-            onClick={() => handleContinue()}
-            style={{
-              padding: "14px 24px",
-              borderRadius: "12px",
-              fontSize: "16px",
-              fontWeight: 600,
-              border: "none",
-              backgroundColor: "#d97a6f",
-              color: "white",
-              cursor: "pointer",
-              width: "100%",
-              transition: "all 0.2s ease",
-            }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            تابعي الرحلة
-          </motion.button>
+
+          {/* Navigation */}
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px", width: "100%", gap: "12px" }}>
+            <motion.button
+              onClick={handleBack}
+              style={{
+                padding: "10px 20px",
+                borderRadius: "8px",
+                border: "1px solid #e0e0e0",
+                backgroundColor: "white",
+                cursor: "pointer",
+                fontSize: "14px",
+                fontWeight: 600,
+                color: "#666",
+                flex: 1,
+              }}
+              whileHover={{ backgroundColor: "#f5f5f5" }}
+            >
+              رجوع
+            </motion.button>
+            <motion.button
+              onClick={handleContinue}
+              style={{
+                padding: "10px 20px",
+                borderRadius: "8px",
+                border: "none",
+                backgroundColor: "#d97a6f",
+                color: "white",
+                cursor: "pointer",
+                fontSize: "14px",
+                fontWeight: 600,
+                flex: 1,
+              }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              تابعي
+            </motion.button>
+          </div>
         </motion.div>
       )}
 
@@ -766,27 +795,29 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
+          className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
           style={{
-            paddingBottom: "40px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
+            paddingTop: "0px",
+            paddingBottom: "140px",
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            minHeight: "100vh",
+            width: "100%",
           }}
         >
-          {/* Question Text */}
+          {/* Question */}
           <h2
-            className="fw-bold text-dark"
             style={{
-              fontSize: "22px",
+              fontSize: "18px",
               fontWeight: 700,
-              textAlign: "right",
-              marginBottom: "24px",
-              marginTop: "0px",
-              lineHeight: "1.4",
-              direction: "rtl",
+              color: "#1a1a1a",
+              textAlign: "center",
+              marginBottom: "16px",
+              marginTop: "0",
+              lineHeight: "1.6",
             }}
           >
-            تختاري شكل علامتك الخاصة... أي سؤال أقرب لشخصيتك؟
+            تختاري شكل علامتك<br />أي شخصية أقرب لك؟
           </h2>
           {/* Brand Personality Cards */}
           <div className="d-flex flex-column gap-3">
