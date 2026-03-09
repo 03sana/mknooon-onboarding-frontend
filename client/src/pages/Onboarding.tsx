@@ -282,10 +282,10 @@ export default function Onboarding() {
           {/* Illustration */}
           <div style={{ marginTop: "8px", marginBottom: "12px", display: "flex", alignItems: "center", justifyContent: "center", height: "187px", marginRight: "12px", marginLeft: "-16px" }}>
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-illust_f92c73f6.png"
-              alt="Starting your project"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-welcome-illustration-dRoRcnxgWmaibguAmtWECC.webp"
+              alt="Business journey with connected ideas"
               style={{
-                maxWidth: "260px",
+                maxWidth: "320px",
                 width: "100%",
                 height: "auto",
                 margin: "0 auto",
