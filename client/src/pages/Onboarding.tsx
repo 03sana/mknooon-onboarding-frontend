@@ -214,7 +214,7 @@ export default function Onboarding() {
   return (
     <>
       <div
-        className="container-fluid h-[100svh] overflow-auto"
+        className="container-fluid h-[100svh] overflow-hidden"
         style={{
           paddingBottom: "0px",
           position: "relative",
@@ -1335,10 +1335,9 @@ export default function Onboarding() {
           style={{
             display: "flex",
             justifyContent: "center",
-            alignItems: "flex-start",
+            alignItems: "center",
             minHeight: "100vh",
-            padding: "10px",
-            paddingTop: "10px",
+            padding: "20px",
             overflowY: "auto",
           }}
         >
