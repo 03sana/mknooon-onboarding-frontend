@@ -802,19 +802,19 @@ export default function Onboarding() {
               {
                 title: "فاخرة وفريدة",
                 subtitle: "أنيقة، راقية، فاخرة",
-                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-luxury-doodle-iqcTcaojHSjmN7FkpSzp4w.webp",
+                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-luxury-doodle-nkMcRsg7L5Kk3gxNmjhUJx.webp",
                 accentColor: "#D4AF37",
               },
               {
                 title: "عصرية وملموسة",
                 subtitle: "حديثة، عصرية، ملموسة",
-                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-modern-doodle-KdRQRq2DfuxgUbhqYYxD87.webp",
+                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-modern-doodle-aVa7twdnSf9ToPY6N6EvpG.webp",
                 accentColor: "#4A90E2",
               },
               {
                 title: "منزلية دافئة",
                 subtitle: "خصوصية، شخصية، دافئة",
-                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-cozy-doodle-VjQmbnGn3YKRuBsD5LXvYo.webp",
+                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-cozy-doodle-UPxianzYRjTKXd9tQ6QShu.webp",
                 accentColor: "#8B6F47",
               },
             ].map((option, idx) => (
