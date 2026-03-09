@@ -295,12 +295,21 @@ export default function Onboarding() {
           {/* Glassy Card Container */}
           <div
             style={{
-              backgroundColor: "rgba(255, 255, 255, 0.75)",
-              backdropFilter: "blur(10px)",
-              borderRadius: "20px",
-              padding: "28px 20px",
-              border: "1px solid rgba(255, 255, 255, 0.3)",
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+              backgroundColor: "rgba(255, 255, 255, 0.65)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              borderRadius: "24px",
+              padding: "40px 24px",
+              border: "1px solid rgba(255, 255, 255, 0.5)",
+              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.5)",
+              minHeight: "320px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              margin: "0 auto",
+              maxWidth: "90%",
             }}
           >
             {/* Title and Subtitle */}
