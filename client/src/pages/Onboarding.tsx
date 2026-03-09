@@ -283,7 +283,7 @@ export default function Onboarding() {
             }}
           >
             {/* App Name - Top */}
-            <div style={{ position: "absolute", top: "20px", left: "20px", right: "20px" }}>
+            <div style={{ position: "absolute", top: "20px", left: "20px", right: "20px", textAlign: "center" }}>
               <h1
                 style={{
                   fontSize: "20px",
@@ -296,16 +296,14 @@ export default function Onboarding() {
               </h1>
             </div>
 
-            {/* Glassmorphism Card - Centered */}
+            {/* Card - Centered */}
             <div
               style={{
-                backgroundColor: "rgba(255, 255, 255, 0.7)",
-                backdropFilter: "blur(25px)",
-                WebkitBackdropFilter: "blur(25px)",
+                backgroundColor: "rgba(255, 255, 255, 0.35)",
                 borderRadius: "28px",
                 padding: "48px 28px",
-                border: "1px solid rgba(255, 255, 255, 0.6)",
-                boxShadow: "0 12px 40px rgba(0, 0, 0, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.6)",
+                border: "none",
+                boxShadow: "none",
                 minHeight: "340px",
                 display: "flex",
                 flexDirection: "column",
