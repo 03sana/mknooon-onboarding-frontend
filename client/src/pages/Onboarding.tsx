@@ -2380,9 +2380,9 @@ export default function Onboarding() {
                   fontSize: "16px",
                   width: "100%",
                   boxSizing: "border-box",
-                  backgroundColor: "#2D2D2D",
-                  color: "#fff",
-                  border: "none",
+                  backgroundColor: "transparent",
+                  color: "#2D2D2D",
+                  border: "2px solid #2D2D2D",
                   display: "block",
                 }}
                 whileHover={{ scale: 1.02 }}
