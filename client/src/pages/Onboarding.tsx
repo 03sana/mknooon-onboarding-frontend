@@ -1163,7 +1163,6 @@ export default function Onboarding() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            minHeight: "100vh",
             padding: "0px 20px",
           }}
         >
@@ -1351,6 +1350,8 @@ export default function Onboarding() {
               maxWidth: "450px",
               width: "100%",
               marginBottom: "40px",
+              maxHeight: "85vh",
+              overflowY: "auto",
             }}
           >
             <h2
