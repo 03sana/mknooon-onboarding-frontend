@@ -200,7 +200,7 @@ export default function Onboarding() {
           console.error("Error fetching payment instructions:", error);
         }
       }
-      setCurrentStep(14);
+      setCurrentStep(13);
     }
   };
 
