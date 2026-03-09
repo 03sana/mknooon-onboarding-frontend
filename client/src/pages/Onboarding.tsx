@@ -268,7 +268,16 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center d-flex flex-column justify-content-between h-[100svh]"
-          style={{ paddingTop: "24px", paddingBottom: "74px", height: "610px" }}
+          style={{
+            paddingTop: "24px",
+            paddingBottom: "74px",
+            height: "610px",
+            backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-bg-pattern-bEEgcvhntCeqi8jPurmmWy.webp')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundAttachment: "fixed",
+          }}
         >
           {/* App Name */}
           <div>
@@ -279,20 +288,7 @@ export default function Onboarding() {
               Mknooon
             </h1>
           </div>
-          {/* Illustration */}
-          <div style={{ marginTop: "8px", marginBottom: "12px", display: "flex", alignItems: "center", justifyContent: "center", height: "187px", marginRight: "12px", marginLeft: "-16px" }}>
-            <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-welcome-illustration-dRoRcnxgWmaibguAmtWECC.webp"
-              alt="Business journey with connected ideas"
-              style={{
-                maxWidth: "320px",
-                width: "100%",
-                height: "auto",
-                margin: "0 auto",
-                display: "block",
-              }}
-            />
-          </div>
+
           {/* Title and Subtitle */}
           <div style={{ marginBottom: "16px" }}>
             <h2
