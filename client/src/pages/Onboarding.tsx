@@ -769,41 +769,53 @@ export default function Onboarding() {
         </motion.div>
       )}
 
-      {/* Screen 6: Learning Style */}
+      {/* Screen 6: Brand Personality */}
       {currentStep === 6 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-end"
-          style={{ paddingBottom: "40px" }}
+          style={{
+            paddingBottom: "40px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+          }}
         >
+          {/* Question Text */}
           <h2
-            className="fw-bold text-dark mb-4"
+            className="fw-bold text-dark"
             style={{
-              fontSize: "24px",
+              fontSize: "22px",
               fontWeight: 700,
               textAlign: "right",
-              lineHeight: "1.5",
+              marginBottom: "24px",
+              marginTop: "0px",
+              lineHeight: "1.4",
+              direction: "rtl",
             }}
           >
-            تختاري شكل علامتك الخاصة...أي سؤال أقرب لشخصيتك؟
+            تختاري شكل علامتك الخاصة... أي سؤال أقرب لشخصيتك؟
           </h2>
+          {/* Brand Personality Cards */}
           <div className="d-flex flex-column gap-3">
             {[
               {
-                title: "فاخرة وفورية",
-                desc: "أنيقة، رائقة، رافية",
-                color: "#D4AF37",
+                title: "فاخرة وفريدة",
+                subtitle: "أنيقة، راقية، فاخرة",
+                icon: "💎",
+                accentColor: "#D4AF37",
               },
               {
                 title: "عصرية وملموسة",
-                desc: "حديثة، عصرية، ملموسة",
-                color: "#4A90E2",
+                subtitle: "حديثة، عصرية، ملموسة",
+                icon: "🚀",
+                accentColor: "#4A90E2",
               },
               {
                 title: "منزلية دافئة",
-                desc: "خصوصية، شخصية، دافئة",
-                color: "#8B6F47",
+                subtitle: "خصوصية، شخصية، دافئة",
+                icon: "🏠",
+                accentColor: "#8B6F47",
               },
             ].map((option, idx) => (
               <motion.button
@@ -812,27 +824,67 @@ export default function Onboarding() {
                   handleAnswer(6, option.title);
                   handleContinue();
                 }}
-                className={`btn py-4 fw-bold text-end d-flex flex-column align-items-start ${answers[6] === option.title ? "btn-dark" : "btn-outline-dark"}`}
                 style={{
+                  padding: "16px",
                   borderRadius: "12px",
-                  textAlign: "right",
-                  direction: "rtl",
+                  border: answers[6] === option.title ? `2px solid ${option.accentColor}` : "2px solid #e0e0e0",
+                  backgroundColor: answers[6] === option.title ? "#FFF5F3" : "white",
                   display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  direction: "rtl",
+                  cursor: "pointer",
+                  transition: "all 0.2s ease",
                   width: "100%",
-                  gap: "4px",
-                  borderRight: `6px solid ${option.color}`,
                 }}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.02, backgroundColor: "#FFF5F3" }}
                 whileTap={{ scale: 0.98 }}
               >
-                <span style={{ fontSize: "16px", fontWeight: 600 }}>
-                  {option.title}
-                </span>
-                <span
-                  style={{ fontSize: "12px", fontWeight: 400, opacity: 0.8 }}
+                {/* Icon */}
+                <div
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    borderRadius: "8px",
+                    backgroundColor: option.accentColor,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "24px",
+                    flexShrink: 0,
+                  }}
                 >
-                  {option.desc}
-                </span>
+                  {option.icon}
+                </div>
+                {/* Text Content */}
+                <div
+                  style={{
+                    flex: 1,
+                    textAlign: "right",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "4px",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#333",
+                    }}
+                  >
+                    {option.title}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "13px",
+                      fontWeight: 400,
+                      color: "#666",
+                    }}
+                  >
+                    {option.subtitle}
+                  </span>
+                </div>
               </motion.button>
             ))}
           </div>
