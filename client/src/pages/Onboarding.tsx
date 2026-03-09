@@ -267,88 +267,121 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center d-flex flex-column justify-content-between h-[100svh]"
+          className="d-flex flex-column justify-content-center align-items-center h-[100svh]"
           style={{
             paddingTop: "24px",
-            paddingBottom: "74px",
-            height: "610px",
-            backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-bg-pattern-bEEgcvhntCeqi8jPurmmWy.webp')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            backgroundAttachment: "fixed",
+            paddingBottom: "24px",
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            minHeight: "100vh",
+            width: "100%",
           }}
         >
-          {/* App Name */}
-          <div>
+          {/* App Name - Top */}
+          <div style={{ position: "absolute", top: "20px", left: "20px", right: "20px", textAlign: "center" }}>
             <h1
-              className="fw-bold text-dark"
-              style={{ fontSize: "20px", fontWeight: 800, marginBottom: "0" }}
+              style={{
+                fontSize: "20px",
+                fontWeight: 800,
+                margin: 0,
+                color: "#1a1a1a",
+              }}
             >
               Mknooon
             </h1>
           </div>
 
-          {/* Title and Subtitle */}
-          <div style={{ marginBottom: "16px" }}>
+          {/* Card - Centered */}
+          <div
+            style={{
+              backgroundColor: "rgba(255, 255, 255, 0.85)",
+              borderRadius: "28px",
+              padding: "48px 28px",
+              border: "1px solid rgba(200, 200, 200, 0.3)",
+              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
+              minHeight: "340px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              maxWidth: "85%",
+              width: "100%",
+              gap: "16px",
+            }}
+          >
+            {/* Main Title */}
             <h2
-              className="fw-bold text-dark"
               style={{
-                fontSize: "28px",
-                lineHeight: "1.2",
+                fontSize: "26px",
                 fontWeight: 800,
-                letterSpacing: "-0.5px",
-                marginBottom: "8px",
+                color: "#1a1a1a",
+                lineHeight: "1.35",
+                margin: "0 0 8px 0",
+                letterSpacing: "-0.3px",
               }}
             >
               رحلتك لإطلاق
               <br />
               مشروعك تبدأ الآن
             </h2>
+
+            {/* Subtitle Text */}
             <p
               style={{
-                fontSize: "15px",
-                lineHeight: "1.6",
-                color: "#666",
+                fontSize: "14px",
+                color: "#555",
                 fontWeight: 500,
-                marginBottom: "8px",
+                margin: "0 0 4px 0",
+                lineHeight: "1.5",
               }}
             >
               3 دقائق فقط... وتعرّفي فيها ..
             </p>
+
+            {/* Question Text */}
             <p
               style={{
-                fontSize: "15px",
-                lineHeight: "1.6",
-                color: "#666",
+                fontSize: "14px",
+                color: "#555",
                 fontWeight: 500,
+                margin: "0 0 20px 0",
+                lineHeight: "1.5",
               }}
             >
               هل أنت جاهزة لإطلاق مشروعك ؟
             </p>
-          </div>
-          {/* CTA Button and Social Proof */}
-          <div>
+
+            {/* CTA Button */}
             <motion.button
               onClick={handleContinue}
-              className="fw-bold"
               style={{
-                borderRadius: "12px",
+                borderRadius: "14px",
                 fontSize: "16px",
+                fontWeight: 700,
                 width: "100%",
-                height: "52px",
+                maxWidth: "280px",
+                height: "50px",
                 backgroundColor: "#d97a6f",
                 color: "white",
                 border: "none",
-                fontWeight: 700,
+                cursor: "pointer",
+                transition: "all 0.3s ease",
               }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.03, boxShadow: "0 6px 20px rgba(217, 122, 111, 0.3)" }}
+              whileTap={{ scale: 0.97 }}
             >
               تعرفي على الفرصة
             </motion.button>
+
+            {/* Social Proof */}
             <p
-              style={{ fontSize: "13px", color: "#999", marginTop: "16px", marginBottom: "0" }}
+              style={{
+                fontSize: "12px",
+                color: "#999",
+                margin: "8px 0 0 0",
+                fontWeight: 500,
+              }}
             >
               أكثر من 11000 امرأة بدأت رحلتها
             </p>
@@ -361,131 +394,80 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-end"
+          className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
           style={{
-            paddingTop: "16px",
-            paddingBottom: "20px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
+            paddingTop: "0px",
+            paddingBottom: "140px",
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            minHeight: "100vh",
+            width: "100%",
           }}
         >
-          {/* Illustration */}
-          <div style={{ marginTop: "4px", marginBottom: "12px", display: "flex", alignItems: "center", justifyContent: "center", height: "140px" }}>
-            <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen2-illust_cdf593c1.png"
-              alt="Planning and timing"
-              style={{
-                maxWidth: "240px",
-                width: "100%",
-                height: "auto",
-                margin: "0 auto",
-                display: "block",
-              }}
-            />
-          </div>
-
-          {/* Question Text */}
+          {/* Question */}
           <h2
-            className="fw-bold text-dark"
             style={{
-              fontSize: "22px",
+              fontSize: "18px",
               fontWeight: 700,
+              color: "#1a1a1a",
               textAlign: "right",
               marginBottom: "16px",
-              lineHeight: "1.3",
+              marginTop: "0",
+              lineHeight: "1.6",
             }}
           >
-            لو كانت التفاصيل واضحة وسهلة
-            <br />
-            ...متى حابة تطلقي مشروعك؟
+            لو كانت التفاصيل واضحة وسهلة<br />...متى حابة تطلقي مشروعك؟
           </h2>
 
-          {/* Option Cards */}
-          <div className="d-flex flex-column gap-3">
+          {/* Options */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px", width: "100%" }}>
+            {[
+              { id: "now", label: "الآن 🚀", subtitle: "أنا جاهزة!" },
+              { id: "month", label: "خلال شهر 📅", subtitle: "بحاجة لتحضيرات" },
+              { id: "quarter", label: "خلال 3 أشهر ⏳", subtitle: "بدي وقت أكثر" },
+              { id: "unsure", label: "لسه ما قررت 🤔", subtitle: "بدي أفكر" },
+            ].map((option) => (
+              <motion.button
+                key={option.id}
+                onClick={() => {
+                  handleAnswer(2, option.id);
+                  handleContinue();
+                }}
+                style={{
+                  padding: "16px",
+                  borderRadius: "12px",
+                  border: answers[2] === option.id ? "2px solid #d97a6f" : "1px solid #e0e0e0",
+                  backgroundColor: answers[2] === option.id ? "rgba(217, 122, 111, 0.1)" : "#f9f9f9",
+                  cursor: "pointer",
+                  textAlign: "right",
+                  transition: "all 0.2s ease",
+                }}
+                whileHover={{ backgroundColor: "rgba(217, 122, 111, 0.05)" }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div style={{ fontSize: "16px", fontWeight: 700, color: "#1a1a1a" }}>{option.label}</div>
+                <div style={{ fontSize: "12px", color: "#999", marginTop: "4px" }}>{option.subtitle}</div>
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Navigation */}
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px", width: "100%" }}>
             <motion.button
-              onClick={() => {
-                handleAnswer(2, "خلال 30 يوم");
-                handleContinue();
-              }}
+              onClick={handleBack}
               style={{
-                padding: "16px 16px",
-                borderRadius: "12px",
-                textAlign: "right",
-                fontSize: "15px",
-                direction: "rtl",
-                display: "block",
-                width: "100%",
-                border: answers[2] === "خلال 30 يوم" ? "2px solid #D97A6F" : "1px solid #e0e0e0",
-                backgroundColor: answers[2] === "خلال 30 يوم" ? "#FFF5F3" : "white",
-                color: answers[2] === "خلال 30 يوم" ? "#D97A6F" : "#333",
-                fontWeight: 600,
+                padding: "10px 20px",
+                borderRadius: "8px",
+                border: "1px solid #e0e0e0",
+                backgroundColor: "white",
                 cursor: "pointer",
-                transition: "all 0.2s ease",
-                boxShadow: answers[2] === "خلال 30 يوم" ? "0 2px 8px rgba(217, 122, 111, 0.15)" : "0 1px 3px rgba(0,0,0,0.05)",
-              }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <span style={{ marginLeft: "8px" }}>🚀</span>
-              خلال 30 يوم
-              <div style={{ fontSize: "13px", fontWeight: 500, color: answers[2] === "خلال 30 يوم" ? "#D97A6F" : "#999", marginTop: "4px" }}>ابدئي بسرعة</div>
-            </motion.button>
-            <motion.button
-              onClick={() => {
-                handleAnswer(2, "خلال 2-3 أشهر");
-                handleContinue();
-              }}
-              style={{
-                padding: "16px 16px",
-                borderRadius: "12px",
-                textAlign: "right",
-                fontSize: "15px",
-                direction: "rtl",
-                display: "block",
-                width: "100%",
-                border: answers[2] === "خلال 2-3 أشهر" ? "2px solid #D97A6F" : "1px solid #e0e0e0",
-                backgroundColor: answers[2] === "خلال 2-3 أشهر" ? "#FFF5F3" : "white",
-                color: answers[2] === "خلال 2-3 أشهر" ? "#D97A6F" : "#333",
+                fontSize: "14px",
                 fontWeight: 600,
-                cursor: "pointer",
-                transition: "all 0.2s ease",
-                boxShadow: answers[2] === "خلال 2-3 أشهر" ? "0 2px 8px rgba(217, 122, 111, 0.15)" : "0 1px 3px rgba(0,0,0,0.05)",
+                color: "#666",
               }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ backgroundColor: "#f5f5f5" }}
             >
-              <span style={{ marginLeft: "8px" }}>📅</span>
-              خلال 2-3 أشهر
-              <div style={{ fontSize: "13px", fontWeight: 500, color: answers[2] === "خلال 2-3 أشهر" ? "#D97A6F" : "#999", marginTop: "4px" }}>تخطيط بهدوء</div>
-            </motion.button>
-            <motion.button
-              onClick={() => {
-                handleAnswer(2, "ما زلت أستكشف الفكرة");
-                handleContinue();
-              }}
-              style={{
-                padding: "16px 16px",
-                borderRadius: "12px",
-                textAlign: "right",
-                fontSize: "15px",
-                direction: "rtl",
-                display: "block",
-                width: "100%",
-                border: answers[2] === "ما زلت أستكشف الفكرة" ? "2px solid #D97A6F" : "1px solid #e0e0e0",
-                backgroundColor: answers[2] === "ما زلت أستكشف الفكرة" ? "#FFF5F3" : "white",
-                color: answers[2] === "ما زلت أستكشف الفكرة" ? "#D97A6F" : "#333",
-                fontWeight: 600,
-                cursor: "pointer",
-                transition: "all 0.2s ease",
-                boxShadow: answers[2] === "ما زلت أستكشف الفكرة" ? "0 2px 8px rgba(217, 122, 111, 0.15)" : "0 1px 3px rgba(0,0,0,0.05)",
-              }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <span style={{ marginLeft: "8px" }}>💡</span>
-              ما زلت أستكشف الفكرة
-              <div style={{ fontSize: "13px", fontWeight: 500, color: answers[2] === "ما زلت أستكشف الفكرة" ? "#D97A6F" : "#999", marginTop: "4px" }}>أبحث عن الإلهام</div>
+              رجوع
             </motion.button>
           </div>
         </motion.div>
