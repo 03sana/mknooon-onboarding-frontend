@@ -1922,13 +1922,17 @@ export default function Onboarding() {
                                   borderBottom: "1px solid #ddd",
                                 }}
                               >
-                                <div
-                                  style={{
-                                    flex: 1,
-                                    textAlign: "right",
-                                    marginRight: "10px",
-                                  }}
-                                >
+                                <div style={{ display: "flex", flexDirection: "column", width: "100%", marginBottom: "8px" }}>
+                                  <strong
+                                    style={{
+                                      fontSize: "13px",
+                                      color: "#2D2D2D",
+                                      marginBottom: "6px",
+                                      textAlign: "right",
+                                    }}
+                                  >
+                                    {label}:
+                                  </strong>
                                   {isUrl ? (
                                     <a
                                       href={stringValue}
@@ -1938,8 +1942,11 @@ export default function Onboarding() {
                                         color: "#0066cc",
                                         textDecoration: "underline",
                                         wordBreak: "break-all",
-                                        display: "block",
-                                        padding: "6px 10px",
+                                        padding: "8px 10px",
+                                        backgroundColor: "#fff",
+                                        borderRadius: "4px",
+                                        fontSize: "12px",
+                                        textAlign: "right",
                                       }}
                                     >
                                       {stringValue}
@@ -1948,28 +1955,19 @@ export default function Onboarding() {
                                     <code
                                       style={{
                                         backgroundColor: "#fff",
-                                        padding: "6px 10px",
+                                        padding: "8px 10px",
                                         borderRadius: "4px",
                                         fontSize: "12px",
                                         color: "#2D2D2D",
                                         wordBreak: "break-all",
                                         display: "block",
+                                        textAlign: "right",
                                       }}
                                     >
                                       {stringValue}
                                     </code>
                                   )}
                                 </div>
-                                <strong
-                                  style={{
-                                    fontSize: "14px",
-                                    color: "#2D2D2D",
-                                    minWidth: "120px",
-                                    textAlign: "left",
-                                  }}
-                                >
-                                  {label}:
-                                </strong>
                               </div>
                             );
                           }
