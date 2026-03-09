@@ -1652,7 +1652,6 @@ export default function Onboarding() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            minHeight: "100vh",
             padding: "20px",
             overflowY: "auto",
           }}
