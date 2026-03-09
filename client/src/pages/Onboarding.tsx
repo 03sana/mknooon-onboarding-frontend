@@ -1171,11 +1171,12 @@ export default function Onboarding() {
             style={{
               backgroundColor: "rgba(255, 255, 255, 0.70)",
               borderRadius: "20px",
-              padding: "48px 32px",
+              padding: "43px 32px",
               border: "1px solid rgba(200, 200, 200, 0.3)",
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
               maxWidth: "450px",
               width: "100%",
+              marginBottom: "259px",
             }}
           >
             <h2
