@@ -1497,27 +1497,38 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center d-flex flex-column h-[100svh]"
           style={{
-            paddingTop: "20px",
-            paddingBottom: "40px",
             display: "flex",
-            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+            padding: "20px",
+            overflowY: "auto",
           }}
         >
-          {/* Title at Top */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            style={{ marginBottom: "20px" }}
+          <div
+            style={{
+              backgroundColor: "rgba(255, 255, 255, 0.70)",
+              borderRadius: "20px",
+              padding: "40px 32px",
+              border: "1px solid rgba(200, 200, 200, 0.3)",
+              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
+              maxWidth: "450px",
+              width: "100%",
+              marginBottom: "40px",
+              textAlign: "center",
+            }}
           >
-            <h2
-              className="fw-bold text-dark"
+            {/* Title */}
+            <motion.h2
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="fw-bold text-dark mb-4"
               style={{
-                fontSize: "28px",
+                fontSize: "24px",
                 fontWeight: 700,
-                lineHeight: "1.4",
+                lineHeight: "1.5",
                 textAlign: "right",
                 direction: "rtl",
               }}
@@ -1525,20 +1536,8 @@ export default function Onboarding() {
               مشروعك أقرب مما تخيلي...
               <br />
               خلينا نبدأه صح.
-            </h2>
-          </motion.div>
+            </motion.h2>
 
-          {/* Success Animation - Centered */}
-          <motion.div
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "30px",
-            }}
-          >
             {/* Checkmark Animation */}
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
@@ -1550,26 +1549,27 @@ export default function Onboarding() {
                 stiffness: 100,
               }}
               style={{
-                width: "80px",
-                height: "80px",
+                width: "60px",
+                height: "60px",
                 borderRadius: "50%",
-                backgroundColor: "#7C6E5B",
+                backgroundColor: "#d97a6f",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                margin: "20px auto 30px",
               }}
             >
               <motion.span
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.6, duration: 0.4 }}
-                style={{ fontSize: "40px", color: "#fff", fontWeight: "bold" }}
+                style={{ fontSize: "32px", color: "#fff", fontWeight: "bold" }}
               >
                 ✓
               </motion.span>
             </motion.div>
 
-            {/* Buttons Section - Centered */}
+            {/* Buttons Section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -1579,8 +1579,6 @@ export default function Onboarding() {
                 flexDirection: "column",
                 gap: "12px",
                 width: "100%",
-                maxWidth: "400px",
-                margin: "0 auto",
               }}
             >
               {/* Primary Button - Subscribe Now */}
@@ -1627,7 +1625,7 @@ export default function Onboarding() {
                 className="btn fw-bold py-3 px-5"
                 style={{
                   borderRadius: "12px",
-                  fontSize: "16px",
+                  fontSize: "14px",
                   width: "100%",
                   backgroundColor: "transparent",
                   color: "#999",
@@ -1641,26 +1639,7 @@ export default function Onboarding() {
                 ما أنا مستعدة حالياً
               </motion.button>
             </motion.div>
-          </motion.div>
-
-          {/* Footer Text */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.5 }}
-            style={{ textAlign: "center" }}
-          >
-            <p
-              style={{
-                fontSize: "13px",
-                color: "#999",
-                marginBottom: "12px",
-                direction: "rtl",
-              }}
-            >
-              غير مستعدة حالياً؟ ستابعي معكم على الواتساب
-            </p>
-          </motion.div>
+          </div>
         </motion.div>
       )}
 
