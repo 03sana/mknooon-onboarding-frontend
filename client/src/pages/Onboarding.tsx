@@ -2373,11 +2373,17 @@ export default function Onboarding() {
                 )}
               <motion.button
                 onClick={() => setCurrentStep(15)}
-                className="btn btn-dark fw-bold w-100 mt-4"
+                className="btn fw-bold mt-4"
                 style={{
                   borderRadius: "12px",
                   padding: "12px 20px",
                   fontSize: "16px",
+                  width: "100%",
+                  boxSizing: "border-box",
+                  backgroundColor: "#2D2D2D",
+                  color: "#fff",
+                  border: "none",
+                  display: "block",
                 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
