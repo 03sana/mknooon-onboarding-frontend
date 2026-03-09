@@ -214,9 +214,9 @@ export default function Onboarding() {
   return (
     <>
       <div
-        className="container-fluid h-[100svh] overflow-y-auto"
+        className="container-fluid h-[100svh] overflow-hidden"
         style={{
-          paddingBottom: "40px",
+          paddingBottom: "0px",
           position: "relative",
           zIndex: 10,
           backgroundColor: "transparent",
@@ -225,7 +225,8 @@ export default function Onboarding() {
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",
-          minHeight: "100vh",
+          height: "100vh",
+          maxHeight: "100vh",
         }}
       >
         {/* Progress Bar - Hidden on Screen 1 and decision screens */}
