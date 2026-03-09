@@ -1176,7 +1176,7 @@ export default function Onboarding() {
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
               maxWidth: "450px",
               width: "100%",
-              marginBottom: "259px",
+
             }}
           >
             <h2
@@ -1349,7 +1349,7 @@ export default function Onboarding() {
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
               maxWidth: "450px",
               width: "100%",
-              marginBottom: "259px",
+
             }}
           >
             <h2
