@@ -2381,8 +2381,8 @@ export default function Onboarding() {
                   width: "100%",
                   boxSizing: "border-box",
                   backgroundColor: "transparent",
-                  color: "#2D2D2D",
-                  border: "2px solid #2D2D2D",
+                  color: "#d97a6f",
+                  border: "2px solid #d97a6f",
                   display: "block",
                 }}
                 whileHover={{ scale: 1.02 }}
