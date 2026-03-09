@@ -1332,143 +1332,149 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center d-flex flex-column justify-content-center"
-          style={{ paddingTop: "8px", paddingBottom: "8px" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+            padding: "20px",
+          }}
         >
-          <h2
-            className="fw-bold text-dark"
-            style={{
-              fontSize: "26px",
-              fontWeight: 700,
-              textAlign: "right",
-              marginBottom: "8px",
-            }}
-          >
-            سعر الاشتراك:
-          </h2>
-
-          {/* Price Box */}
           <div
             style={{
-              backgroundColor: "#F8F7F5",
-              padding: "12px 20px",
-              borderRadius: "14px",
-              marginBottom: "8px",
-              border: "1.5px solid #E8E4DC",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              direction: "rtl",
+              backgroundColor: "rgba(255, 255, 255, 0.70)",
+              borderRadius: "20px",
+              padding: "43px 32px",
+              border: "1px solid rgba(200, 200, 200, 0.3)",
+              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
+              maxWidth: "450px",
+              width: "100%",
+              marginBottom: "259px",
             }}
           >
-            <div style={{ textAlign: "center" }}>
+            <h2
+              className="fw-bold text-dark mb-2"
+              style={{
+                fontSize: "24px",
+                fontWeight: 700,
+                textAlign: "right",
+                lineHeight: "1.5",
+              }}
+            >
+              سعر الاشتراك
+            </h2>
+            <p
+              style={{
+                fontSize: "14px",
+                color: "#666",
+                marginBottom: "20px",
+                textAlign: "right",
+              }}
+            >
+              في {selectedCountry?.name_ar}
+            </p>
+
+            {/* Price Display */}
+            <div
+              style={{
+                backgroundColor: "rgba(217, 122, 111, 0.1)",
+                padding: "20px",
+                borderRadius: "14px",
+                marginBottom: "20px",
+                border: "2px solid #d97a6f",
+                textAlign: "center",
+              }}
+            >
               <p
                 style={{
-                  fontSize: "28px",
+                  fontSize: "12px",
+                  color: "#666",
+                  margin: "0 0 8px 0",
+                }}
+              >
+                السعر النهائي
+              </p>
+              <p
+                style={{
+                  fontSize: "36px",
                   fontWeight: 800,
-                  color: "#2D2D2D",
+                  color: "#d97a6f",
                   margin: "0",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "4px",
+                  gap: "8px",
                 }}
               >
                 <span>{priceData?.price}</span>
-                <span style={{ fontSize: "16px", color: "#666" }}>
+                <span style={{ fontSize: "20px" }}>
                   {priceData?.currency_symbol}
                 </span>
               </p>
             </div>
-          </div>
 
-          <p
-            style={{
-              fontSize: "14px",
-              color: "#666",
-              margin: "0 0 6px 0",
-              textAlign: "right",
-            }}
-          >
-            وهذا السعر يشمل 5 دورات، وهي:
-          </p>
+            <p
+              style={{
+                fontSize: "13px",
+                color: "#666",
+                margin: "0 0 12px 0",
+                textAlign: "right",
+              }}
+            >
+              يشمل 5 دورات:
+            </p>
 
-          {/* Courses Box */}
-          <div
-            style={{
-              backgroundColor: "#F8F7F5",
-              padding: "28px 16px",
-              borderRadius: "14px",
-              marginBottom: "8px",
-              border: "1.5px solid #E8E4DC",
-            }}
-          >
-            <div style={{ textAlign: "right" }}>
+            {/* Courses List */}
+            <div style={{ textAlign: "right", marginBottom: "20px" }}>
               {[
                 "الدورة الاحترافية",
-                "دورة تسعير المنتجات",
-                "دورة تصوير المنتجات بالموبايل",
-                "دورة التسويق الإلكتروني",
-                "دورة إدارة المشاريع",
-                "المتابعة مع الدعم الفني لمدة عام كامل",
+                "تسعير المنتجات",
+                "تصوير بالموبايل",
+                "التسويق الإلكتروني",
+                "إدارة المشاريع",
               ].map((item, index) => (
                 <div
                   key={index}
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "flex-start",
-                    margin: "10px 0",
-                    gap: "10px",
+                    gap: "8px",
+                    margin: "8px 0",
+                    fontSize: "13px",
+                    color: "#2D2D2D",
                     direction: "rtl",
                   }}
                 >
-                  <div
-                    style={{
-                      width: "22px",
-                      height: "22px",
-                      borderRadius: "50%",
-                      backgroundColor: "#7C6E5B",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <span
-                      style={{
-                        color: "#fff",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      ✓
-                    </span>
-                  </div>
                   <span
                     style={{
-                      fontSize: "15px",
-                      color: "#2D2D2D",
-                      fontWeight: 500,
-                      lineHeight: "1.5",
+                      color: "#d97a6f",
+                      fontWeight: "bold",
                     }}
                   >
-                    {item}
+                    ✓
                   </span>
+                  <span>{item}</span>
                 </div>
               ))}
             </div>
-          </div>
 
-          <motion.button
-            onClick={() => setCurrentStep(11)}
-            className="btn btn-dark fw-bold py-3 px-5"
-            style={{ borderRadius: "12px", fontSize: "16px", width: "100%" }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            اشتري الآن
-          </motion.button>
+            <motion.button
+              onClick={() => setCurrentStep(11)}
+              className="btn fw-bold py-3 px-5"
+              style={{
+                borderRadius: "12px",
+                fontSize: "16px",
+                width: "100%",
+                backgroundColor: "#d97a6f",
+                border: "none",
+                color: "white",
+              }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              اشتري الآن
+            </motion.button>
+          </div>
         </motion.div>
       )}
 
