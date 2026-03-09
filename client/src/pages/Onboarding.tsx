@@ -292,69 +292,81 @@ export default function Onboarding() {
             </h1>
           </div>
 
-          {/* Title and Subtitle */}
-          <div style={{ marginBottom: "12px" }}>
-            <h2
-              className="fw-bold text-dark"
-              style={{
-                fontSize: "24px",
-                lineHeight: "1.3",
-                fontWeight: 800,
-                letterSpacing: "-0.5px",
-                marginBottom: "6px",
-              }}
-            >
-              رحلتك لإطلاق
-              <br />
-              مشروعك تبدأ الآن
-            </h2>
-            <p
-              style={{
-                fontSize: "13px",
-                lineHeight: "1.4",
-                color: "#666",
-                fontWeight: 500,
-                marginBottom: "4px",
-              }}
-            >
-              3 دقائق فقط... وتعرّفي فيها ..
-            </p>
-            <p
-              style={{
-                fontSize: "13px",
-                lineHeight: "1.4",
-                color: "#666",
-                fontWeight: 500,
-              }}
-            >
-              هل أنت جاهزة لإطلاق مشروعك ؟
-            </p>
-          </div>
-          {/* CTA Button and Social Proof */}
-          <div>
-            <motion.button
-              onClick={handleContinue}
-              className="fw-bold"
-              style={{
-                borderRadius: "12px",
-                fontSize: "15px",
-                width: "85%",
-                height: "48px",
-                backgroundColor: "#d97a6f",
-                color: "white",
-                border: "none",
-                fontWeight: 700,
-              }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              تعرفي على الفرصة
-            </motion.button>
-            <p
-              style={{ fontSize: "12px", color: "#999", marginTop: "12px", marginBottom: "0" }}
-            >
-              أكثر من 11000 امرأة بدأت رحلتها
-            </p>
+          {/* Glassy Card Container */}
+          <div
+            style={{
+              backgroundColor: "rgba(255, 255, 255, 0.75)",
+              backdropFilter: "blur(10px)",
+              borderRadius: "20px",
+              padding: "28px 20px",
+              border: "1px solid rgba(255, 255, 255, 0.3)",
+              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            {/* Title and Subtitle */}
+            <div style={{ marginBottom: "12px" }}>
+              <h2
+                className="fw-bold text-dark"
+                style={{
+                  fontSize: "24px",
+                  lineHeight: "1.3",
+                  fontWeight: 800,
+                  letterSpacing: "-0.5px",
+                  marginBottom: "6px",
+                }}
+              >
+                رحلتك لإطلاق
+                <br />
+                مشروعك تبدأ الآن
+              </h2>
+              <p
+                style={{
+                  fontSize: "13px",
+                  lineHeight: "1.4",
+                  color: "#666",
+                  fontWeight: 500,
+                  marginBottom: "4px",
+                }}
+              >
+                3 دقائق فقط... وتعرّفي فيها ..
+              </p>
+              <p
+                style={{
+                  fontSize: "13px",
+                  lineHeight: "1.4",
+                  color: "#666",
+                  fontWeight: 500,
+                }}
+              >
+                هل أنت جاهزة لإطلاق مشروعك ؟
+              </p>
+            </div>
+            {/* CTA Button and Social Proof */}
+            <div>
+              <motion.button
+                onClick={handleContinue}
+                className="fw-bold"
+                style={{
+                  borderRadius: "12px",
+                  fontSize: "15px",
+                  width: "85%",
+                  height: "48px",
+                  backgroundColor: "#d97a6f",
+                  color: "white",
+                  border: "none",
+                  fontWeight: 700,
+                }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                تعرفي على الفرصة
+              </motion.button>
+              <p
+                style={{ fontSize: "12px", color: "#999", marginTop: "12px", marginBottom: "0" }}
+              >
+                أكثر من 11000 امرأة بدأت رحلتها
+              </p>
+            </div>
           </div>
         </motion.div>
       )}
