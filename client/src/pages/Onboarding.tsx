@@ -1050,57 +1050,106 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-end"
-          style={{ paddingBottom: "40px" }}
+          className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
+          style={{
+            paddingTop: "0px",
+            paddingBottom: "140px",
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            minHeight: "100vh",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          <p
-            style={{
-              fontSize: "14px",
-              color: "#666",
-              marginBottom: "20px",
-              textAlign: "right",
-            }}
-          >
-            شاهدي فيديو راح يمكنك من عمل مشروعك
-          </p>
+          {/* Card Container */}
           <div
             style={{
-              marginBottom: "30px",
-              borderRadius: "12px",
-              overflow: "hidden",
+              backgroundColor: "rgba(255, 255, 255, 0.70)",
+              borderRadius: "20px",
+              padding: "48px 32px",
+              border: "1px solid rgba(200, 200, 200, 0.3)",
+              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
+              maxWidth: "450px",
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
             }}
           >
-            <iframe
-              width="100%"
-              height="300"
-              src={`https://www.youtube.com/embed/${selectedBrand ? brandVideos[selectedBrand] || "dJjFfRiy6E4" : "dJjFfRiy6E4"}`}
-              title="Mknooon Video"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              style={{ borderRadius: "12px" }}
-            />
+            {/* Subtitle */}
+            <p
+              style={{
+                fontSize: "14px",
+                color: "#666",
+                marginBottom: "20px",
+                marginTop: "0",
+                textAlign: "center",
+              }}
+            >
+              شاهدي فيديو راح يمكنك من عمل مشروعك
+            </p>
+
+            {/* Video Container */}
+            <div
+              style={{
+                marginBottom: "30px",
+                borderRadius: "12px",
+                overflow: "hidden",
+                width: "100%",
+              }}
+            >
+              <iframe
+                width="100%"
+                height="250"
+                src={`https://www.youtube.com/embed/${selectedBrand ? brandVideos[selectedBrand] || "dJjFfRiy6E4" : "dJjFfRiy6E4"}`}
+                title="Mknooon Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{ borderRadius: "12px" }}
+              />
+            </div>
+
+            {/* Title */}
+            <h3
+              style={{
+                fontSize: "18px",
+                fontWeight: 700,
+                textAlign: "center",
+                marginBottom: "30px",
+                marginTop: "0",
+                color: "#1a1a1a",
+              }}
+            >
+              مستقبلك بعد مشروعك .. أفضل
+            </h3>
+
+            {/* Continue Button */}
+            <motion.button
+              onClick={handleContinue}
+              style={{
+                padding: "14px 32px",
+                borderRadius: "12px",
+                border: "none",
+                backgroundColor: "#d97a6f",
+                color: "white",
+                fontSize: "16px",
+                fontWeight: 600,
+                cursor: "pointer",
+                width: "100%",
+                maxWidth: "280px",
+                margin: "0 auto",
+                display: "block",
+              }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              تعرفي على تكلفة الاشتراك 🚀
+            </motion.button>
           </div>
-          <h3
-            style={{
-              fontSize: "20px",
-              fontWeight: 700,
-              textAlign: "right",
-              marginBottom: "30px",
-              color: "#2D2D2D",
-            }}
-          >
-            مستقبلك بعد مشروعك .. أفضل
-          </h3>
-          <motion.button
-            onClick={handleContinue}
-            className="btn btn-dark fw-bold py-3 px-5"
-            style={{ borderRadius: "12px", fontSize: "16px", width: "100%" }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            تعرفي على تكلفة الاشتراك 🚀
-          </motion.button>
         </motion.div>
       )}
 
