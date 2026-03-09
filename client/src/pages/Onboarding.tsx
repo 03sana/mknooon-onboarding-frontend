@@ -321,6 +321,7 @@ export default function Onboarding() {
               width: "100%",
               gap: "16px",
               margin: "0 auto",
+              marginTop: "123px",
             }}
           >
             {/* Main Title */}
