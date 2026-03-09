@@ -407,7 +407,7 @@ export default function Onboarding() {
               paddingRight: "20px",
               minHeight: "100vh",
               width: "100%",
-              backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-bg-pattern-gtuN3TCCUfUab9ymxFpqgz.webp')",
+              backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), url('https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-bg-pattern-gtuN3TCCUfUab9ymxFpqgz.webp')",
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
@@ -423,9 +423,10 @@ export default function Onboarding() {
                 textAlign: "right",
                 marginBottom: "16px",
                 marginTop: "0",
+                lineHeight: "1.6",
               }}
             >
-              متى تفكرين تبدي المشروع ؟
+              لو كانت التفاصيل واضحة وسهلة<br />...متى حابة تطلقي مشروعك؟
             </h2>
 
             {/* Options */}
