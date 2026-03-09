@@ -290,7 +290,7 @@ export default function Onboarding() {
           }}
         >
           {/* App Name - Top */}
-          <div style={{ position: "absolute", top: "20px", left: "20px", right: "20px", textAlign: "center" }}>
+          <div style={{ position: "absolute", top: "40px", left: "0", right: "0", textAlign: "center", zIndex: 20 }}>
             <h1
               style={{
                 fontSize: "20px",
@@ -320,6 +320,7 @@ export default function Onboarding() {
               maxWidth: "85%",
               width: "100%",
               gap: "16px",
+              margin: "0 auto",
             }}
           >
             {/* Main Title */}
