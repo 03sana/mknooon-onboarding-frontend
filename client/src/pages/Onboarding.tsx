@@ -327,7 +327,7 @@ export default function Onboarding() {
             {/* Main Title */}
             <h2
               style={{
-                fontSize: "26px",
+                fontSize: "30px",
                 fontWeight: 800,
                 color: "#1a1a1a",
                 lineHeight: "1.35",
