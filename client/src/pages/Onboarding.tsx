@@ -820,99 +820,54 @@ export default function Onboarding() {
             تختاري شكل علامتك<br />أي شخصية أقرب لك؟
           </h2>
           {/* Brand Personality Cards */}
-          <div className="d-flex flex-column gap-3">
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px", width: "100%" }}>
             {[
               {
+                id: "luxury",
                 title: "فاخرة وفريدة",
                 subtitle: "أنيقة، راقية، فاخرة",
-                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-luxury-doodle-nkMcRsg7L5Kk3gxNmjhUJx.webp",
                 accentColor: "#D4AF37",
               },
               {
+                id: "modern",
                 title: "عصرية وملموسة",
                 subtitle: "حديثة، عصرية، ملموسة",
-                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-modern-doodle-aVa7twdnSf9ToPY6N6EvpG.webp",
                 accentColor: "#4A90E2",
               },
               {
+                id: "cozy",
                 title: "منزلية دافئة",
                 subtitle: "خصوصية، شخصية، دافئة",
-                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-cozy-doodle-UPxianzYRjTKXd9tQ6QShu.webp",
                 accentColor: "#8B6F47",
               },
-            ].map((option, idx) => (
+            ].map((option) => (
               <motion.button
-                key={idx}
+                key={option.id}
                 onClick={() => {
-                  handleAnswer(6, option.title);
+                  handleAnswer(6, option.id);
                   handleContinue();
                 }}
                 style={{
-                  padding: "16px",
+                  padding: "16px 16px 16px 20px",
                   borderRadius: "12px",
-                  border: answers[6] === option.title ? `2px solid ${option.accentColor}` : "2px solid #e0e0e0",
-                  backgroundColor: answers[6] === option.title ? "#FFF5F3" : "white",
+                  border: "1px solid #e0e0e0",
+                  borderLeft: answers[6] === option.id ? `4px solid ${option.accentColor}` : "4px solid transparent",
+                  backgroundColor: answers[6] === option.id ? "rgba(217, 122, 111, 0.05)" : "#f9f9f9",
                   display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
+                  alignItems: "flex-start",
+                  flexDirection: "column",
+                  gap: "4px",
                   direction: "rtl",
                   cursor: "pointer",
                   transition: "all 0.2s ease",
                   width: "100%",
+                  textAlign: "right",
                 }}
                 whileHover={{ scale: 1.02, backgroundColor: "#FFF5F3" }}
                 whileTap={{ scale: 0.98 }}
               >
-                {/* Illustration Doodle */}
-                <div
-                  style={{
-                    width: "72px",
-                    height: "72px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                  }}
-                >
-                  <img
-                    src={option.illustration}
-                    alt={option.title}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "contain",
-                    }}
-                  />
-                </div>
-                {/* Text Content */}
-                <div
-                  style={{
-                    flex: 1,
-                    textAlign: "right",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "4px",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: "16px",
-                      fontWeight: 600,
-                      color: "#333",
-                    }}
-                  >
-                    {option.title}
-                  </span>
-                  <span
-                    style={{
-                      fontSize: "13px",
-                      fontWeight: 400,
-                      color: "#666",
-                    }}
-                  >
-                    {option.subtitle}
-                  </span>
-                </div>
+                <div style={{ fontSize: "16px", fontWeight: 700, color: "#1a1a1a" }}>{option.title}</div>
+                <div style={{ fontSize: "12px", color: "#999", marginTop: "4px" }}>{option.subtitle}</div>
               </motion.button>
             ))}
           </div>
