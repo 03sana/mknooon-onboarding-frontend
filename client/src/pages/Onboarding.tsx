@@ -492,79 +492,80 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
+          className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
           style={{
-            paddingBottom: "40px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            height: "635px",
+            paddingTop: "0px",
+            paddingBottom: "140px",
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            minHeight: "100vh",
+            width: "100%",
           }}
         >
-          {/* Illustration */}
-          <div style={{ marginTop: "4px", marginBottom: "12px", display: "flex", alignItems: "center", justifyContent: "center", height: "126px" }}>
-            <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen3-illust_a2ce56ee.png"
-              alt="Income and financial goals"
-              style={{
-                maxWidth: "300px",
-                width: "100%",
-                height: "auto",
-                margin: "0 auto",
-                display: "block",
-              }}
-            />
-          </div>
-          {/* Question Text */}
+          {/* Question */}
           <h2
-            className="fw-bold text-dark"
             style={{
-              fontSize: "22px",
+              fontSize: "18px",
               fontWeight: 700,
+              color: "#1a1a1a",
               textAlign: "right",
-              marginBottom: "12px",
-              marginTop: "4px",
-              lineHeight: "1.3",
+              marginBottom: "16px",
+              marginTop: "0",
+              lineHeight: "1.6",
             }}
           >
-            لما يبدأ مشروعك بنجح ويحقق إيرادات .. كيف حالة يكون دخله بالنسبة لك؟
+            لما يبدأ مشروعك بنجح ويحقق إيرادات..<br />كيف حابة يكون دخله بالنسبة لك؟
           </h2>
-          {/* Option Cards */}
-          <div className="d-flex flex-column gap-3">
+
+          {/* Options */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px", width: "100%" }}>
             {[
-              { emoji: "💰", title: "يغطي مصاريفي الشخصية", subtitle: "استقلالية مالية" },
-              { emoji: "👨‍👩‍👧", title: "يساعدني في دعم عائلتي", subtitle: "دعم الأحبة" },
-              { emoji: "🎯", title: "يكون مشروع العمر", subtitle: "حلم كبير" },
-            ].map(option => (
+              { id: "personal", label: "يغطي مصاريفي الشخصية 💰", subtitle: "استقلالية مالية" },
+              { id: "family", label: "يساعدني في دعم عائلتي 👨‍👩‍👧", subtitle: "دعم الأحبة" },
+              { id: "dream", label: "يكون مشروع العمر 🎯", subtitle: "حلم كبير" },
+            ].map((option) => (
               <motion.button
-                key={option.title}
+                key={option.id}
                 onClick={() => {
-                  handleAnswer(3, option.title);
+                  handleAnswer(3, option.id);
                   handleContinue();
                 }}
                 style={{
-                  padding: "16px 16px",
+                  padding: "16px",
                   borderRadius: "12px",
-                  textAlign: "right",
-                  fontSize: "15px",
-                  direction: "rtl",
-                  display: "block",
-                  width: "100%",
-                  border: answers[3] === option.title ? "2px solid " + (selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F") : "1px solid #e0e0e0",
-                  backgroundColor: answers[3] === option.title ? "#FFF5F3" : "white",
-                  color: answers[3] === option.title ? (selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F") : "#333",
-                  fontWeight: 600,
+                  border: answers[3] === option.id ? "2px solid #d97a6f" : "1px solid #e0e0e0",
+                  backgroundColor: answers[3] === option.id ? "rgba(217, 122, 111, 0.1)" : "#f9f9f9",
                   cursor: "pointer",
+                  textAlign: "right",
                   transition: "all 0.2s ease",
-                  boxShadow: answers[3] === option.title ? "0 2px 8px rgba(217, 122, 111, 0.15)" : "0 1px 3px rgba(0,0,0,0.05)",
                 }}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ backgroundColor: "rgba(217, 122, 111, 0.05)" }}
                 whileTap={{ scale: 0.98 }}
               >
-                <span style={{ marginLeft: "8px" }}>{option.emoji}</span>
-                {option.title}
-                <div style={{ fontSize: "13px", fontWeight: 500, color: answers[3] === option.title ? (selectedBrand ? (brandColors[selectedBrand] || "#D97A6F") : "#D97A6F") : "#999", marginTop: "4px" }}>{option.subtitle}</div>
+                <div style={{ fontSize: "16px", fontWeight: 700, color: "#1a1a1a" }}>{option.label}</div>
+                <div style={{ fontSize: "12px", color: "#999", marginTop: "4px" }}>{option.subtitle}</div>
               </motion.button>
             ))}
+          </div>
+
+          {/* Navigation */}
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px", width: "100%" }}>
+            <motion.button
+              onClick={handleBack}
+              style={{
+                padding: "10px 20px",
+                borderRadius: "8px",
+                border: "1px solid #e0e0e0",
+                backgroundColor: "white",
+                cursor: "pointer",
+                fontSize: "14px",
+                fontWeight: 600,
+                color: "#666",
+              }}
+              whileHover={{ backgroundColor: "#f5f5f5" }}
+            >
+              رجوع
+            </motion.button>
           </div>
         </motion.div>
       )}
