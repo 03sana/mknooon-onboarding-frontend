@@ -399,30 +399,40 @@ export default function Onboarding() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-end"
+            className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
             style={{
-              paddingTop: "16px",
-              paddingBottom: "20px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-start",
+              paddingTop: "24px",
+              paddingBottom: "24px",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              minHeight: "100vh",
+              width: "100%",
+              backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-bg-pattern-gtuN3TCCUfUab9ymxFpqgz.webp')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundAttachment: "fixed",
             }}
           >
-            {/* Illustration */}
-            <div style={{ marginTop: "4px", marginBottom: "12px", display: "flex", alignItems: "center", justifyContent: "center", height: "140px" }}>
-              <img
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen2-illust_cdf593c1.png"
-                alt="Planning and timing"
-                style={{
-                  maxWidth: "240px",
-                  width: "100%",
-                  height: "auto",
-                  margin: "0 auto",
-                  display: "block",
-                }}
-              />
-            </div>
-
+            {/* Card Container */}
+            <div
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.85)",
+                borderRadius: "28px",
+                padding: "48px 28px",
+                border: "1px solid rgba(200, 200, 200, 0.3)",
+                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
+                minHeight: "auto",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                maxWidth: "85%",
+                width: "100%",
+                gap: "16px",
+              }}
+            >
             {/* Question */}
             <h2
               style={{
@@ -438,7 +448,7 @@ export default function Onboarding() {
             </h2>
 
             {/* Options */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px", width: "100%" }}>
               {[
                 { id: "now", label: "الآن 🚀", subtitle: "أنا جاهزة!" },
                 { id: "month", label: "خلال شهر 📅", subtitle: "بحاجة لتحضيرات" },
@@ -470,7 +480,7 @@ export default function Onboarding() {
             </div>
 
             {/* Navigation */}
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px", width: "100%" }}>
               <motion.button
                 onClick={handleBack}
                 style={{
@@ -487,6 +497,7 @@ export default function Onboarding() {
               >
                 رجوع
               </motion.button>
+            </div>
             </div>
           </motion.div>
         )}
