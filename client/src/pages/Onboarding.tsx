@@ -1164,7 +1164,7 @@ export default function Onboarding() {
             justifyContent: "center",
             alignItems: "center",
             minHeight: "100vh",
-            padding: "20px",
+            padding: "0px 20px",
           }}
         >
           <div
@@ -1337,7 +1337,7 @@ export default function Onboarding() {
             justifyContent: "center",
             alignItems: "center",
             minHeight: "100vh",
-            padding: "20px",
+            padding: "0px 20px",
             overflowY: "auto",
           }}
         >
