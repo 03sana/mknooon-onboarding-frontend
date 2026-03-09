@@ -904,13 +904,21 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center"
-          style={{ paddingBottom: "40px" }}
+          className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
+          style={{
+            paddingTop: "0px",
+            paddingBottom: "140px",
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            minHeight: "100vh",
+            width: "100%",
+          }}
         >
-          <motion.div style={{ marginBottom: "20px" }}>
+          {/* Circular Progress */}
+          <motion.div style={{ marginBottom: "32px" }}>
             <svg
-              width="140"
-              height="140"
+              width="160"
+              height="160"
               viewBox="0 0 200 200"
               style={{ margin: "0 auto", display: "block" }}
             >
@@ -927,7 +935,7 @@ export default function Onboarding() {
                 cy="100"
                 r="90"
                 fill="none"
-                stroke="#2D2D2D"
+                stroke="#d97a6f"
                 strokeWidth="8"
                 strokeLinecap="round"
                 initial={{
@@ -937,24 +945,59 @@ export default function Onboarding() {
                 animate={{ strokeDashoffset: "141.37px" }}
                 transition={{ duration: 2, ease: "easeInOut" }}
               />
+              <text
+                x="100"
+                y="110"
+                textAnchor="middle"
+                fontSize="48"
+                fontWeight="700"
+                fill="#1a1a1a"
+              >
+                75%
+              </text>
             </svg>
           </motion.div>
+
+          {/* Title and Message */}
           <h2
-            className="fw-bold text-dark mb-2"
-            style={{ fontSize: "36px", fontWeight: 700 }}
+            style={{
+              fontSize: "22px",
+              fontWeight: 700,
+              color: "#1a1a1a",
+              textAlign: "center",
+              marginBottom: "8px",
+              marginTop: "0",
+            }}
           >
-            75%
+            جاهزيتك عالية جداً! 🎉
           </h2>
-          <p className="text-muted mb-4" style={{ fontSize: "16px" }}>
-            جاهزيتك عالية جداً!
+          <p
+            style={{
+              fontSize: "14px",
+              color: "#666",
+              textAlign: "center",
+              marginBottom: "32px",
+              marginTop: "0",
+              maxWidth: "350px",
+            }}
+          >
+            أنتِ مستعدة لبدء رحلتك وتحقيق أحلامك في عالم الأعمال
           </p>
+
+          {/* Continue Button */}
           <motion.button
             onClick={() => handleContinue()}
-            className="btn btn-dark fw-bold w-100"
             style={{
+              padding: "14px 32px",
               borderRadius: "12px",
-              padding: "12px 20px",
+              border: "none",
+              backgroundColor: "#d97a6f",
+              color: "white",
               fontSize: "16px",
+              fontWeight: 600,
+              cursor: "pointer",
+              width: "100%",
+              maxWidth: "280px",
             }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
