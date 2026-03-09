@@ -1650,58 +1650,111 @@ export default function Onboarding() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-end"
-          style={{ paddingBottom: "40px" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+            padding: "20px",
+          }}
         >
-          <h2
-            className="fw-bold text-dark mb-4"
+          <div
             style={{
-              fontSize: "24px",
-              fontWeight: 700,
+              backgroundColor: "rgba(255, 255, 255, 0.70)",
+              borderRadius: "20px",
+              padding: "40px 32px",
+              border: "1px solid rgba(200, 200, 200, 0.3)",
+              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
+              maxWidth: "450px",
+              width: "100%",
               textAlign: "right",
-              lineHeight: "1.5",
             }}
           >
-            اختاري طريقة الدفع
-          </h2>
+            <motion.h2
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="fw-bold text-dark mb-4"
+              style={{
+                fontSize: "24px",
+                fontWeight: 700,
+                textAlign: "right",
+                lineHeight: "1.5",
+                direction: "rtl",
+              }}
+            >
+              اختاري طريقة الدفع
+            </motion.h2>
 
-          {loading && (
-            <p style={{ textAlign: "center", color: "#666" }}>
-              جاري التحميل...
-            </p>
-          )}
+            {loading && (
+              <p style={{ textAlign: "center", color: "#666" }}>
+                جاري التحميل...
+              </p>
+            )}
 
-          {!loading && paymentMethods.length > 0 && (
-            <div className="d-flex flex-column gap-3">
-              {paymentMethods.map(method => (
-                <motion.button
-                  key={method.id}
-                  onClick={() => handlePaymentMethodSelect(method)}
-                  className="btn py-3 fw-bold text-end"
-                  style={{
-                    borderRadius: "12px",
-                    textAlign: "right",
-                    direction: "rtl",
-                    display: "block",
-                    width: "100%",
-                    backgroundColor: "#F8F7F5",
-                    color: "#2D2D2D",
-                    border: "1.5px solid #E8E4DC",
-                  }}
-                  whileHover={{ scale: 1.02, backgroundColor: "#F0EAE0" }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {method.name}
-                </motion.button>
-              ))}
-            </div>
-          )}
+            {!loading && paymentMethods.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className="d-flex flex-column gap-3"
+              >
+                {paymentMethods.map((method, index) => (
+                  <motion.button
+                    key={method.id}
+                    onClick={() => handlePaymentMethodSelect(method)}
+                    className="btn py-3 fw-bold text-end"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
+                    style={{
+                      borderRadius: "12px",
+                      textAlign: "right",
+                      direction: "rtl",
+                      display: "block",
+                      width: "100%",
+                      backgroundColor: selectedPaymentMethod?.id === method.id ? "#d97a6f" : "#F8F7F5",
+                      color: selectedPaymentMethod?.id === method.id ? "#fff" : "#2D2D2D",
+                      border: selectedPaymentMethod?.id === method.id ? "1.5px solid #d97a6f" : "1.5px solid #E8E4DC",
+                      fontWeight: 600,
+                    }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    {method.name}
+                  </motion.button>
+                ))}
+              </motion.div>
+            )}
 
-          {!loading && paymentMethods.length === 0 && (
-            <p style={{ textAlign: "center", color: "#999" }}>
-              لا توجد طرق دفع متاحة
-            </p>
-          )}
+            {!loading && paymentMethods.length === 0 && (
+              <p style={{ textAlign: "center", color: "#999" }}>
+                لا توجد طرق دفع متاحة
+              </p>
+            )}
+
+            {selectedPaymentMethod && (
+              <motion.button
+                onClick={() => setCurrentStep(13)}
+                className="btn fw-bold py-3 px-5 w-100 mt-4"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+                style={{
+                  borderRadius: "12px",
+                  fontSize: "16px",
+                  backgroundColor: "#d97a6f",
+                  color: "#fff",
+                  border: "none",
+                  fontWeight: 600,
+                }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                متابعة
+              </motion.button>
+            )}
+          </div>
         </motion.div>
       )}
 
