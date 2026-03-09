@@ -1654,8 +1654,8 @@ export default function Onboarding() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            minHeight: "100vh",
             padding: "20px",
+            overflowY: "auto",
           }}
         >
           <div
@@ -1667,27 +1667,39 @@ export default function Onboarding() {
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
               maxWidth: "450px",
               width: "100%",
-              textAlign: "right",
+              marginBottom: "40px",
             }}
           >
+            {/* Title */}
             <motion.h2
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="fw-bold text-dark mb-4"
+              className="fw-bold text-dark mb-2"
               style={{
                 fontSize: "24px",
                 fontWeight: 700,
                 textAlign: "right",
-                lineHeight: "1.5",
                 direction: "rtl",
+                lineHeight: "1.5",
               }}
             >
               اختاري طريقة الدفع
             </motion.h2>
+            <p
+              style={{
+                fontSize: "14px",
+                color: "#666",
+                marginBottom: "24px",
+                textAlign: "right",
+                direction: "rtl",
+              }}
+            >
+              اختاري الطريقة المناسبة لك
+            </p>
 
             {loading && (
-              <p style={{ textAlign: "center", color: "#666" }}>
+              <p style={{ textAlign: "center", color: "#666", padding: "20px" }}>
                 جاري التحميل...
               </p>
             )}
@@ -1697,28 +1709,48 @@ export default function Onboarding() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
-                className="d-flex flex-column gap-3"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "12px",
+                }}
               >
                 {paymentMethods.map((method, index) => (
                   <motion.button
                     key={method.id}
                     onClick={() => handlePaymentMethodSelect(method)}
-                    className="btn py-3 fw-bold text-end"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
+                    className="btn fw-bold py-3 px-4"
                     style={{
                       borderRadius: "12px",
                       textAlign: "right",
                       direction: "rtl",
-                      display: "block",
                       width: "100%",
-                      backgroundColor: selectedPaymentMethod?.id === method.id ? "#d97a6f" : "#F8F7F5",
-                      color: selectedPaymentMethod?.id === method.id ? "#fff" : "#2D2D2D",
-                      border: selectedPaymentMethod?.id === method.id ? "1.5px solid #d97a6f" : "1.5px solid #E8E4DC",
+                      backgroundColor:
+                        selectedPaymentMethod?.id === method.id
+                          ? "#d97a6f"
+                          : "#F8F7F5",
+                      color:
+                        selectedPaymentMethod?.id === method.id
+                          ? "#fff"
+                          : "#2D2D2D",
+                      border:
+                        selectedPaymentMethod?.id === method.id
+                          ? "2px solid #d97a6f"
+                          : "1.5px solid #E8E4DC",
                       fontWeight: 600,
+                      fontSize: "16px",
+                      transition: "all 0.3s ease",
                     }}
-                    whileHover={{ scale: 1.02 }}
+                    whileHover={{
+                      scale: 1.02,
+                      backgroundColor:
+                        selectedPaymentMethod?.id === method.id
+                          ? "#d97a6f"
+                          : "#F0EAE0",
+                    }}
                     whileTap={{ scale: 0.98 }}
                   >
                     {method.name}
@@ -1728,7 +1760,7 @@ export default function Onboarding() {
             )}
 
             {!loading && paymentMethods.length === 0 && (
-              <p style={{ textAlign: "center", color: "#999" }}>
+              <p style={{ textAlign: "center", color: "#999", padding: "20px" }}>
                 لا توجد طرق دفع متاحة
               </p>
             )}
@@ -1736,10 +1768,10 @@ export default function Onboarding() {
             {selectedPaymentMethod && (
               <motion.button
                 onClick={() => setCurrentStep(13)}
-                className="btn fw-bold py-3 px-5 w-100 mt-4"
+                className="btn fw-bold py-3 px-4 w-100 mt-3"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.5 }}
+                transition={{ delay: 0.5, duration: 0.4 }}
                 style={{
                   borderRadius: "12px",
                   fontSize: "16px",
