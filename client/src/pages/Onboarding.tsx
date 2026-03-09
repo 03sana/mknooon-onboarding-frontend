@@ -1305,6 +1305,24 @@ export default function Onboarding() {
               </motion.div>
             )}
           </div>
+          <motion.button
+            onClick={handleContinue}
+            disabled={!answers[9]}
+            className="btn btn-dark fw-bold py-3 px-5"
+            style={{
+              borderRadius: "12px",
+              fontSize: "16px",
+              width: "100%",
+              marginTop: "20px",
+              opacity: !answers[9] ? 0.5 : 1,
+              backgroundColor: "#d97a6f",
+              border: "none",
+            }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            متابعة
+          </motion.button>
           </div>
         </motion.div>
       )}
