@@ -407,8 +407,8 @@ export default function Onboarding() {
             animate={{ opacity: 1, y: 0 }}
             className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
             style={{
-              paddingTop: "24px",
-              paddingBottom: "24px",
+              paddingTop: "0px",
+              paddingBottom: "140px",
               paddingLeft: "20px",
               paddingRight: "20px",
               minHeight: "100vh",
