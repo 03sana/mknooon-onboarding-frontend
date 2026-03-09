@@ -208,8 +208,8 @@ export default function Onboarding() {
     window.open("https://wa.me/905344258184", "_blank");
   };
 
-  // Get progress percentage (based on 14 main screens)
-  const progressPercentage = (currentStep / 14) * 100;
+  // Get progress percentage (based on 15 main screens)
+  const progressPercentage = (currentStep / 15) * 100;
 
   return (
     <>
