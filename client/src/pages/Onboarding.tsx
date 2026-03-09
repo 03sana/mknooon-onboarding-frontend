@@ -826,18 +826,21 @@ export default function Onboarding() {
                 id: "luxury",
                 title: "فاخرة وفريدة",
                 subtitle: "أنيقة، راقية، فاخرة",
+                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-luxury-doodle-nkMcRsg7L5Kk3gxNmjhUJx.webp",
                 accentColor: "#D4AF37",
               },
               {
                 id: "modern",
                 title: "عصرية وملموسة",
                 subtitle: "حديثة، عصرية، ملموسة",
+                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-modern-doodle-aVa7twdnSf9ToPY6N6EvpG.webp",
                 accentColor: "#4A90E2",
               },
               {
                 id: "cozy",
                 title: "منزلية دافئة",
                 subtitle: "خصوصية، شخصية، دافئة",
+                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-cozy-doodle-UPxianzYRjTKXd9tQ6QShu.webp",
                 accentColor: "#8B6F47",
               },
             ].map((option) => (
@@ -848,26 +851,48 @@ export default function Onboarding() {
                   handleContinue();
                 }}
                 style={{
-                  padding: "16px 16px 16px 20px",
+                  padding: "16px",
                   borderRadius: "12px",
-                  border: "1px solid #e0e0e0",
-                  borderLeft: answers[6] === option.id ? `4px solid ${option.accentColor}` : "4px solid transparent",
-                  backgroundColor: answers[6] === option.id ? "rgba(217, 122, 111, 0.05)" : "#f9f9f9",
+                  border: answers[6] === option.id ? `2px solid ${option.accentColor}` : "2px solid #e0e0e0",
+                  backgroundColor: answers[6] === option.id ? "rgba(255, 255, 255, 0.9)" : "white",
                   display: "flex",
-                  alignItems: "flex-start",
-                  flexDirection: "column",
-                  gap: "4px",
+                  alignItems: "center",
+                  gap: "12px",
                   direction: "rtl",
                   cursor: "pointer",
                   transition: "all 0.2s ease",
                   width: "100%",
-                  textAlign: "right",
                 }}
-                whileHover={{ scale: 1.02, backgroundColor: "#FFF5F3" }}
+                whileHover={{ scale: 1.02, boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }}
                 whileTap={{ scale: 0.98 }}
               >
-                <div style={{ fontSize: "16px", fontWeight: 700, color: "#1a1a1a" }}>{option.title}</div>
-                <div style={{ fontSize: "12px", color: "#999", marginTop: "4px" }}>{option.subtitle}</div>
+                <div
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                    borderRadius: "8px",
+                    backgroundColor: `${option.accentColor}15`,
+                  }}
+                >
+                  <img
+                    src={option.illustration}
+                    alt={option.title}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "contain",
+                      padding: "8px",
+                    }}
+                  />
+                </div>
+                <div style={{ flex: 1, textAlign: "right", display: "flex", flexDirection: "column", gap: "4px" }}>
+                  <div style={{ fontSize: "16px", fontWeight: 700, color: "#1a1a1a" }}>{option.title}</div>
+                  <div style={{ fontSize: "12px", color: "#999" }}>{option.subtitle}</div>
+                </div>
               </motion.button>
             ))}
           </div>
