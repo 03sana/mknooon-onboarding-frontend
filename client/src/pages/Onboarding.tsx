@@ -187,11 +187,10 @@ export default function Onboarding() {
     setSelectedPaymentMethod(method);
     handleAnswer(13, method.code);
 
-    if (method.code === "visa" || method.code === "mastercard") {
-      setCurrentStep(14);
-    } else {
-      // Navigate immediately for better UX
-      setCurrentStep(13);
+    // Navigate to Screen 13 for all payment methods
+    setCurrentStep(13);
+
+    if (method.code !== "visa" && method.code !== "mastercard") {
       
       // Fetch payment instructions in parallel (non-blocking)
       if (selectedCountry) {
@@ -1840,7 +1839,7 @@ export default function Onboarding() {
               >
                 أدخل تفاصيل بطاقتك الآمنة
               </p>
-              {priceData && selectedCountry && (
+              {priceData && selectedCountry ? (
                 <StripePaymentFormWrapper
                   amount={priceData.price}
                   currency={priceData.currency_symbol}
@@ -1855,6 +1854,10 @@ export default function Onboarding() {
                     console.error("Payment error:", error);
                   }}
                 />
+              ) : (
+                <p style={{ textAlign: "center", color: "#666", padding: "20px" }}>
+                  جاري تحميل تفاصيل الدفع...
+                </p>
               )}
             </>
           ) : (
