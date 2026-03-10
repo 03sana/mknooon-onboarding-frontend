@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const API_BASE_URL =
@@ -16,6 +16,12 @@ interface StripePaymentFormProps {
   isLoading?: boolean;
 }
 
+declare global {
+  interface Window {
+    Stripe: any;
+  }
+}
+
 export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
   amount,
   currency,
@@ -29,15 +35,56 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiry, setExpiry] = useState("");
-  const [cvc, setCvc] = useState("");
+  const [stripe, setStripe] = useState<any>(null);
+  const [elements, setElements] = useState<any>(null);
+  const [cardElement, setCardElement] = useState<any>(null);
+
+  // Initialize Stripe
+  useEffect(() => {
+    if (!window.Stripe) {
+      setError("Stripe library failed to load");
+      return;
+    }
+
+    const stripePublishableKey =
+      import.meta.env.VITE_STRIPE_PUBLIC_KEY ||
+      "pk_test_51ScO1gJygXhmYqTbbrOpQ9fzopMyPhyZB2zUnRxgFBHccuNlYd7LVh63ee9g0TtKXrKJUsgwvaEzxtUPV0z3xVgJ00KXGM3Lt8";
+
+    const stripeInstance = window.Stripe(stripePublishableKey);
+    setStripe(stripeInstance);
+
+    const elementsInstance = stripeInstance.elements();
+    setElements(elementsInstance);
+
+    const card = elementsInstance.create("card", {
+      style: {
+        base: {
+          fontSize: "16px",
+          color: "#2D2D2D",
+          fontFamily: "Cairo, sans-serif",
+          "::placeholder": {
+            color: "#999",
+          },
+        },
+        invalid: {
+          color: "#d32f2f",
+        },
+      },
+    });
+
+    card.mount("#card-element");
+    setCardElement(card);
+
+    return () => {
+      card.unmount();
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!cardNumber || !expiry || !cvc) {
-      setError("Please fill in all card details");
+    if (!stripe || !cardElement) {
+      setError("Payment system not ready");
       return;
     }
 
@@ -46,7 +93,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
 
     try {
       // Step 1: Create Payment Intent on backend
-      const response = await fetch(
+      const intentResponse = await fetch(
         `${API_BASE_URL}/stripe/create-payment-intent`,
         {
           method: "POST",
@@ -64,39 +111,62 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         }
       );
 
-      if (!response.ok) {
+      if (!intentResponse.ok) {
         throw new Error("Failed to create payment intent");
       }
 
-      const { client_secret, payment_intent_id } = await response.json();
+      const { client_secret, payment_intent_id } =
+        await intentResponse.json();
 
-      // Step 2: Simulate payment processing
-      // In production, you would use Stripe.js here
-      // For now, we'll confirm the payment directly
-      const confirmResponse = await fetch(
-        `${API_BASE_URL}/stripe/confirm-payment`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+      // Step 2: Confirm payment with card details using Stripe.js
+      const { error: stripeError, paymentIntent } =
+        await stripe.confirmCardPayment(client_secret, {
+          payment_method: {
+            card: cardElement,
+            billing_details: {
+              name: userName,
+              email: userEmail,
+            },
           },
-          body: JSON.stringify({
-            payment_intent_id: payment_intent_id,
-          }),
-        }
-      );
+        });
 
-      if (!confirmResponse.ok) {
-        throw new Error("Failed to confirm payment");
+      if (stripeError) {
+        setError(stripeError.message);
+        onError(stripeError.message);
+        setLoading(false);
+        return;
       }
 
-      const confirmData = await confirmResponse.json();
+      if (paymentIntent.status === "succeeded") {
+        // Step 3: Confirm on backend
+        const confirmResponse = await fetch(
+          `${API_BASE_URL}/stripe/confirm-payment`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              payment_intent_id: payment_intent_id,
+            }),
+          }
+        );
 
-      if (confirmData.success) {
-        onSuccess(payment_intent_id);
+        if (!confirmResponse.ok) {
+          throw new Error("Failed to confirm payment");
+        }
+
+        const confirmData = await confirmResponse.json();
+
+        if (confirmData.success) {
+          onSuccess(payment_intent_id);
+        } else {
+          setError(confirmData.error || "Payment confirmation failed");
+          onError(confirmData.error || "Payment confirmation failed");
+        }
       } else {
-        setError(confirmData.error || "Payment confirmation failed");
-        onError(confirmData.error || "Payment confirmation failed");
+        setError(`Payment status: ${paymentIntent.status}`);
+        onError(`Payment status: ${paymentIntent.status}`);
       }
     } catch (err) {
       const errorMessage =
@@ -106,31 +176,6 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     } finally {
       setLoading(false);
     }
-  };
-
-  const formatCardNumber = (value: string) => {
-    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
-    const matches = v.match(/\d{4,16}/g);
-    const match = (matches && matches[0]) || "";
-    const parts = [];
-
-    for (let i = 0, len = match.length; i < len; i += 4) {
-      parts.push(match.substring(i, i + 4));
-    }
-
-    if (parts.length) {
-      return parts.join(" ");
-    } else {
-      return value;
-    }
-  };
-
-  const formatExpiry = (value: string) => {
-    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
-    if (v.length >= 2) {
-      return v.slice(0, 2) + "/" + v.slice(2, 4);
-    }
-    return v;
   };
 
   return (
@@ -146,89 +191,18 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
             color: "#2D2D2D",
           }}
         >
-          رقم البطاقة
+          تفاصيل البطاقة
         </label>
-        <input
-          type="text"
-          value={cardNumber}
-          onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
-          placeholder="1234 5678 9012 3456"
-          maxLength="19"
+        <div
+          id="card-element"
           style={{
-            width: "100%",
             padding: "12px",
             borderRadius: "8px",
             border: "1px solid #ddd",
-            fontSize: "16px",
-            textAlign: "center",
-            boxSizing: "border-box",
+            backgroundColor: "#fff",
+            minHeight: "40px",
           }}
         />
-      </div>
-
-      <div style={{ display: "flex", gap: "12px", marginBottom: "20px" }}>
-        <div style={{ flex: 1 }}>
-          <label
-            style={{
-              display: "block",
-              fontSize: "14px",
-              fontWeight: 600,
-              marginBottom: "8px",
-              textAlign: "right",
-              color: "#2D2D2D",
-            }}
-          >
-            انتهاء الصلاحية
-          </label>
-          <input
-            type="text"
-            value={expiry}
-            onChange={(e) => setExpiry(formatExpiry(e.target.value))}
-            placeholder="MM/YY"
-            maxLength="5"
-            style={{
-              width: "100%",
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1px solid #ddd",
-              fontSize: "16px",
-              textAlign: "center",
-              boxSizing: "border-box",
-            }}
-          />
-        </div>
-        <div style={{ flex: 1 }}>
-          <label
-            style={{
-              display: "block",
-              fontSize: "14px",
-              fontWeight: 600,
-              marginBottom: "8px",
-              textAlign: "right",
-              color: "#2D2D2D",
-            }}
-          >
-            CVC
-          </label>
-          <input
-            type="text"
-            value={cvc}
-            onChange={(e) =>
-              setCvc(e.target.value.replace(/[^0-9]/gi, "").slice(0, 4))
-            }
-            placeholder="123"
-            maxLength="4"
-            style={{
-              width: "100%",
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1px solid #ddd",
-              fontSize: "16px",
-              textAlign: "center",
-              boxSizing: "border-box",
-            }}
-          />
-        </div>
       </div>
 
       {error && (
@@ -249,23 +223,27 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
 
       <motion.button
         type="submit"
-        disabled={loading || isLoading}
+        disabled={loading || isLoading || !stripe}
         style={{
           width: "100%",
           padding: "12px 20px",
           borderRadius: "12px",
           border: "none",
-          backgroundColor: loading || isLoading ? "#ccc" : "#d97a6f",
+          backgroundColor:
+            loading || isLoading || !stripe ? "#ccc" : "#d97a6f",
           color: "#fff",
           fontSize: "16px",
           fontWeight: 600,
-          cursor: loading || isLoading ? "not-allowed" : "pointer",
-          opacity: loading || isLoading ? 0.6 : 1,
+          cursor:
+            loading || isLoading || !stripe ? "not-allowed" : "pointer",
+          opacity: loading || isLoading || !stripe ? 0.6 : 1,
         }}
-        whileHover={!loading && !isLoading ? { scale: 1.02 } : {}}
-        whileTap={!loading && !isLoading ? { scale: 0.98 } : {}}
+        whileHover={!loading && !isLoading && stripe ? { scale: 1.02 } : {}}
+        whileTap={!loading && !isLoading && stripe ? { scale: 0.98 } : {}}
       >
-        {loading || isLoading ? "جاري المعالجة..." : `ادفع ${amount} ${currency}`}
+        {loading || isLoading
+          ? "جاري المعالجة..."
+          : `ادفع ${amount} ${currency}`}
       </motion.button>
     </form>
   );
