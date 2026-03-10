@@ -1136,7 +1136,7 @@ export default function Onboarding() {
                 border: "none",
                 backgroundColor: "#d97a6f",
                 color: "white",
-                fontSize: "16px",
+                fontSize: "14px",
                 fontWeight: 600,
                 cursor: "pointer",
                 width: "100%",
