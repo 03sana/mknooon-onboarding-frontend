@@ -2341,10 +2341,10 @@ export default function Onboarding() {
                       let message =
                         paymentInstructions.receipt_whatsapp.prefill;
                       
-                      // Add price information if available
+                      // Add price information if available with proper RTL formatting
                       if (priceData && priceData.price) {
-                        const priceWithCurrency = `${selectedCountry?.currency_symbol || ""}${priceData.price}`;
-                        message += `\n\nالسعر المدفوع: ${priceWithCurrency}`;
+                        const priceWithCurrency = `${priceData.price} ${selectedCountry?.currency_symbol || ""}`;
+                        message += `\n\u200f\nالسعر المدفوع: ${priceWithCurrency}`;
                       }
                       
                       const phone =
