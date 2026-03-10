@@ -182,25 +182,25 @@ export default function Onboarding() {
     setIsDropdownOpen(false);
   };
 
-  const handlePaymentMethodSelect = async (method: PaymentMethod) => {
+  const handlePaymentMethodSelect = (method: PaymentMethod) => {
     setSelectedPaymentMethod(method);
     handleAnswer(13, method.code);
 
     if (method.code === "visa") {
       setCurrentStep(14);
     } else {
-      if (selectedCountry) {
-        try {
-          const response = await fetch(
-            `${API_BASE_URL}/payment-instructions?country=${selectedCountry.code}&method=${method.code}&src=${selectedBrand || "Mknooon"}`
-          );
-          const data = await response.json();
-          setPaymentInstructions(data);
-        } catch (error) {
-          console.error("Error fetching payment instructions:", error);
-        }
-      }
+      // Navigate immediately for better UX
       setCurrentStep(13);
+      
+      // Fetch payment instructions in parallel (non-blocking)
+      if (selectedCountry) {
+        fetch(
+          `${API_BASE_URL}/payment-instructions?country=${selectedCountry.code}&method=${method.code}&src=${selectedBrand || "Mknooon"}`
+        )
+          .then((response) => response.json())
+          .then((data) => setPaymentInstructions(data))
+          .catch((error) => console.error("Error fetching payment instructions:", error));
+      }
     }
   };
 
