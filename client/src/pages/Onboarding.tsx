@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { StripePaymentFormWrapper } from "../components/StripePaymentForm";
 
 interface Country {
   id: number;
@@ -186,7 +187,7 @@ export default function Onboarding() {
     setSelectedPaymentMethod(method);
     handleAnswer(13, method.code);
 
-    if (method.code === "visa") {
+    if (method.code === "visa" || method.code === "mastercard") {
       setCurrentStep(14);
     } else {
       // Navigate immediately for better UX
@@ -1816,7 +1817,7 @@ export default function Onboarding() {
               textAlign: "right",
             }}
           >
-            {selectedPaymentMethod.code === "visa" ? (
+            {selectedPaymentMethod.code === "visa" || selectedPaymentMethod.code === "mastercard" ? (
               <>
               <h2
                 className="fw-bold text-dark mb-4"
@@ -1827,7 +1828,7 @@ export default function Onboarding() {
                   lineHeight: "1.5",
                 }}
               >
-                الدفع عبر Stripe
+                الدفع عبر البطاقة
               </h2>
               <p
                 style={{
@@ -1837,21 +1838,24 @@ export default function Onboarding() {
                   marginBottom: "20px",
                 }}
               >
-                سيتم تحويلك إلى صفحة الدفع الآمنة
+                أدخل تفاصيل بطاقتك الآمنة
               </p>
-              <motion.button
-                onClick={() => setCurrentStep(15)}
-                className="btn btn-dark fw-bold w-100 mt-4"
-                style={{
-                  borderRadius: "12px",
-                  padding: "12px 20px",
-                  fontSize: "16px",
-                }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                الانتقال إلى الدفع
-              </motion.button>
+              {priceData && selectedCountry && (
+                <StripePaymentFormWrapper
+                  amount={priceData.price}
+                  currency={priceData.currency_symbol}
+                  brand={selectedBrand || "Mknooon"}
+                  countryCode={selectedCountry.code}
+                  userName={deliveryForm.full_name || "Customer"}
+                  userEmail={deliveryForm.phone || "customer@example.com"}
+                  onSuccess={(paymentIntentId) => {
+                    setCurrentStep(15);
+                  }}
+                  onError={(error) => {
+                    console.error("Payment error:", error);
+                  }}
+                />
+              )}
             </>
           ) : (
             <>
