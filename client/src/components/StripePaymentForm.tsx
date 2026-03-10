@@ -265,7 +265,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         whileHover={!loading && !isLoading ? { scale: 1.02 } : {}}
         whileTap={!loading && !isLoading ? { scale: 0.98 } : {}}
       >
-        {loading || isLoading ? "جاري المعالجة..." : `ادفع ${currency} ${amount}`}
+        {loading || isLoading ? "جاري المعالجة..." : `ادفع ${amount} ${currency}`}
       </motion.button>
     </form>
   );

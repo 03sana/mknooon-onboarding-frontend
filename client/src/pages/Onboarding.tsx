@@ -1842,7 +1842,7 @@ export default function Onboarding() {
               {priceData && selectedCountry ? (
                 <StripePaymentFormWrapper
                   amount={priceData.price}
-                  currency={priceData.currency_symbol}
+                  currency={priceData.currency}
                   brand={selectedBrand || "Mknooon"}
                   countryCode={selectedCountry.code}
                   userName={deliveryForm.full_name || "Customer"}
