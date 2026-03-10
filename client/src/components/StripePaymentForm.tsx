@@ -37,7 +37,9 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [stripe, setStripe] = useState<any>(null);
   const [elements, setElements] = useState<any>(null);
-  const [cardElement, setCardElement] = useState<any>(null);
+  const [cardNumberElement, setCardNumberElement] = useState<any>(null);
+  const [cardExpiryElement, setCardExpiryElement] = useState<any>(null);
+  const [cardCvcElement, setCardCvcElement] = useState<any>(null);
 
   // Initialize Stripe
   useEffect(() => {
@@ -56,7 +58,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     const elementsInstance = stripeInstance.elements();
     setElements(elementsInstance);
 
-    const card = elementsInstance.create("card", {
+    const elementStyle = {
       style: {
         base: {
           fontSize: "16px",
@@ -70,20 +72,58 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
           color: "#d32f2f",
         },
       },
+    };
+
+    // Create separate elements
+    const cardNumber = elementsInstance.create("cardNumber", elementStyle);
+    const cardExpiry = elementsInstance.create("cardExpiry", elementStyle);
+    const cardCvc = elementsInstance.create("cardCvc", elementStyle);
+
+    // Mount elements
+    cardNumber.mount("#card-number-element");
+    cardExpiry.mount("#card-expiry-element");
+    cardCvc.mount("#card-cvc-element");
+
+    setCardNumberElement(cardNumber);
+    setCardExpiryElement(cardExpiry);
+    setCardCvcElement(cardCvc);
+
+    // Handle errors
+    cardNumber.on("change", (event: any) => {
+      if (event.error) {
+        setError(event.error.message);
+      } else {
+        setError(null);
+      }
     });
 
-    card.mount("#card-element");
-    setCardElement(card);
+    cardExpiry.on("change", (event: any) => {
+      if (event.error) {
+        setError(event.error.message);
+      } else {
+        setError(null);
+      }
+    });
+
+    cardCvc.on("change", (event: any) => {
+      if (event.error) {
+        setError(event.error.message);
+      } else {
+        setError(null);
+      }
+    });
 
     return () => {
-      card.unmount();
+      cardNumber.unmount();
+      cardExpiry.unmount();
+      cardCvc.unmount();
     };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!stripe || !cardElement) {
+    if (!stripe || !cardNumberElement) {
       setError("Payment system not ready");
       return;
     }
@@ -122,7 +162,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
       const { error: stripeError, paymentIntent } =
         await stripe.confirmCardPayment(client_secret, {
           payment_method: {
-            card: cardElement,
+            card: cardNumberElement,
             billing_details: {
               name: userName,
               email: userEmail,
@@ -178,6 +218,15 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     }
   };
 
+  const elementContainerStyle: React.CSSProperties = {
+    padding: "12px",
+    borderRadius: "8px",
+    border: "1px solid #ddd",
+    backgroundColor: "#fff",
+    minHeight: "40px",
+    marginBottom: "12px",
+  };
+
   return (
     <form onSubmit={handleSubmit} style={{ width: "100%" }}>
       <div style={{ marginBottom: "20px" }}>
@@ -191,18 +240,43 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
             color: "#2D2D2D",
           }}
         >
-          تفاصيل البطاقة
+          رقم البطاقة
         </label>
-        <div
-          id="card-element"
-          style={{
-            padding: "12px",
-            borderRadius: "8px",
-            border: "1px solid #ddd",
-            backgroundColor: "#fff",
-            minHeight: "40px",
-          }}
-        />
+        <div id="card-number-element" style={elementContainerStyle} />
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "20px" }}>
+        <div>
+          <label
+            style={{
+              display: "block",
+              fontSize: "14px",
+              fontWeight: 600,
+              marginBottom: "8px",
+              textAlign: "right",
+              color: "#2D2D2D",
+            }}
+          >
+            تاريخ الانتهاء
+          </label>
+          <div id="card-expiry-element" style={elementContainerStyle} />
+        </div>
+
+        <div>
+          <label
+            style={{
+              display: "block",
+              fontSize: "14px",
+              fontWeight: 600,
+              marginBottom: "8px",
+              textAlign: "right",
+              color: "#2D2D2D",
+            }}
+          >
+            CVC
+          </label>
+          <div id="card-cvc-element" style={elementContainerStyle} />
+        </div>
       </div>
 
       {error && (
