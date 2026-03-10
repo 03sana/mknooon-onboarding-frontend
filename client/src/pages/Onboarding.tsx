@@ -2338,8 +2338,15 @@ export default function Onboarding() {
                 !paymentInstructions?.requires_delivery_info && (
                   <motion.button
                     onClick={() => {
-                      const message =
+                      let message =
                         paymentInstructions.receipt_whatsapp.prefill;
+                      
+                      // Add price information if available
+                      if (priceData && priceData.price) {
+                        const priceWithCurrency = `${selectedCountry?.currency_symbol || ""}${priceData.price}`;
+                        message += `\n\nالسعر المدفوع: ${priceWithCurrency}`;
+                      }
+                      
                       const phone =
                         paymentInstructions.receipt_whatsapp.phone.replace(
                           /[^0-9]/g,
