@@ -45,6 +45,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
   const [phone, setPhone] = useState(userPhone);
   const [phoneCountryCode, setPhoneCountryCode] = useState<string>("");
   const [phoneError, setPhoneError] = useState<string>("");
+  const [detectedCountryCode, setDetectedCountryCode] = useState<string>(countryCode);
   const paymentIntentCreatedRef = useRef(false);
 
   // Phone country code mapping
@@ -75,6 +76,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     if (!phoneNumber) {
       setPhoneCountryCode("");
       setPhoneError("");
+      setDetectedCountryCode(countryCode);
       return;
     }
 
@@ -92,15 +94,12 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     if (foundCode) {
       const detectedCountry = countryCodeMap[foundCode];
       setPhoneCountryCode(detectedCountry);
-      
-      if (detectedCountry !== countryCode) {
-        setPhoneError(`⚠️ Country mismatch: detected ${detectedCountry}, but selected ${countryCode}`);
-      } else {
-        setPhoneError("");
-      }
+      setDetectedCountryCode(detectedCountry);
+      setPhoneError("");
     } else {
       setPhoneCountryCode("");
       setPhoneError("⚠️ Country code not recognized");
+      setDetectedCountryCode(countryCode);
     }
   };
 
@@ -142,7 +141,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
             amount,
             currency: currency.toUpperCase(),
             brand,
-            country_code: countryCode,
+            country_code: detectedCountryCode,
             user_name: name,
             user_email: userEmail,
             user_phone: phone,
@@ -219,6 +218,13 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         clientSecret,
         confirmParams: {
           return_url: `${window.location.origin}/payment-success?payment_intent_id=${paymentIntentId}`,
+          payment_method_data: {
+            billing_details: {
+              address: {
+                country: detectedCountryCode,
+              },
+            },
+          },
         },
       });
 
