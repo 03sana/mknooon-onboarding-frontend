@@ -179,12 +179,8 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
 
     const paymentElement = elementsInstance.create("payment", {
       layout: "tabs",
-      wallets: {
-        applePay: "auto",
-        googlePay: "auto",
-      },
       fields: {
-        billingDetails: "never",
+        billingDetails: "auto",
       },
     });
 
@@ -223,16 +219,6 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         clientSecret,
         confirmParams: {
           return_url: `${window.location.origin}/payment-success?payment_intent_id=${paymentIntentId}`,
-          payment_method_data: {
-            billing_details: {
-              name: name,
-              email: userEmail,
-              phone: phone,
-              address: {
-                country: countryCode,
-              },
-            },
-          },
         },
       });
 
