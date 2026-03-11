@@ -84,33 +84,45 @@ export default function Onboarding() {
 
   const selectedBrand = getBrandFromUrl();
 
-  // Fetch countries when brand is selected
+  // Fetch course data and countries when course is selected
   useEffect(() => {
-    const fetchCountries = async () => {
+    const fetchCourseData = async () => {
       try {
         setLoading(true);
         if (selectedBrand) {
-          // Fetch brand-specific countries with updated currency data
+          // Fetch course-specific data with countries and prices
           const response = await fetch(
-            `${API_BASE_URL}/countries?src=${selectedBrand}&t=${new Date().getTime()}`
+            `${API_BASE_URL}/course?src=${selectedBrand}&t=${new Date().getTime()}`
           );
           const data = await response.json();
-          if (data.data && data.data.countries) {
-            setCountries(data.data.countries);
+          if (data.data && data.data.prices) {
+            // Extract unique countries from prices
+            const countriesMap = new Map();
+            data.data.prices.forEach((price: any) => {
+              if (!countriesMap.has(price.country_code)) {
+                countriesMap.set(price.country_code, {
+                  code: price.country_code,
+                  name: price.country_name,
+                  currency: price.currency,
+                  currency_symbol: price.currency_symbol,
+                });
+              }
+            });
+            setCountries(Array.from(countriesMap.values()));
           }
         } else {
-          // Fallback to countries list if no brand selected
+          // Fallback to countries list if no course selected
           const response = await fetch(`${API_BASE_URL}/countries-list`);
           const data = await response.json();
           setCountries(data);
         }
       } catch (error) {
-        console.error("Error fetching countries:", error);
+        console.error("Error fetching course data:", error);
       } finally {
         setLoading(false);
       }
     };
-    fetchCountries();
+    fetchCourseData();
   }, [selectedBrand]);
 
   // Fetch payment methods when country is selected
@@ -134,7 +146,7 @@ export default function Onboarding() {
     }
   }, [selectedCountry?.code]);
 
-  // Fetch price when country or brand is selected
+  // Fetch price when country or course is selected
   useEffect(() => {
     if (selectedCountry && selectedBrand) {
       const fetchPrice = async () => {
@@ -145,7 +157,7 @@ export default function Onboarding() {
         );
         try {
           const response = await fetch(
-            `${API_BASE_URL}/price?src=${selectedBrand}&country=${selectedCountry.code}&t=${new Date().getTime()}`
+            `${API_BASE_URL}/course-price?src=${selectedBrand}&country=${selectedCountry.code}&t=${new Date().getTime()}`
           );
           const data = await response.json();
           if (data.data) {
@@ -1876,8 +1888,9 @@ export default function Onboarding() {
                       currency={priceData.currency}
                       brand={selectedBrand || "Mknooon"}
                       countryCode={selectedCountry.code}
-                      userName={deliveryForm.full_name}
-                      userEmail={deliveryForm.phone}
+                      userName={deliveryForm.full_name || "Customer"}
+                      userEmail={deliveryForm.phone ? `${deliveryForm.phone.replace(/\D/g, '')}@mknooon.local` : "customer@mknooon.local"}
+                      userPhone={deliveryForm.phone}
                       onSuccess={paymentIntentId => {
                         setCurrentStep(15);
                       }}

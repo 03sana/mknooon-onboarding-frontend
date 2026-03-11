@@ -190,7 +190,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     };
   }, [stripe, clientSecret]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!stripe || !elements || !clientSecret || !paymentIntentId) {
@@ -202,20 +202,22 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     setError(null);
 
     try {
-      // Update payment intent metadata with current name before confirming
-      try {
-        await fetch(`${API_BASE_URL}/stripe/update-payment-intent`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            payment_intent_id: paymentIntentId,
-            user_name: name,
-            user_phone: phone,
-          }),
-        });
-      } catch (updateErr) {
-        console.warn("Could not update payment intent metadata", updateErr);
-        // Continue anyway - this is just metadata
+      // Update payment intent with current name and phone BEFORE confirming
+      const updateResponse = await fetch(`${API_BASE_URL}/stripe/update-payment-intent`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          payment_intent_id: paymentIntentId,
+          user_name: name,
+          user_phone: phone,
+        }),
+      });
+
+      if (!updateResponse.ok) {
+        const errorData = await updateResponse.json();
+        throw new Error(errorData.error || "Failed to update payment intent");
       }
 
       // Submit the payment element form
@@ -228,7 +230,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         return;
       }
 
-      // Confirm payment with billing details including current name
+      // Confirm payment with current name and phone
       const { error: confirmError } = await stripe.confirmPayment({
         elements,
         clientSecret,
