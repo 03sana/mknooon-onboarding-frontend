@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 const API_BASE_URL =
@@ -46,7 +46,6 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
   const [phoneCountryCode, setPhoneCountryCode] = useState<string>("");
   const [phoneError, setPhoneError] = useState<string>("");
   const [detectedCountryCode, setDetectedCountryCode] = useState<string>(countryCode);
-  const paymentElementMountedRef = useRef(false);
   const paymentIntentCreatedRef = useRef(false);
 
   // Phone country code mapping
@@ -99,15 +98,15 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
       setPhoneError("");
     } else {
       setPhoneCountryCode("");
-      setPhoneError("رمز الدولة غير معروف");
+      setPhoneError("⚠️ Country code not recognized");
       setDetectedCountryCode(countryCode);
     }
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPhone(value);
-    verifyPhoneCountryCode(value);
+    const newPhone = e.target.value;
+    setPhone(newPhone);
+    verifyPhoneCountryCode(newPhone);
   };
 
   // Initialize Stripe
@@ -125,7 +124,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     setStripe(stripeInstance);
   }, []);
 
-  // Create payment intent on mount with initial values
+  // Create Payment Intent only once
   useEffect(() => {
     if (!stripe || paymentIntentCreatedRef.current) return;
 
@@ -167,48 +166,35 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     createPaymentIntent();
   }, [stripe]);
 
-  // Mount Payment Element when clientSecret is available
+  // Mount Payment Element only when clientSecret is available
   useEffect(() => {
-    if (!stripe || !clientSecret || paymentElementMountedRef.current) return;
+    if (!stripe || !clientSecret) return;
 
-    const mountPaymentElement = async () => {
-      try {
-        const elementsInstance = stripe.elements({
-          clientSecret: clientSecret,
-        });
+    const elementsInstance = stripe.elements({
+      clientSecret: clientSecret,
+    });
 
-        setElements(elementsInstance);
+    setElements(elementsInstance);
 
-        const paymentElement = elementsInstance.create("payment", {
-          layout: "tabs",
-          billingDetails: "auto",
-        });
+    const paymentElement = elementsInstance.create("payment", {
+      layout: "tabs",
+      fields: {
+        billingDetails: "auto",
+      },
+    });
 
-        const container = document.getElementById("payment-element");
-        if (container) {
-          paymentElement.mount("#payment-element");
-          paymentElementMountedRef.current = true;
-        }
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : "Failed to mount payment element";
-        setError(errorMessage);
-        onError(errorMessage);
-      }
+    paymentElement.mount("#payment-element");
+
+    return () => {
+      paymentElement.unmount();
     };
-
-    mountPaymentElement();
   }, [stripe, clientSecret]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!name.trim()) {
-      setError("الرجاء إدخال اسمك الكامل");
-      return;
-    }
-
-    if (!phone.trim()) {
-      setError("الرجاء إدخال رقم هاتفك");
+    if (!stripe || !elements || !clientSecret || !paymentIntentId) {
+      setError("Payment system not ready");
       return;
     }
 
@@ -216,13 +202,6 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     setError(null);
 
     try {
-      // Check if elements are ready
-      if (!elements) {
-        setError("Payment form is not ready. Please try again.");
-        setLoading(false);
-        return;
-      }
-
       // Submit the payment element form
       const { error: submitError } = await elements.submit();
 
@@ -236,7 +215,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
       // Confirm payment
       const { error: confirmError } = await stripe.confirmPayment({
         elements,
-        clientSecret: clientSecret,
+        clientSecret,
         confirmParams: {
           return_url: `${window.location.origin}/payment-success?payment_intent_id=${paymentIntentId}`,
           payment_method_data: {
@@ -253,7 +232,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         setError(confirmError.message || "Payment failed");
         onError(confirmError.message || "Payment failed");
       } else {
-        onSuccess(paymentIntentId || "");
+        onSuccess(paymentIntentId);
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "An error occurred";
@@ -326,7 +305,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         >
           رقم الهاتف
         </label>
-        <div style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
           <input
             type="tel"
             value={phone}
@@ -336,27 +315,24 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
               flex: 1,
               padding: "12px",
               borderRadius: "8px",
-              border: phoneError ? "1px solid #d97a6f" : "1px solid #ddd",
+              border: "1px solid #ddd",
               fontSize: "14px",
-              fontFamily: "monospace",
+              fontFamily: "Cairo, sans-serif",
               color: "#2D2D2D",
               boxSizing: "border-box",
               direction: "ltr",
-              textAlign: "left",
             }}
           />
           {phoneCountryCode && (
             <div
               style={{
-                padding: "12px 16px",
-                borderRadius: "8px",
-                backgroundColor: phoneCountryCode === detectedCountryCode ? "#e8f5e9" : "#ffebee",
-                border: `1px solid ${phoneCountryCode === detectedCountryCode ? "#4CAF50" : "#d97a6f"}`,
+                padding: "6px 12px",
+                borderRadius: "6px",
+                backgroundColor: phoneError ? "#ffebee" : "#e8f5e9",
+                color: phoneError ? "#d32f2f" : "#2e7d32",
                 fontSize: "12px",
                 fontWeight: 600,
-                color: phoneCountryCode === detectedCountryCode ? "#2e7d32" : "#c62828",
-                minWidth: "50px",
-                textAlign: "center",
+                whiteSpace: "nowrap",
               }}
             >
               {phoneCountryCode}
@@ -364,38 +340,33 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
           )}
         </div>
         {phoneError && (
-          <p style={{ color: "#d97a6f", fontSize: "12px", marginTop: "4px", fontFamily: "Cairo, sans-serif" }}>
+          <div
+            style={{
+              color: "#d32f2f",
+              fontSize: "12px",
+              marginTop: "4px",
+              textAlign: "right",
+            }}
+          >
             {phoneError}
-          </p>
-        )}
-      </div>
-
-      {/* Payment Element */}
-      <div style={{ marginBottom: "20px", minHeight: "200px" }}>
-        <div id="payment-element" />
-        {!clientSecret && (
-          <div style={{
-            textAlign: "center",
-            color: "#999",
-            padding: "40px 20px",
-            fontSize: "14px",
-          }}>
-            جاري تحميل نموذج الدفع...
           </div>
         )}
       </div>
 
-      {/* Error Message */}
+      {/* Payment Element */}
+      <div style={{ marginBottom: "20px" }}>
+        <div id="payment-element" />
+      </div>
+
       {error && (
         <div
           style={{
-            backgroundColor: "#ffebee",
-            color: "#c62828",
-            padding: "12px",
-            borderRadius: "8px",
+            color: "#d32f2f",
             marginBottom: "16px",
             fontSize: "14px",
-            fontFamily: "Cairo, sans-serif",
+            padding: "8px",
+            backgroundColor: "#ffebee",
+            borderRadius: "4px",
             textAlign: "right",
           }}
         >
@@ -403,26 +374,29 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         </div>
       )}
 
-      {/* Submit Button */}
       <motion.button
         type="submit"
-        disabled={loading || isLoading || !clientSecret}
+        disabled={loading || isLoading || !stripe || !clientSecret}
         style={{
           width: "100%",
           padding: "12px 20px",
-          borderRadius: "8px",
+          borderRadius: "12px",
           border: "none",
-          backgroundColor: loading || isLoading || !clientSecret ? "#ccc" : "#d97a6f",
+          backgroundColor:
+            loading || isLoading || !stripe || !clientSecret ? "#ccc" : "#d97a6f",
           color: "#fff",
           fontSize: "16px",
           fontWeight: 600,
-          cursor: loading || isLoading || !clientSecret ? "not-allowed" : "pointer",
-          fontFamily: "Cairo, sans-serif",
-        } as React.CSSProperties}
-        whileHover={!loading && !isLoading && clientSecret ? { scale: 1.02 } : {}}
-        whileTap={!loading && !isLoading && clientSecret ? { scale: 0.98 } : {}}
+          cursor:
+            loading || isLoading || !stripe || !clientSecret ? "not-allowed" : "pointer",
+          opacity: loading || isLoading || !stripe || !clientSecret ? 0.6 : 1,
+        }}
+        whileHover={!loading && !isLoading && stripe && clientSecret ? { scale: 1.02 } : {}}
+        whileTap={!loading && !isLoading && stripe && clientSecret ? { scale: 0.98 } : {}}
       >
-        {loading || isLoading ? "جاري المعالجة..." : `ادفع ${amount} ${currency}`}
+        {loading || isLoading
+          ? "جاري المعالجة..."
+          : `ادفع ${amount} ${currency}`}
       </motion.button>
     </motion.form>
   );
