@@ -153,7 +153,8 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         );
 
         if (!intentResponse.ok) {
-          throw new Error("Failed to create payment intent");
+          const errorData = await intentResponse.json();
+          throw new Error(errorData.message || "Failed to create payment intent");
         }
 
         const { client_secret, payment_intent_id } =
@@ -244,7 +245,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!stripe || !clientSecret || !paymentIntentId) {
+    if (!stripe || !elements || !clientSecret || !paymentIntentId) {
       setError("Payment system not ready");
       return;
     }
@@ -253,7 +254,18 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     setError(null);
 
     try {
-      const { error: submitError } = await stripe.confirmPayment({
+      // Step 1: Call elements.submit() first as required by Stripe Payment Element API
+      const { error: submitError } = await elements.submit();
+      
+      if (submitError) {
+        setError(submitError.message || "Form validation failed");
+        onError(submitError.message || "Form validation failed");
+        setLoading(false);
+        return;
+      }
+
+      // Step 2: Now confirm the payment
+      const { error: confirmError } = await stripe.confirmPayment({
         elements,
         clientSecret,
         confirmParams: {
@@ -261,9 +273,9 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         },
       });
 
-      if (submitError) {
-        setError(submitError.message || "Payment failed");
-        onError(submitError.message || "Payment failed");
+      if (confirmError) {
+        setError(confirmError.message || "Payment failed");
+        onError(confirmError.message || "Payment failed");
       } else {
         onSuccess(paymentIntentId);
       }
