@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useRouter } from "wouter";
+import { useRouter } from "wouter";
 import { motion } from "framer-motion";
 
 export const PaymentSuccess: React.FC = () => {
-  const [location] = useLocation();
   const [, navigate] = useRouter();
   const [paymentIntentId, setPaymentIntentId] = useState<string | null>(null);
 
@@ -112,7 +111,7 @@ export const PaymentSuccess: React.FC = () => {
         )}
 
         <motion.button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/", { replace: true })}
           style={{
             width: "100%",
             padding: "12px 20px",
@@ -124,7 +123,7 @@ export const PaymentSuccess: React.FC = () => {
             fontWeight: 600,
             cursor: "pointer",
             fontFamily: "Cairo, sans-serif",
-          }}
+          } as React.CSSProperties}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
