@@ -235,16 +235,7 @@ export const PaymentSuccess: React.FC = () => {
               >
                 {paymentDetails.user_name}
               </p>
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "#666",
-                  fontFamily: "Cairo, sans-serif",
-                  margin: "4px 0 0 0",
-                }}
-              >
-                {paymentDetails.user_email}
-              </p>
+
               <p
                 style={{
                   fontSize: "12px",
@@ -257,6 +248,30 @@ export const PaymentSuccess: React.FC = () => {
               </p>
             </div>
 
+            {/* Course/Brand Details */}
+            <div style={{ marginBottom: "20px" }}>
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "#999",
+                  fontFamily: "Cairo, sans-serif",
+                  margin: "0 0 4px 0",
+                }}
+              >
+                الدورة
+              </p>
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#2D2D2D",
+                  fontFamily: "Cairo, sans-serif",
+                  margin: 0,
+                  fontWeight: 600,
+                }}
+              >
+                {paymentDetails.brand}
+              </p>
+            </div>
             {/* Payment Details */}
             <div
               style={{

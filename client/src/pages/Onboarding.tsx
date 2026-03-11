@@ -1876,8 +1876,8 @@ export default function Onboarding() {
                       currency={priceData.currency}
                       brand={selectedBrand || "Mknooon"}
                       countryCode={selectedCountry.code}
-                      userName={deliveryForm.full_name || "Customer"}
-                      userEmail={deliveryForm.phone || "customer@example.com"}
+                      userName={deliveryForm.full_name}
+                      userEmail={deliveryForm.phone}
                       onSuccess={paymentIntentId => {
                         setCurrentStep(15);
                       }}
