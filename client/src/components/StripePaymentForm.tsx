@@ -141,6 +141,9 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
           applePay: "auto",
           googlePay: "auto",
         },
+        fields: {
+          billingDetails: "never", // Hide all billing details
+        },
       });
 
       paymentElementInstance.mount("#payment-element");
