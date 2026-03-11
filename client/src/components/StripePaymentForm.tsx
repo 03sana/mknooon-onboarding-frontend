@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 const API_BASE_URL =
@@ -39,12 +39,13 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [stripe, setStripe] = useState<any>(null);
   const [elements, setElements] = useState<any>(null);
-  const [cardNumberElement, setCardNumberElement] = useState<any>(null);
-  const [cardExpiryElement, setCardExpiryElement] = useState<any>(null);
-  const [cardCvcElement, setCardCvcElement] = useState<any>(null);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [paymentIntentId, setPaymentIntentId] = useState<string | null>(null);
+  const [name, setName] = useState(userName);
   const [phone, setPhone] = useState(userPhone);
   const [phoneCountryCode, setPhoneCountryCode] = useState<string>("");
   const [phoneError, setPhoneError] = useState<string>("");
+  const paymentIntentCreatedRef = useRef(false);
 
   // Phone country code mapping
   const countryCodeMap: Record<string, string> = {
@@ -122,88 +123,17 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
 
     const stripeInstance = window.Stripe(stripePublishableKey);
     setStripe(stripeInstance);
-
-    const elementsInstance = stripeInstance.elements();
-    setElements(elementsInstance);
-
-    const elementStyle = {
-      style: {
-        base: {
-          fontSize: "16px",
-          color: "#2D2D2D",
-          fontFamily: "Cairo, sans-serif",
-          "::placeholder": {
-            color: "#999",
-          },
-        },
-        invalid: {
-          color: "#d32f2f",
-        },
-      },
-    };
-
-    // Create separate elements
-    const cardNumber = elementsInstance.create("cardNumber", elementStyle);
-    const cardExpiry = elementsInstance.create("cardExpiry", elementStyle);
-    const cardCvc = elementsInstance.create("cardCvc", elementStyle);
-
-    // Mount elements
-    cardNumber.mount("#card-number-element");
-    cardExpiry.mount("#card-expiry-element");
-    cardCvc.mount("#card-cvc-element");
-
-    setCardNumberElement(cardNumber);
-    setCardExpiryElement(cardExpiry);
-    setCardCvcElement(cardCvc);
-
-    // Handle errors
-    cardNumber.on("change", (event: any) => {
-      if (event.error) {
-        setError(event.error.message);
-      } else {
-        setError(null);
-      }
-    });
-
-    cardExpiry.on("change", (event: any) => {
-      if (event.error) {
-        setError(event.error.message);
-      } else {
-        setError(null);
-      }
-    });
-
-    cardCvc.on("change", (event: any) => {
-      if (event.error) {
-        setError(event.error.message);
-      } else {
-        setError(null);
-      }
-    });
-
-    return () => {
-      cardNumber.unmount();
-      cardExpiry.unmount();
-      cardCvc.unmount();
-    };
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Create Payment Intent only once
+  useEffect(() => {
+    if (!stripe || paymentIntentCreatedRef.current) return;
 
-    if (!stripe || !cardNumberElement) {
-      setError("Payment system not ready");
-      return;
-    }
+    paymentIntentCreatedRef.current = true;
 
-    setLoading(true);
-    setError(null);
-
-    try {
-      // Step 1: Create Payment Intent on backend
-      const intentResponse = await fetch(
-        `${API_BASE_URL}/stripe/create-payment-intent`,
-        {
+    const createPaymentIntent = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/stripe/create-payment-intent`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -213,74 +143,104 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
             currency: currency.toUpperCase(),
             brand,
             country_code: countryCode,
-            user_name: userName,
+            user_name: name,
             user_email: userEmail,
             user_phone: phone,
           }),
-        }
-      );
-
-      if (!intentResponse.ok) {
-        throw new Error("Failed to create payment intent");
-      }
-
-      const { client_secret, payment_intent_id } =
-        await intentResponse.json();
-
-      // Step 2: Confirm payment with card details using Stripe.js
-      const { error: stripeError, paymentIntent } =
-        await stripe.confirmCardPayment(client_secret, {
-          payment_method: {
-            card: cardNumberElement,
-            billing_details: {
-              name: userName,
-              email: userEmail,
-              phone: phone,
-            },
-          },
         });
 
-      if (stripeError) {
-        setError(stripeError.message);
-        onError(stripeError.message);
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Failed to create payment intent");
+        }
+
+        const data = await response.json();
+        setClientSecret(data.client_secret);
+        setPaymentIntentId(data.payment_intent_id);
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Failed to create payment intent";
+        setError(errorMessage);
+        onError(errorMessage);
+      }
+    };
+
+    createPaymentIntent();
+  }, [stripe]);
+
+  // Mount Payment Element only when clientSecret is available
+  useEffect(() => {
+    if (!stripe || !clientSecret) return;
+
+    const elementsInstance = stripe.elements({
+      clientSecret: clientSecret,
+    });
+
+    setElements(elementsInstance);
+
+    const paymentElement = elementsInstance.create("payment", {
+      layout: "tabs",
+      wallets: {
+        applePay: "auto",
+        googlePay: "auto",
+      },
+      fields: {
+        billingDetails: "never",
+      },
+    });
+
+    paymentElement.mount("#payment-element");
+
+    return () => {
+      paymentElement.unmount();
+    };
+  }, [stripe, clientSecret]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!stripe || !elements || !clientSecret || !paymentIntentId) {
+      setError("Payment system not ready");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Submit the payment element form
+      const { error: submitError } = await elements.submit();
+
+      if (submitError) {
+        setError(submitError.message || "Form validation failed");
+        onError(submitError.message || "Form validation failed");
         setLoading(false);
         return;
       }
 
-      if (paymentIntent.status === "succeeded") {
-        // Step 3: Confirm on backend
-        const confirmResponse = await fetch(
-          `${API_BASE_URL}/stripe/confirm-payment`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
+      // Confirm payment
+      const { error: confirmError } = await stripe.confirmPayment({
+        elements,
+        clientSecret,
+        confirmParams: {
+          return_url: `${window.location.origin}/payment-success?payment_intent_id=${paymentIntentId}`,
+          payment_method_data: {
+            billing_details: {
+              name: name,
+              email: userEmail,
+              phone: phone,
             },
-            body: JSON.stringify({
-              payment_intent_id: payment_intent_id,
-            }),
-          }
-        );
+          },
+        },
+      });
 
-        if (!confirmResponse.ok) {
-          throw new Error("Failed to confirm payment");
-        }
-
-        const confirmData = await confirmResponse.json();
-
-        if (confirmData.success) {
-          onSuccess(payment_intent_id);
-        } else {
-          setError(confirmData.error || "Payment confirmation failed");
-          onError(confirmData.error || "Payment confirmation failed");
-        }
+      if (confirmError) {
+        setError(confirmError.message || "Payment failed");
+        onError(confirmError.message || "Payment failed");
       } else {
-        setError(`Payment status: ${paymentIntent.status}`);
-        onError(`Payment status: ${paymentIntent.status}`);
+        onSuccess(paymentIntentId);
       }
     } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "An error occurred";
+      const errorMessage = err instanceof Error ? err.message : "An error occurred";
       setError(errorMessage);
       onError(errorMessage);
     } finally {
@@ -288,23 +248,54 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     }
   };
 
-  const elementContainerStyle: React.CSSProperties = {
-    padding: "12px",
-    borderRadius: "8px",
-    border: "1px solid #ddd",
-    backgroundColor: "#fff",
-    minHeight: "40px",
-    marginBottom: "12px",
-  };
-
   return (
     <motion.form
       onSubmit={handleSubmit}
-      style={{ width: "100%" }}
+      style={{
+        maxWidth: "500px",
+        margin: "0 auto",
+        padding: "24px",
+        backgroundColor: "#fff",
+        borderRadius: "12px",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+      }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
+      {/* Name Field */}
+      <div style={{ marginBottom: "20px" }}>
+        <label
+          style={{
+            display: "block",
+            fontSize: "14px",
+            fontWeight: 600,
+            marginBottom: "8px",
+            textAlign: "right",
+            color: "#2D2D2D",
+          }}
+        >
+          الاسم الكامل
+        </label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="أدخل اسمك الكامل"
+          style={{
+            width: "100%",
+            padding: "12px",
+            borderRadius: "8px",
+            border: "1px solid #ddd",
+            fontSize: "14px",
+            fontFamily: "Cairo, sans-serif",
+            color: "#2D2D2D",
+            boxSizing: "border-box",
+            direction: "rtl",
+          }}
+        />
+      </div>
+
       {/* Phone Field with Country Code Verification */}
       <div style={{ marginBottom: "20px" }}>
         <label
@@ -367,54 +358,9 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         )}
       </div>
 
+      {/* Payment Element */}
       <div style={{ marginBottom: "20px" }}>
-        <label
-          style={{
-            display: "block",
-            fontSize: "14px",
-            fontWeight: 600,
-            marginBottom: "8px",
-            textAlign: "right",
-            color: "#2D2D2D",
-          }}
-        >
-          رقم البطاقة
-        </label>
-        <div id="card-number-element" style={elementContainerStyle} />
-      </div>
-
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "20px" }}>
-        <div>
-          <label
-            style={{
-              display: "block",
-              fontSize: "14px",
-              fontWeight: 600,
-              marginBottom: "8px",
-              textAlign: "right",
-              color: "#2D2D2D",
-            }}
-          >
-            تاريخ الانتهاء
-          </label>
-          <div id="card-expiry-element" style={elementContainerStyle} />
-        </div>
-
-        <div>
-          <label
-            style={{
-              display: "block",
-              fontSize: "14px",
-              fontWeight: 600,
-              marginBottom: "8px",
-              textAlign: "right",
-              color: "#2D2D2D",
-            }}
-          >
-            CVC
-          </label>
-          <div id="card-cvc-element" style={elementContainerStyle} />
-        </div>
+        <div id="payment-element" />
       </div>
 
       {error && (
@@ -435,23 +381,23 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
 
       <motion.button
         type="submit"
-        disabled={loading || isLoading || !stripe}
+        disabled={loading || isLoading || !stripe || !clientSecret}
         style={{
           width: "100%",
           padding: "12px 20px",
           borderRadius: "12px",
           border: "none",
           backgroundColor:
-            loading || isLoading || !stripe ? "#ccc" : "#d97a6f",
+            loading || isLoading || !stripe || !clientSecret ? "#ccc" : "#d97a6f",
           color: "#fff",
           fontSize: "16px",
           fontWeight: 600,
           cursor:
-            loading || isLoading || !stripe ? "not-allowed" : "pointer",
-          opacity: loading || isLoading || !stripe ? 0.6 : 1,
+            loading || isLoading || !stripe || !clientSecret ? "not-allowed" : "pointer",
+          opacity: loading || isLoading || !stripe || !clientSecret ? 0.6 : 1,
         }}
-        whileHover={!loading && !isLoading && stripe ? { scale: 1.02 } : {}}
-        whileTap={!loading && !isLoading && stripe ? { scale: 0.98 } : {}}
+        whileHover={!loading && !isLoading && stripe && clientSecret ? { scale: 1.02 } : {}}
+        whileTap={!loading && !isLoading && stripe && clientSecret ? { scale: 0.98 } : {}}
       >
         {loading || isLoading
           ? "جاري المعالجة..."
