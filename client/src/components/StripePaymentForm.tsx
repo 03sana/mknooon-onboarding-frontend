@@ -47,6 +47,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
   const [phoneError, setPhoneError] = useState<string>("");
   const [detectedCountryCode, setDetectedCountryCode] = useState<string>(countryCode);
   const paymentElementMountedRef = useRef(false);
+  const paymentIntentCreatedRef = useRef(false);
 
   // Phone country code mapping
   const countryCodeMap: Record<string, string> = {
@@ -124,6 +125,48 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     setStripe(stripeInstance);
   }, []);
 
+  // Create payment intent on mount with initial values
+  useEffect(() => {
+    if (!stripe || paymentIntentCreatedRef.current) return;
+
+    paymentIntentCreatedRef.current = true;
+
+    const createPaymentIntent = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/stripe/create-payment-intent`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount,
+            currency: currency.toUpperCase(),
+            brand,
+            country_code: detectedCountryCode,
+            user_name: name,
+            user_email: userEmail,
+            user_phone: phone,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Failed to create payment intent");
+        }
+
+        const data = await response.json();
+        setClientSecret(data.client_secret);
+        setPaymentIntentId(data.payment_intent_id);
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Failed to create payment intent";
+        setError(errorMessage);
+        onError(errorMessage);
+      }
+    };
+
+    createPaymentIntent();
+  }, [stripe]);
+
   // Mount Payment Element when clientSecret is available
   useEffect(() => {
     if (!stripe || !clientSecret || paymentElementMountedRef.current) return;
@@ -156,41 +199,6 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     mountPaymentElement();
   }, [stripe, clientSecret]);
 
-  const createPaymentIntent = async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/stripe/create-payment-intent`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount,
-          currency: currency.toUpperCase(),
-          brand,
-          country_code: detectedCountryCode,
-          user_name: name,
-          user_email: userEmail,
-          user_phone: phone,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to create payment intent");
-      }
-
-      const data = await response.json();
-      setClientSecret(data.client_secret);
-      setPaymentIntentId(data.payment_intent_id);
-      return data;
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Failed to create payment intent";
-      setError(errorMessage);
-      onError(errorMessage);
-      throw err;
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -208,12 +216,6 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     setError(null);
 
     try {
-      // Create payment intent with current form values
-      const intentData = await createPaymentIntent();
-
-      // Wait a moment for the Payment Element to be mounted
-      await new Promise(resolve => setTimeout(resolve, 500));
-
       // Check if elements are ready
       if (!elements) {
         setError("Payment form is not ready. Please try again.");
@@ -234,9 +236,9 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
       // Confirm payment
       const { error: confirmError } = await stripe.confirmPayment({
         elements,
-        clientSecret: intentData.client_secret,
+        clientSecret: clientSecret,
         confirmParams: {
-          return_url: `${window.location.origin}/payment-success?payment_intent_id=${intentData.payment_intent_id}`,
+          return_url: `${window.location.origin}/payment-success?payment_intent_id=${paymentIntentId}`,
           payment_method_data: {
             billing_details: {
               address: {
@@ -251,7 +253,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         setError(confirmError.message || "Payment failed");
         onError(confirmError.message || "Payment failed");
       } else {
-        onSuccess(intentData.payment_intent_id);
+        onSuccess(paymentIntentId || "");
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "An error occurred";
@@ -368,17 +370,17 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         )}
       </div>
 
-      {/* Payment Element - Will be mounted when clientSecret is available */}
+      {/* Payment Element */}
       <div style={{ marginBottom: "20px", minHeight: "200px" }}>
         <div id="payment-element" />
-        {!clientSecret && !loading && (
+        {!clientSecret && (
           <div style={{
             textAlign: "center",
             color: "#999",
             padding: "40px 20px",
             fontSize: "14px",
           }}>
-            سيظهر نموذج الدفع بعد النقر على زر الدفع
+            جاري تحميل نموذج الدفع...
           </div>
         )}
       </div>
@@ -404,21 +406,21 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
       {/* Submit Button */}
       <motion.button
         type="submit"
-        disabled={loading || isLoading}
+        disabled={loading || isLoading || !clientSecret}
         style={{
           width: "100%",
           padding: "12px 20px",
           borderRadius: "8px",
           border: "none",
-          backgroundColor: loading || isLoading ? "#ccc" : "#d97a6f",
+          backgroundColor: loading || isLoading || !clientSecret ? "#ccc" : "#d97a6f",
           color: "#fff",
           fontSize: "16px",
           fontWeight: 600,
-          cursor: loading || isLoading ? "not-allowed" : "pointer",
+          cursor: loading || isLoading || !clientSecret ? "not-allowed" : "pointer",
           fontFamily: "Cairo, sans-serif",
         } as React.CSSProperties}
-        whileHover={!loading && !isLoading ? { scale: 1.02 } : {}}
-        whileTap={!loading && !isLoading ? { scale: 0.98 } : {}}
+        whileHover={!loading && !isLoading && clientSecret ? { scale: 1.02 } : {}}
+        whileTap={!loading && !isLoading && clientSecret ? { scale: 0.98 } : {}}
       >
         {loading || isLoading ? "جاري المعالجة..." : `ادفع ${amount} ${currency}`}
       </motion.button>
