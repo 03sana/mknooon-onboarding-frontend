@@ -179,8 +179,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     return () => {
       isMounted = false;
     };
-  }, [stripe, amount, currency, brand, countryCode]);
-
+  }, [stripe, formData.name, formData.email, formData.phone]);
 
   // Mount Payment Element
   useEffect(() => {
@@ -271,15 +270,8 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         clientSecret,
         confirmParams: {
           return_url: `${window.location.origin}/payment-success?payment_intent_id=${paymentIntentId}`,
-          payment_method_data: {
-            billing_details: {
-              name: formData.name,
-              email: formData.email,
-            },
-          },
         },
       });
-
 
       if (confirmError) {
         setError(confirmError.message || "Payment failed");
