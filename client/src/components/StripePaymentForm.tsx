@@ -228,6 +228,9 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
               name: name,
               email: userEmail,
               phone: phone,
+              address: {
+                country: countryCode,
+              },
             },
           },
         },
