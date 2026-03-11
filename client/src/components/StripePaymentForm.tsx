@@ -46,6 +46,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
   const [phoneCountryCode, setPhoneCountryCode] = useState<string>("");
   const [phoneError, setPhoneError] = useState<string>("");
   const [detectedCountryCode, setDetectedCountryCode] = useState<string>(countryCode);
+  const paymentElementMountedRef = useRef(false);
 
   // Phone country code mapping
   const countryCodeMap: Record<string, string> = {
@@ -123,7 +124,38 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     setStripe(stripeInstance);
   }, []);
 
-  // Create Payment Intent when form is submitted
+  // Mount Payment Element when clientSecret is available
+  useEffect(() => {
+    if (!stripe || !clientSecret || paymentElementMountedRef.current) return;
+
+    const mountPaymentElement = async () => {
+      try {
+        const elementsInstance = stripe.elements({
+          clientSecret: clientSecret,
+        });
+
+        setElements(elementsInstance);
+
+        const paymentElement = elementsInstance.create("payment", {
+          layout: "tabs",
+          billingDetails: "auto",
+        });
+
+        const container = document.getElementById("payment-element");
+        if (container) {
+          paymentElement.mount("#payment-element");
+          paymentElementMountedRef.current = true;
+        }
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Failed to mount payment element";
+        setError(errorMessage);
+        onError(errorMessage);
+      }
+    };
+
+    mountPaymentElement();
+  }, [stripe, clientSecret]);
+
   const createPaymentIntent = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/stripe/create-payment-intent`, {
@@ -159,28 +191,6 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     }
   };
 
-  // Mount Payment Element only when clientSecret is available
-  useEffect(() => {
-    if (!stripe || !clientSecret) return;
-
-    const elementsInstance = stripe.elements({
-      clientSecret: clientSecret,
-    });
-
-    setElements(elementsInstance);
-
-    const paymentElement = elementsInstance.create("payment", {
-      layout: "tabs",
-      billingDetails: "auto",
-    });
-
-    paymentElement.mount("#payment-element");
-
-    return () => {
-      paymentElement.unmount();
-    };
-  }, [stripe, clientSecret]);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -201,18 +211,14 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
       // Create payment intent with current form values
       const intentData = await createPaymentIntent();
 
-      // Mount the Payment Element if not already mounted
-      if (!elements) {
-        const elementsInstance = stripe.elements({
-          clientSecret: intentData.client_secret,
-        });
-        setElements(elementsInstance);
+      // Wait a moment for the Payment Element to be mounted
+      await new Promise(resolve => setTimeout(resolve, 500));
 
-        const paymentElement = elementsInstance.create("payment", {
-          layout: "tabs",
-          billingDetails: "auto",
-        });
-        paymentElement.mount("#payment-element");
+      // Check if elements are ready
+      if (!elements) {
+        setError("Payment form is not ready. Please try again.");
+        setLoading(false);
+        return;
       }
 
       // Submit the payment element form
@@ -362,9 +368,19 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         )}
       </div>
 
-      {/* Payment Element */}
-      <div style={{ marginBottom: "20px" }}>
+      {/* Payment Element - Will be mounted when clientSecret is available */}
+      <div style={{ marginBottom: "20px", minHeight: "200px" }}>
         <div id="payment-element" />
+        {!clientSecret && !loading && (
+          <div style={{
+            textAlign: "center",
+            color: "#999",
+            padding: "40px 20px",
+            fontSize: "14px",
+          }}>
+            سيظهر نموذج الدفع بعد النقر على زر الدفع
+          </div>
+        )}
       </div>
 
       {/* Error Message */}
