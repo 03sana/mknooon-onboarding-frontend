@@ -60,11 +60,6 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     const stripeInstance = window.Stripe(stripePublishableKey);
     setStripe(stripeInstance);
 
-    const elementsInstance = stripeInstance.elements({
-      clientSecret: "", // Will be set after payment intent is created
-    });
-    setElements(elementsInstance);
-
     // Cleanup
     return () => {
       // Cleanup if needed
@@ -127,7 +122,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
 
   // Create Payment Element once clientSecret is available
   useEffect(() => {
-    if (!elements || !clientSecret) return;
+    if (!stripe || !clientSecret) return;
 
     try {
       // Unmount previous payment element if it exists
@@ -135,6 +130,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         paymentElement.unmount();
       }
 
+      // Create elements with clientSecret
       const elementsInstance = stripe.elements({
         clientSecret: clientSecret,
       });
@@ -149,6 +145,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
 
       paymentElementInstance.mount("#payment-element");
       setPaymentElement(paymentElementInstance);
+      setElements(elementsInstance);
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "Failed to mount payment element";
@@ -166,7 +163,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!stripe || !elements || !clientSecret || !paymentIntentId) {
+    if (!stripe || !clientSecret || !paymentIntentId) {
       setError("Payment form not ready. Please wait...");
       return;
     }
@@ -178,7 +175,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
       // Confirm payment with Stripe
       const { error: confirmError, paymentIntent } =
         await stripe.confirmPayment({
-          elements,
+          elements: paymentElement ? paymentElement.parent : undefined,
           clientSecret,
           redirect: "if_required",
         });
@@ -372,7 +369,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
       {/* Submit Button */}
       <motion.button
         type="submit"
-        disabled={loading || !clientSecret}
+        disabled={loading || !clientSecret || !paymentElement}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         style={{
