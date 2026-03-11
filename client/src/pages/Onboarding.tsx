@@ -193,15 +193,16 @@ export default function Onboarding() {
     setCurrentStep(13);
 
     if (method.code !== "visa" && method.code !== "mastercard") {
-      
       // Fetch payment instructions in parallel (non-blocking)
       if (selectedCountry) {
         fetch(
           `${API_BASE_URL}/payment-instructions?country=${selectedCountry.code}&method=${method.code}&src=${selectedBrand || "Mknooon"}`
         )
-          .then((response) => response.json())
-          .then((data) => setPaymentInstructions(data))
-          .catch((error) => console.error("Error fetching payment instructions:", error));
+          .then(response => response.json())
+          .then(data => setPaymentInstructions(data))
+          .catch(error =>
+            console.error("Error fetching payment instructions:", error)
+          );
       }
     }
   };
@@ -222,7 +223,8 @@ export default function Onboarding() {
           position: "relative",
           zIndex: 10,
           backgroundColor: "transparent",
-          backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-bg-pattern-gtuN3TCCUfUab9ymxFpqgz.webp')",
+          backgroundImage:
+            "linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen1-bg-pattern-gtuN3TCCUfUab9ymxFpqgz.webp')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -231,1316 +233,2264 @@ export default function Onboarding() {
           maxHeight: "100vh",
         }}
       >
-      {/* Progress Bar - Hidden on Screen 1 and decision screens */}
-      {currentStep > 1 && currentStep !== 11 && currentStep !== 15 && (
-        <div style={{ paddingTop: "20px", paddingBottom: "20px" }}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: "10px",
-            }}
-          >
+        {/* Progress Bar - Hidden on Screen 1 and decision screens */}
+        {currentStep > 1 && currentStep !== 11 && currentStep !== 15 && (
+          <div style={{ paddingTop: "20px", paddingBottom: "20px" }}>
             <div
               style={{
-                flex: 1,
-                height: "4px",
-                backgroundColor: "#e0e0e0",
-                borderRadius: "2px",
-                marginRight: "10px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "10px",
               }}
             >
               <div
                 style={{
-                  height: "100%",
-                  width: `${progressPercentage}%`,
-                  backgroundColor: "#d97a6f",
+                  flex: 1,
+                  height: "4px",
+                  backgroundColor: "#e0e0e0",
                   borderRadius: "2px",
-                  transition: "width 0.3s ease",
+                  marginRight: "10px",
                 }}
-              />
-            </div>
-            <span
-              style={{
-                fontSize: "14px",
-                fontWeight: 600,
-                color: "#666",
-                minWidth: "40px",
-                textAlign: "right",
-              }}
-            >
-              {currentStep}/14
-            </span>
-          </div>
-        </div>
-      )}
-
-      {/* Screen 1: Entry */}
-      {currentStep === 1 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="d-flex flex-column justify-content-center align-items-center h-[100svh]"
-          style={{
-            paddingTop: "24px",
-            paddingBottom: "24px",
-            paddingLeft: "20px",
-            paddingRight: "20px",
-            minHeight: "100vh",
-            width: "100%",
-          }}
-        >
-          {/* App Name - Top */}
-          <div style={{ position: "absolute", top: "40px", left: "0", right: "0", textAlign: "center", zIndex: 20 }}>
-            <h1
-              style={{
-                fontSize: "20px",
-                fontWeight: 800,
-                margin: 0,
-                color: "#1a1a1a",
-              }}
-            >
-              Mknooon
-            </h1>
-          </div>
-
-          {/* Card - Centered */}
-          <div
-            style={{
-              backgroundColor: "rgba(255, 255, 255, 0.85)",
-              borderRadius: "28px",
-              padding: "48px 28px",
-              border: "1px solid rgba(200, 200, 200, 0.3)",
-              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
-              minHeight: "340px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
-              maxWidth: "85%",
-              width: "100%",
-              gap: "16px",
-              margin: "0 auto",
-              marginTop: "123px",
-            }}
-          >
-            {/* Main Title */}
-            <h2
-              style={{
-                fontSize: "30px",
-                fontWeight: 800,
-                color: "#1a1a1a",
-                lineHeight: "1.35",
-                margin: "0 0 8px 0",
-                letterSpacing: "-0.3px",
-              }}
-            >
-              رحلتك لإطلاق
-              <br />
-              مشروعك تبدأ الآن
-            </h2>
-
-            {/* Subtitle Text */}
-            <p
-              style={{
-                fontSize: "14px",
-                color: "#555",
-                fontWeight: 500,
-                margin: "0 0 4px 0",
-                lineHeight: "1.5",
-              }}
-            >
-              3 دقائق فقط... وتعرّفي فيها ..
-            </p>
-
-            {/* Question Text */}
-            <p
-              style={{
-                fontSize: "14px",
-                color: "#555",
-                fontWeight: 500,
-                margin: "0 0 20px 0",
-                lineHeight: "1.5",
-              }}
-            >
-              هل أنت جاهزة لإطلاق مشروعك ؟
-            </p>
-
-            {/* CTA Button */}
-            <motion.button
-              onClick={handleContinue}
-              style={{
-                borderRadius: "14px",
-                fontSize: "16px",
-                fontWeight: 700,
-                width: "100%",
-                maxWidth: "280px",
-                height: "50px",
-                backgroundColor: "#d97a6f",
-                color: "white",
-                border: "none",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
-              }}
-              whileHover={{ scale: 1.03, boxShadow: "0 6px 20px rgba(217, 122, 111, 0.3)" }}
-              whileTap={{ scale: 0.97 }}
-            >
-              تعرفي على الفرصة
-            </motion.button>
-
-            {/* Social Proof */}
-            <p
-              style={{
-                fontSize: "12px",
-                color: "#999",
-                margin: "8px 0 0 0",
-                fontWeight: 500,
-              }}
-            >
-              أكثر من 11000 امرأة بدأت رحلتها
-            </p>
-          </div>
-        </motion.div>
-      )}
-
-      {/* Screen 2: Launch Timing */}
-      {currentStep === 2 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
-          style={{
-            paddingTop: "0px",
-            paddingBottom: "140px",
-            paddingLeft: "20px",
-            paddingRight: "20px",
-            minHeight: "100vh",
-            width: "100%",
-          }}
-        >
-          {/* Question */}
-          <h2
-            style={{
-              fontSize: "18px",
-              fontWeight: 700,
-              color: "#1a1a1a",
-              textAlign: "center",
-              marginBottom: "16px",
-              marginTop: "0",
-              lineHeight: "1.6",
-            }}
-          >
-            لو كانت التفاصيل واضحة وسهلة<br />...متى حابة تطلقي مشروعك؟
-          </h2>
-
-          {/* Options */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px", width: "100%" }}>
-            {[
-              { id: "now", label: "الآن 🚀", subtitle: "أنا جاهزة!" },
-              { id: "month", label: "خلال شهر 📅", subtitle: "بحاجة لتحضيرات" },
-              { id: "quarter", label: "خلال 3 أشهر ⏳", subtitle: "بدي وقت أكثر" },
-              { id: "unsure", label: "لسه ما قررت 🤔", subtitle: "بدي أفكر" },
-            ].map((option) => (
-              <motion.button
-                key={option.id}
-                onClick={() => {
-                  handleAnswer(2, option.id);
-                  handleContinue();
-                }}
-                style={{
-                  padding: "16px",
-                  borderRadius: "12px",
-                  border: answers[2] === option.id ? "2px solid #d97a6f" : "1px solid #e0e0e0",
-                  backgroundColor: answers[2] === option.id ? "rgba(217, 122, 111, 0.1)" : "#f9f9f9",
-                  cursor: "pointer",
-                  textAlign: "right",
-                  transition: "all 0.2s ease",
-                }}
-                whileHover={{ backgroundColor: "rgba(217, 122, 111, 0.05)" }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <div style={{ fontSize: "16px", fontWeight: 700, color: "#1a1a1a" }}>{option.label}</div>
-                <div style={{ fontSize: "12px", color: "#999", marginTop: "4px" }}>{option.subtitle}</div>
-              </motion.button>
-            ))}
-          </div>
-
-          {/* Navigation */}
-          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px", width: "100%" }}>
-            <motion.button
-              onClick={handleBack}
-              style={{
-                padding: "10px 20px",
-                borderRadius: "8px",
-                border: "1px solid #e0e0e0",
-                backgroundColor: "white",
-                cursor: "pointer",
-                fontSize: "14px",
-                fontWeight: 600,
-                color: "#666",
-              }}
-              whileHover={{ backgroundColor: "#f5f5f5" }}
-            >
-              رجوع
-            </motion.button>
-          </div>
-        </motion.div>
-      )}
-
-      {/* Screen 3: Income Vision */}
-      {currentStep === 3 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
-          style={{
-            paddingTop: "0px",
-            paddingBottom: "140px",
-            paddingLeft: "20px",
-            paddingRight: "20px",
-            minHeight: "100vh",
-            width: "100%",
-          }}
-        >
-          {/* Question */}
-          <h2
-            style={{
-              fontSize: "18px",
-              fontWeight: 700,
-              color: "#1a1a1a",
-              textAlign: "center",
-              marginBottom: "16px",
-              marginTop: "0",
-              lineHeight: "1.6",
-            }}
-          >
-            لما يبدأ مشروعك بنجح ويحقق إيرادات..<br />كيف حابة يكون دخله بالنسبة لك؟
-          </h2>
-
-          {/* Options */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px", width: "100%" }}>
-            {[
-              { id: "personal", label: "يغطي مصاريفي الشخصية 💰", subtitle: "استقلالية مالية" },
-              { id: "family", label: "يساعدني في دعم عائلتي 👨‍👩‍👧", subtitle: "دعم الأحبة" },
-              { id: "dream", label: "يكون مشروع العمر 🎯", subtitle: "حلم كبير" },
-            ].map((option) => (
-              <motion.button
-                key={option.id}
-                onClick={() => {
-                  handleAnswer(3, option.id);
-                  handleContinue();
-                }}
-                style={{
-                  padding: "16px",
-                  borderRadius: "12px",
-                  border: answers[3] === option.id ? "2px solid #d97a6f" : "1px solid #e0e0e0",
-                  backgroundColor: answers[3] === option.id ? "rgba(217, 122, 111, 0.1)" : "#f9f9f9",
-                  cursor: "pointer",
-                  textAlign: "right",
-                  transition: "all 0.2s ease",
-                }}
-                whileHover={{ backgroundColor: "rgba(217, 122, 111, 0.05)" }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <div style={{ fontSize: "16px", fontWeight: 700, color: "#1a1a1a" }}>{option.label}</div>
-                <div style={{ fontSize: "12px", color: "#999", marginTop: "4px" }}>{option.subtitle}</div>
-              </motion.button>
-            ))}
-          </div>
-
-          {/* Navigation */}
-          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px", width: "100%" }}>
-            <motion.button
-              onClick={handleBack}
-              style={{
-                padding: "10px 20px",
-                borderRadius: "8px",
-                border: "1px solid #e0e0e0",
-                backgroundColor: "white",
-                cursor: "pointer",
-                fontSize: "14px",
-                fontWeight: 600,
-                color: "#666",
-              }}
-              whileHover={{ backgroundColor: "#f5f5f5" }}
-            >
-              رجوع
-            </motion.button>
-          </div>
-        </motion.div>
-      )}
-
-       {/* Screen 4: Main Obstacle */}
-      {currentStep === 4 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
-          style={{
-            paddingTop: "0px",
-            paddingBottom: "140px",
-            paddingLeft: "20px",
-            paddingRight: "20px",
-            minHeight: "100vh",
-            width: "100%",
-          }}
-        >
-          {/* Question */}
-          <h2
-            style={{
-              fontSize: "18px",
-              fontWeight: 700,
-              color: "#1a1a1a",
-              textAlign: "center",
-              marginBottom: "16px",
-              marginTop: "0",
-              lineHeight: "1.6",
-            }}
-          >
-            أكثر شيء بتخافي منه<br />لما تفكري تبدي مشروعك؟
-          </h2>
-
-          {/* Options */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px", width: "100%" }}>
-            {[
-              { id: "start", label: "ما أعرف من وين أبدأ 🤔", subtitle: "البداية الصحيحة" },
-              { id: "materials", label: "ما أعرف أماكن المواد 📋", subtitle: "توفر المواد" },
-              { id: "pricing", label: "ما أعرف أسعر وأسوق 💰", subtitle: "التسعير والتسويق" },
-              { id: "sales", label: "ما أعرف أبيع وأحقق 📈", subtitle: "المبيعات والأرباح" },
-              { id: "all", label: "جميع ما ذكر ⚠️", subtitle: "كل الخوف" },
-            ].map((option) => (
-              <motion.button
-                key={option.id}
-                onClick={() => {
-                  handleAnswer(4, option.id);
-                  handleContinue();
-                }}
-                style={{
-                  padding: "16px",
-                  borderRadius: "12px",
-                  border: answers[4] === option.id ? "2px solid #d97a6f" : "1px solid #e0e0e0",
-                  backgroundColor: answers[4] === option.id ? "rgba(217, 122, 111, 0.1)" : "#f9f9f9",
-                  cursor: "pointer",
-                  textAlign: "right",
-                  transition: "all 0.2s ease",
-                }}
-                whileHover={{ backgroundColor: "rgba(217, 122, 111, 0.05)" }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <div style={{ fontSize: "16px", fontWeight: 700, color: "#1a1a1a" }}>{option.label}</div>
-                <div style={{ fontSize: "12px", color: "#999", marginTop: "4px" }}>{option.subtitle}</div>
-              </motion.button>
-            ))}
-          </div>
-
-          {/* Navigation */}
-          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px", width: "100%" }}>
-            <motion.button
-              onClick={handleBack}
-              style={{
-                padding: "10px 20px",
-                borderRadius: "8px",
-                border: "1px solid #e0e0e0",
-                backgroundColor: "white",
-                cursor: "pointer",
-                fontSize: "14px",
-                fontWeight: 600,
-                color: "#666",
-              }}
-              whileHover={{ backgroundColor: "#f5f5f5" }}
-            >
-              رجوع
-            </motion.button>
-          </div>
-        </motion.div>
-      )}
-
-      {/* Screen 5: Main Challenge */}
-      {currentStep === 5 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
-          style={{
-            paddingTop: "0px",
-            paddingBottom: "140px",
-            paddingLeft: "20px",
-            paddingRight: "20px",
-            minHeight: "100vh",
-            width: "100%",
-          }}
-        >
-          {/* Title */}
-          <h2
-            style={{
-              fontSize: "18px",
-              fontWeight: 700,
-              color: "#1a1a1a",
-              textAlign: "center",
-              marginBottom: "16px",
-              marginTop: "0",
-              lineHeight: "1.6",
-            }}
-          >
-            طبيعي يكون عندك هاي المخاوف 🤍
-          </h2>
-          <p
-            style={{
-              fontSize: "14px",
-              color: "#666",
-              textAlign: "center",
-              marginBottom: "16px",
-              marginTop: "0",
-            }}
-          >
-            لذلك فرقنا يكون معك خطوة بخطوة في:
-          </p>
-
-          {/* Checklist Items */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px", width: "100%" }}>
-            {[
-              { emoji: "🎯", title: "كيف تبدي" },
-              { emoji: "📦", title: "من وين توفري المواد الخام" },
-              { emoji: "💰", title: "كيف تسعري منتجاتك" },
-              { emoji: "📸", title: "كيف تصوريهم باحترافية" },
-              { emoji: "📱", title: "كيف تسوقي على السوشال ميديا" },
-              { emoji: "🛒", title: "كيف تجيبي أول طلبية" },
-            ].map((item, idx) => (
-              <motion.div
-                key={idx}
-                style={{
-                  padding: "12px 16px",
-                  textAlign: "right",
-                  fontSize: "15px",
-                  direction: "rtl",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  width: "100%",
-                  backgroundColor: "#f9f9f9",
-                  borderRadius: "12px",
-                  border: "1px solid #e0e0e0",
-                }}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.1 }}
               >
                 <div
                   style={{
-                    width: "28px",
-                    height: "28px",
-                    borderRadius: "50%",
+                    height: "100%",
+                    width: `${progressPercentage}%`,
                     backgroundColor: "#d97a6f",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                    color: "white",
-                    fontSize: "14px",
-                    fontWeight: "bold",
+                    borderRadius: "2px",
+                    transition: "width 0.3s ease",
                   }}
-                >
-                  ✓
-                </div>
-                <div style={{ flex: 1 }}>
-                  <span style={{ fontWeight: 600, color: "#333" }}>{item.title} {item.emoji}</span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Navigation */}
-          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px", width: "100%", gap: "12px" }}>
-            <motion.button
-              onClick={handleBack}
-              style={{
-                padding: "10px 20px",
-                borderRadius: "8px",
-                border: "1px solid #e0e0e0",
-                backgroundColor: "white",
-                cursor: "pointer",
-                fontSize: "14px",
-                fontWeight: 600,
-                color: "#666",
-                flex: 1,
-              }}
-              whileHover={{ backgroundColor: "#f5f5f5" }}
-            >
-              رجوع
-            </motion.button>
-            <motion.button
-              onClick={handleContinue}
-              style={{
-                padding: "10px 20px",
-                borderRadius: "8px",
-                border: "none",
-                backgroundColor: "#d97a6f",
-                color: "white",
-                cursor: "pointer",
-                fontSize: "14px",
-                fontWeight: 600,
-                flex: 1,
-              }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              تابعي
-            </motion.button>
-          </div>
-        </motion.div>
-      )}
-
-      {/* Screen 6: Brand Personality */}
-      {currentStep === 6 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
-          style={{
-            paddingTop: "0px",
-            paddingBottom: "140px",
-            paddingLeft: "20px",
-            paddingRight: "20px",
-            minHeight: "100vh",
-            width: "100%",
-          }}
-        >
-          {/* Question */}
-          <h2
-            style={{
-              fontSize: "18px",
-              fontWeight: 700,
-              color: "#1a1a1a",
-              textAlign: "center",
-              marginBottom: "16px",
-              marginTop: "0",
-              lineHeight: "1.6",
-            }}
-          >
-            تختاري شكل علامتك<br />أي شخصية أقرب لك؟
-          </h2>
-          {/* Brand Personality Cards */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "16px", width: "100%" }}>
-            {[
-              {
-                id: "luxury",
-                title: "فاخرة وفريدة",
-                subtitle: "أنيقة، راقية، فاخرة",
-                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-luxury-doodle-nkMcRsg7L5Kk3gxNmjhUJx.webp",
-                accentColor: "#D4AF37",
-              },
-              {
-                id: "modern",
-                title: "عصرية وملموسة",
-                subtitle: "حديثة، عصرية، ملموسة",
-                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-modern-doodle-aVa7twdnSf9ToPY6N6EvpG.webp",
-                accentColor: "#4A90E2",
-              },
-              {
-                id: "cozy",
-                title: "منزلية دافئة",
-                subtitle: "خصوصية، شخصية، دافئة",
-                illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-cozy-doodle-UPxianzYRjTKXd9tQ6QShu.webp",
-                accentColor: "#8B6F47",
-              },
-            ].map((option) => (
-              <motion.button
-                key={option.id}
-                onClick={() => {
-                  handleAnswer(6, option.id);
-                  handleContinue();
-                }}
+                />
+              </div>
+              <span
                 style={{
-                  padding: "16px",
-                  borderRadius: "12px",
-                  border: answers[6] === option.id ? `2px solid ${option.accentColor}` : "2px solid #e0e0e0",
-                  backgroundColor: answers[6] === option.id ? "rgba(255, 255, 255, 0.9)" : "white",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  direction: "rtl",
-                  cursor: "pointer",
-                  transition: "all 0.2s ease",
-                  width: "100%",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  color: "#666",
+                  minWidth: "40px",
+                  textAlign: "right",
                 }}
-                whileHover={{ scale: 1.02, boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }}
-                whileTap={{ scale: 0.98 }}
               >
-                <div
-                  style={{
-                    width: "60px",
-                    height: "60px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                    borderRadius: "8px",
-                    backgroundColor: `${option.accentColor}15`,
-                  }}
-                >
-                  <img
-                    src={option.illustration}
-                    alt={option.title}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "contain",
-                      padding: "8px",
-                    }}
-                  />
-                </div>
-                <div style={{ flex: 1, textAlign: "right", display: "flex", flexDirection: "column", gap: "4px" }}>
-                  <div style={{ fontSize: "16px", fontWeight: 700, color: "#1a1a1a" }}>{option.title}</div>
-                  <div style={{ fontSize: "12px", color: "#999" }}>{option.subtitle}</div>
-                </div>
-              </motion.button>
-            ))}
+                {currentStep}/14
+              </span>
+            </div>
           </div>
-        </motion.div>
-      )}
+        )}
 
-      {/* Screen 7: Readiness Score */}
-      {currentStep === 7 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
-          style={{
-            paddingTop: "0px",
-            paddingBottom: "140px",
-            paddingLeft: "20px",
-            paddingRight: "20px",
-            minHeight: "100vh",
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {/* Card Container */}
-          <div
+        {/* Screen 1: Entry */}
+        {currentStep === 1 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="d-flex flex-column justify-content-center align-items-center h-[100svh]"
             style={{
-              backgroundColor: "rgba(255, 255, 255, 0.70)",
-              borderRadius: "20px",
-              padding: "48px 32px",
-              border: "1px solid rgba(200, 200, 200, 0.3)",
-              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
-              maxWidth: "450px",
+              paddingTop: "24px",
+              paddingBottom: "24px",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              minHeight: "100vh",
               width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              textAlign: "center",
             }}
           >
-            {/* Circular Progress */}
-            <motion.div style={{ marginBottom: "32px" }}>
-              <svg
-                width="160"
-                height="160"
-                viewBox="0 0 200 200"
-                style={{ margin: "0 auto", display: "block" }}
+            {/* App Name - Top */}
+            <div
+              style={{
+                position: "absolute",
+                top: "40px",
+                left: "0",
+                right: "0",
+                textAlign: "center",
+                zIndex: 20,
+              }}
+            >
+              <h1
+                style={{
+                  fontSize: "20px",
+                  fontWeight: 800,
+                  margin: 0,
+                  color: "#1a1a1a",
+                }}
               >
-                <circle
-                  cx="100"
-                  cy="100"
-                  r="90"
-                  fill="none"
-                  stroke="#e0e0e0"
-                  strokeWidth="12"
-                />
-                <motion.circle
-                  cx="100"
-                  cy="100"
-                  r="90"
-                  fill="none"
-                  stroke="#d97a6f"
-                  strokeWidth="12"
-                  strokeLinecap="round"
-                  initial={{
-                    strokeDasharray: "565.48px",
-                    strokeDashoffset: "565.48px",
-                  }}
-                  animate={{ strokeDashoffset: "141.37px" }}
-                  transition={{ duration: 2, ease: "easeInOut" }}
-                />
-                <text
-                  x="100"
-                  y="110"
-                  textAnchor="middle"
-                  fontSize="48"
-                  fontWeight="700"
-                  fill="#d97a6f"
-                >
-                  78%
-                </text>
-              </svg>
-            </motion.div>
+                Mknooon
+              </h1>
+            </div>
 
-            {/* Title with emoji */}
+            {/* Card - Centered */}
+            <div
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.85)",
+                borderRadius: "28px",
+                padding: "48px 28px",
+                border: "1px solid rgba(200, 200, 200, 0.3)",
+                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
+                minHeight: "340px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                maxWidth: "85%",
+                width: "100%",
+                gap: "16px",
+                margin: "0 auto",
+                marginTop: "123px",
+              }}
+            >
+              {/* Main Title */}
+              <h2
+                style={{
+                  fontSize: "30px",
+                  fontWeight: 800,
+                  color: "#1a1a1a",
+                  lineHeight: "1.35",
+                  margin: "0 0 8px 0",
+                  letterSpacing: "-0.3px",
+                }}
+              >
+                رحلتك لتغيير
+                <br />
+                مستقبلك تبدا الان
+              </h2>
+
+              {/* Question Text */}
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#555",
+                  fontWeight: 500,
+                  margin: "0 0 20px 0",
+                  lineHeight: "1.5",
+                }}
+              >
+                اكتشفي هل انت جاهزة لاطلاق مشروعك؟
+              </p>
+
+              {/* CTA Button */}
+              <motion.button
+                onClick={handleContinue}
+                style={{
+                  borderRadius: "14px",
+                  fontSize: "16px",
+                  fontWeight: 700,
+                  width: "100%",
+                  maxWidth: "280px",
+                  height: "50px",
+                  backgroundColor: "#d97a6f",
+                  color: "white",
+                  border: "none",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                }}
+                whileHover={{
+                  scale: 1.03,
+                  boxShadow: "0 6px 20px rgba(217, 122, 111, 0.3)",
+                }}
+                whileTap={{ scale: 0.97 }}
+              >
+                تعرَّفي الان
+              </motion.button>
+
+              {/* Social Proof */}
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "#999",
+                  margin: "8px 0 0 0",
+                  fontWeight: 500,
+                }}
+              >
+                أكثر من 12000 امرأة بدأت رحلتها
+              </p>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Screen 2: Launch Timing */}
+        {currentStep === 2 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
+            style={{
+              paddingTop: "0px",
+              paddingBottom: "140px",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              minHeight: "100vh",
+              width: "100%",
+            }}
+          >
+            {/* Question */}
             <h2
               style={{
                 fontSize: "18px",
                 fontWeight: 700,
                 color: "#1a1a1a",
                 textAlign: "center",
-                marginBottom: "12px",
+                marginBottom: "16px",
                 marginTop: "0",
+                lineHeight: "1.6",
               }}
             >
-              🚀 جاهزيتك لإطلاق مشروعك
+              لو كانت التفاصيل واضحة وسهلة
+              <br />
+              ...متى حابة تطلقي مشروعك؟
             </h2>
 
-            {/* Subtitle with emoji */}
-            <h3
+            {/* Options */}
+            <div
               style={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#d97a6f",
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+                width: "100%",
+              }}
+            >
+              {[
+                { id: "now", label: "الآن 🚀", subtitle: "أنا جاهزة!" },
+                {
+                  id: "month",
+                  label: "خلال شهر 📅",
+                  subtitle: "بحاجة لتحضيرات",
+                },
+                {
+                  id: "quarter",
+                  label: "خلال 3 أشهر ⏳",
+                  subtitle: "بدي وقت أكثر",
+                },
+                { id: "unsure", label: "لسه ما قررت 🤔", subtitle: "بدي أفكر" },
+              ].map(option => (
+                <motion.button
+                  key={option.id}
+                  onClick={() => {
+                    handleAnswer(2, option.id);
+                    handleContinue();
+                  }}
+                  style={{
+                    padding: "16px",
+                    borderRadius: "12px",
+                    border:
+                      answers[2] === option.id
+                        ? "2px solid #d97a6f"
+                        : "1px solid #e0e0e0",
+                    backgroundColor:
+                      answers[2] === option.id
+                        ? "rgba(217, 122, 111, 0.1)"
+                        : "#f9f9f9",
+                    cursor: "pointer",
+                    textAlign: "right",
+                    transition: "all 0.2s ease",
+                  }}
+                  whileHover={{ backgroundColor: "rgba(217, 122, 111, 0.05)" }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: 700,
+                      color: "#1a1a1a",
+                    }}
+                  >
+                    {option.label}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      color: "#999",
+                      marginTop: "4px",
+                    }}
+                  >
+                    {option.subtitle}
+                  </div>
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Screen 3: Income Vision */}
+        {currentStep === 3 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
+            style={{
+              paddingTop: "0px",
+              paddingBottom: "140px",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              minHeight: "100vh",
+              width: "100%",
+            }}
+          >
+            {/* Question */}
+            <h2
+              style={{
+                fontSize: "18px",
+                fontWeight: 700,
+                color: "#1a1a1a",
+                textAlign: "center",
+                marginBottom: "16px",
+                marginTop: "0",
+                lineHeight: "1.6",
+              }}
+            >
+              لما يبدأ مشروعك ينجح ويحقق إيرادات..
+              <br />
+              كيف حابة يكون دخله بالنسبة لك؟
+            </h2>
+
+            {/* Options */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+                width: "100%",
+              }}
+            >
+              {[
+                {
+                  id: "personal",
+                  label: "يغطي مصاريفي الشخصية 💰",
+                  subtitle: "استقلالية مالية",
+                },
+                {
+                  id: "family",
+                  label: "يساعدني في دعم عائلتي 👨‍👩‍👧",
+                  subtitle: "دعم الأحبة",
+                },
+                {
+                  id: "dream",
+                  label: "يكون مشروع العمر 🎯",
+                  subtitle: "حلم كبير",
+                },
+              ].map(option => (
+                <motion.button
+                  key={option.id}
+                  onClick={() => {
+                    handleAnswer(3, option.id);
+                    handleContinue();
+                  }}
+                  style={{
+                    padding: "16px",
+                    borderRadius: "12px",
+                    border:
+                      answers[3] === option.id
+                        ? "2px solid #d97a6f"
+                        : "1px solid #e0e0e0",
+                    backgroundColor:
+                      answers[3] === option.id
+                        ? "rgba(217, 122, 111, 0.1)"
+                        : "#f9f9f9",
+                    cursor: "pointer",
+                    textAlign: "right",
+                    transition: "all 0.2s ease",
+                  }}
+                  whileHover={{ backgroundColor: "rgba(217, 122, 111, 0.05)" }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: 700,
+                      color: "#1a1a1a",
+                    }}
+                  >
+                    {option.label}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      color: "#999",
+                      marginTop: "4px",
+                    }}
+                  >
+                    {option.subtitle}
+                  </div>
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Screen 4: Main Obstacle */}
+        {currentStep === 4 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
+            style={{
+              paddingTop: "0px",
+              paddingBottom: "140px",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              minHeight: "100vh",
+              width: "100%",
+            }}
+          >
+            {/* Question */}
+            <h2
+              style={{
+                fontSize: "18px",
+                fontWeight: 700,
+                color: "#1a1a1a",
+                textAlign: "center",
+                marginBottom: "16px",
+                marginTop: "0",
+                lineHeight: "1.6",
+              }}
+            >
+              أكثر شيء بتخافي منه
+              <br />
+              لما تفكري تبدي مشروعك؟
+            </h2>
+
+            {/* Options */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+                width: "100%",
+              }}
+            >
+              {[
+                {
+                  id: "start",
+                  label: "ما أعرف من وين أبدأ 🤔",
+                  subtitle: "البداية الصحيحة",
+                },
+                {
+                  id: "materials",
+                  label: "ما أعرف أماكن المواد 📋",
+                  subtitle: "توفر المواد",
+                },
+                {
+                  id: "pricing",
+                  label: "ما أعرف أسعر وأسوق 💰",
+                  subtitle: "التسعير والتسويق",
+                },
+                {
+                  id: "sales",
+                  label: "ما أعرف أبيع وأحقق إيرادات 📈",
+                  subtitle: "المبيعات والأرباح",
+                },
+                { id: "all", label: "جميع ما ذكر ⚠️", subtitle: "كل الخوف" },
+              ].map(option => (
+                <motion.button
+                  key={option.id}
+                  onClick={() => {
+                    handleAnswer(4, option.id);
+                    handleContinue();
+                  }}
+                  style={{
+                    padding: "16px",
+                    borderRadius: "12px",
+                    border:
+                      answers[4] === option.id
+                        ? "2px solid #d97a6f"
+                        : "1px solid #e0e0e0",
+                    backgroundColor:
+                      answers[4] === option.id
+                        ? "rgba(217, 122, 111, 0.1)"
+                        : "#f9f9f9",
+                    cursor: "pointer",
+                    textAlign: "right",
+                    transition: "all 0.2s ease",
+                  }}
+                  whileHover={{ backgroundColor: "rgba(217, 122, 111, 0.05)" }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: 700,
+                      color: "#1a1a1a",
+                    }}
+                  >
+                    {option.label}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      color: "#999",
+                      marginTop: "4px",
+                    }}
+                  >
+                    {option.subtitle}
+                  </div>
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Screen 5: Main Challenge */}
+        {currentStep === 5 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
+            style={{
+              paddingTop: "0px",
+              paddingBottom: "140px",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              minHeight: "100vh",
+              width: "100%",
+            }}
+          >
+            {/* Title */}
+            <h2
+              style={{
+                fontSize: "18px",
+                fontWeight: 700,
+                color: "#1a1a1a",
+                textAlign: "center",
+                marginBottom: "16px",
+                marginTop: "0",
+                lineHeight: "1.6",
+              }}
+            >
+              طبيعي يكون عندك هذه المخاوف 🤍
+            </h2>
+            <p
+              style={{
+                fontSize: "14px",
+                color: "#666",
                 textAlign: "center",
                 marginBottom: "16px",
                 marginTop: "0",
               }}
             >
-              ✨ جاهزيتك ممتازة
-            </h3>
+              لذلك فرقنا يكون معك خطوة بخطوة في:
+            </p>
 
-            {/* Description */}
-            <p
+            {/* Checklist Items */}
+            <div
               style={{
-                fontSize: "14px",
-                color: "#666",
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+                width: "100%",
+              }}
+            >
+              {[
+                { emoji: "🎯", title: "كيف تبدي" },
+                { emoji: "📦", title: "من وين توفري المواد الخام" },
+                { emoji: "💰", title: "كيف تسعري منتجاتك" },
+                { emoji: "📸", title: "كيف تصوريهم باحترافية" },
+                { emoji: "📱", title: "كيف تسوقي على السوشال ميديا" },
+                { emoji: "🛒", title: "كيف تجيبي أول طلبية" },
+              ].map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  style={{
+                    padding: "12px 16px",
+                    textAlign: "right",
+                    fontSize: "15px",
+                    direction: "rtl",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    width: "100%",
+                    backgroundColor: "#f9f9f9",
+                    borderRadius: "12px",
+                    border: "1px solid #e0e0e0",
+                  }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                >
+                  <div
+                    style={{
+                      width: "28px",
+                      height: "28px",
+                      borderRadius: "50%",
+                      backgroundColor: "#d97a6f",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      color: "white",
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    ✓
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <span style={{ fontWeight: 600, color: "#333" }}>
+                      {item.title} {item.emoji}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Navigation */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "20px",
+                width: "100%",
+                gap: "12px",
+              }}
+            >
+              <motion.button
+                onClick={handleContinue}
+                style={{
+                  padding: "10px 20px",
+                  borderRadius: "8px",
+                  border: "none",
+                  backgroundColor: "#d97a6f",
+                  color: "white",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  flex: 1,
+                }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                تابعي
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Screen 6: Brand Personality */}
+        {currentStep === 6 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
+            style={{
+              paddingTop: "0px",
+              paddingBottom: "140px",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              minHeight: "100vh",
+              width: "100%",
+            }}
+          >
+            {/* Question */}
+            <h2
+              style={{
+                fontSize: "18px",
+                fontWeight: 700,
+                color: "#1a1a1a",
                 textAlign: "center",
-                marginBottom: "32px",
+                marginBottom: "16px",
                 marginTop: "0",
                 lineHeight: "1.6",
               }}
             >
-              إذا خليتي احكيلي الآن كيف تحول هذه الجاهزية إلى مشروع حقيقي خلال 30 يوم.
-            </p>
-
-            {/* Continue Button - Centered */}
-            <motion.button
-              onClick={() => handleContinue()}
+              لما تطلقي مشروعك،
+              <br />
+              كيف بتحبي تكون علامتك التجارية؟{" "}
+            </h2>
+            {/* Brand Personality Cards */}
+            <div
               style={{
-                padding: "14px 32px",
-                borderRadius: "12px",
-                border: "none",
-                backgroundColor: "#d97a6f",
-                color: "white",
-                fontSize: "16px",
-                fontWeight: 600,
-                cursor: "pointer",
+                display: "flex",
+                flexDirection: "column",
+                gap: "16px",
                 width: "100%",
-                maxWidth: "280px",
-                margin: "0 auto",
-                display: "block",
               }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
             >
-              اضغطي هنا
-            </motion.button>
-          </div>
-        </motion.div>
-      )}
+              {[
+                {
+                  id: "luxury",
+                  title: "فاخرة وفريدة",
+                  subtitle: "أنيقة، راقية، فاخرة",
+                  illustration:
+                    "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-luxury-doodle-nkMcRsg7L5Kk3gxNmjhUJx.webp",
+                  accentColor: "#D4AF37",
+                },
+                {
+                  id: "modern",
+                  title: "عصرية حيوية",
+                  subtitle: "حديثة، عصرية، ملموسة",
+                  illustration:
+                    "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-modern-doodle-aVa7twdnSf9ToPY6N6EvpG.webp",
+                  accentColor: "#4A90E2",
+                },
+                {
+                  id: "cozy",
+                  title: "منزلية دافئة",
+                  subtitle: "خصوصية، شخصية، دافئة",
+                  illustration:
+                    "https://d2xsxph8kpxj0f.cloudfront.net/310419663029857308/iZ6p6azaBMGCgmhFoK6Rha/screen6-cozy-doodle-UPxianzYRjTKXd9tQ6QShu.webp",
+                  accentColor: "#8B6F47",
+                },
+              ].map(option => (
+                <motion.button
+                  key={option.id}
+                  onClick={() => {
+                    handleAnswer(6, option.id);
+                    handleContinue();
+                  }}
+                  style={{
+                    padding: "16px",
+                    borderRadius: "12px",
+                    border:
+                      answers[6] === option.id
+                        ? `2px solid ${option.accentColor}`
+                        : "2px solid #e0e0e0",
+                    backgroundColor:
+                      answers[6] === option.id
+                        ? "rgba(255, 255, 255, 0.9)"
+                        : "white",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    direction: "rtl",
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                    width: "100%",
+                  }}
+                  whileHover={{
+                    scale: 1.02,
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      borderRadius: "8px",
+                      backgroundColor: `${option.accentColor}15`,
+                    }}
+                  >
+                    <img
+                      src={option.illustration}
+                      alt={option.title}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "contain",
+                        padding: "8px",
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      flex: 1,
+                      textAlign: "right",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "4px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: "16px",
+                        fontWeight: 700,
+                        color: "#1a1a1a",
+                      }}
+                    >
+                      {option.title}
+                    </div>
+                    <div style={{ fontSize: "12px", color: "#999" }}>
+                      {option.subtitle}
+                    </div>
+                  </div>
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
-      {/* Screen 8: Video */}
-      {currentStep === 8 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
-          style={{
-            paddingTop: "0px",
-            paddingBottom: "140px",
-            paddingLeft: "20px",
-            paddingRight: "20px",
-            minHeight: "100vh",
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {/* Card Container */}
-          <div
+        {/* Screen 7: Readiness Score */}
+        {currentStep === 7 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
             style={{
-              backgroundColor: "rgba(255, 255, 255, 0.70)",
-              borderRadius: "20px",
-              padding: "48px 32px",
-              border: "1px solid rgba(200, 200, 200, 0.3)",
-              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
-              maxWidth: "450px",
+              paddingTop: "0px",
+              paddingBottom: "140px",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              minHeight: "100vh",
               width: "100%",
               display: "flex",
-              flexDirection: "column",
+              justifyContent: "center",
               alignItems: "center",
-              textAlign: "center",
             }}
           >
-            {/* Subtitle */}
-            <p
-              style={{
-                fontSize: "14px",
-                color: "#666",
-                marginBottom: "20px",
-                marginTop: "0",
-                textAlign: "center",
-              }}
-            >
-              شاهدي فيديو راح يمكنك من عمل مشروعك
-            </p>
-
-            {/* Video Container */}
+            {/* Card Container */}
             <div
               style={{
-                marginBottom: "30px",
-                borderRadius: "12px",
-                overflow: "hidden",
+                backgroundColor: "rgba(255, 255, 255, 0.70)",
+                borderRadius: "20px",
+                padding: "48px 32px",
+                border: "1px solid rgba(200, 200, 200, 0.3)",
+                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
+                maxWidth: "450px",
                 width: "100%",
-              }}
-            >
-              <iframe
-                width="100%"
-                height="250"
-                src={`https://www.youtube.com/embed/${selectedBrand ? brandVideos[selectedBrand] || "dJjFfRiy6E4" : "dJjFfRiy6E4"}`}
-                title="Mknooon Video"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                style={{ borderRadius: "12px" }}
-              />
-            </div>
-
-            {/* Title */}
-            <h3
-              style={{
-                fontSize: "18px",
-                fontWeight: 700,
-                textAlign: "center",
-                marginBottom: "30px",
-                marginTop: "0",
-                color: "#1a1a1a",
-              }}
-            >
-              مستقبلك بعد مشروعك .. أفضل
-            </h3>
-
-            {/* Continue Button */}
-            <motion.button
-              onClick={handleContinue}
-              style={{
-                padding: "14px 32px",
-                borderRadius: "12px",
-                border: "none",
-                backgroundColor: "#d97a6f",
-                color: "white",
-                fontSize: "14px",
-                fontWeight: 600,
-                cursor: "pointer",
-                width: "100%",
-                maxWidth: "280px",
-                margin: "0 auto",
-                display: "block",
-              }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              تعرفي على تكلفة الاشتراك 🚀
-            </motion.button>
-          </div>
-        </motion.div>
-      )}
-
-      {/* Screen 9: Country Selection (Original) */}
-      {currentStep === 9 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-end"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "100vh",
-            padding: "20px",
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "rgba(255, 255, 255, 0.70)",
-              borderRadius: "20px",
-              padding: "43px 32px",
-              border: "1px solid rgba(200, 200, 200, 0.3)",
-              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
-              maxWidth: "450px",
-              width: "100%",
-              marginBottom: "259px",
-            }}
-          >
-            <h2
-              className="fw-bold text-dark mb-2"
-              style={{
-                fontSize: "24px",
-                fontWeight: 700,
-                textAlign: "right",
-                lineHeight: "1.5",
-              }}
-            >
-              وحتى نقدرتطيكي السعر حسب عملتك المحلية...
-            </h2>
-            <p
-              style={{
-                fontSize: "14px",
-                color: "#666",
-                marginBottom: "20px",
-                textAlign: "right",
-              }}
-            >
-              من أي دولة تواصلي معنا؟
-            </p>
-            <p
-              style={{
-                fontSize: "12px",
-                color: "#999",
-                marginBottom: "20px",
-                textAlign: "right",
-              }}
-            >
-              اختاري دولتك
-            </p>
-            <div style={{ position: "relative", marginBottom: "20px", width: "100%" }}>
-              <motion.button
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              style={{
-                width: "100%",
-                borderRadius: isDropdownOpen ? "10px 10px 0 0" : "10px",
-                border: "1.5px solid #D9D5CF",
-                borderBottom: isDropdownOpen ? "none" : "1.5px solid #D9D5CF",
-                padding: "14px 16px",
-                fontSize: "16px",
-                fontWeight: 500,
-                backgroundColor: "#FFFFFF",
-                color: answers[9] ? "#2D2D2D" : "#999",
-                direction: "rtl",
-                textAlign: "right",
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
-                justifyContent: "flex-end",
-                gap: "8px",
-                transition: "all 0.2s ease",
-                boxShadow: isDropdownOpen
-                  ? "0 0 0 3px rgba(124, 110, 91, 0.1)"
-                  : "0 1px 3px rgba(0, 0, 0, 0.05)",
-                cursor: "pointer",
+                textAlign: "center",
               }}
-              whileHover={{ backgroundColor: "#FAFAF8" }}
             >
-              <span>{answers[9] || "اختاري دولة"}</span>
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#7C6E5B"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </motion.button>
+              {/* Circular Progress */}
+              <motion.div style={{ marginBottom: "32px" }}>
+                <svg
+                  width="160"
+                  height="160"
+                  viewBox="0 0 200 200"
+                  style={{ margin: "0 auto", display: "block" }}
+                >
+                  <circle
+                    cx="100"
+                    cy="100"
+                    r="90"
+                    fill="none"
+                    stroke="#e0e0e0"
+                    strokeWidth="12"
+                  />
+                  <motion.circle
+                    cx="100"
+                    cy="100"
+                    r="90"
+                    fill="none"
+                    stroke="#d97a6f"
+                    strokeWidth="12"
+                    strokeLinecap="round"
+                    initial={{
+                      strokeDasharray: "565.48px",
+                      strokeDashoffset: "565.48px",
+                    }}
+                    animate={{ strokeDashoffset: "141.37px" }}
+                    transition={{ duration: 2, ease: "easeInOut" }}
+                  />
+                  <text
+                    x="100"
+                    y="110"
+                    textAnchor="middle"
+                    fontSize="48"
+                    fontWeight="700"
+                    fill="#d97a6f"
+                  >
+                    78%
+                  </text>
+                </svg>
+              </motion.div>
 
-            {isDropdownOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+              {/* Title with emoji */}
+              <h2
                 style={{
-                  position: "absolute",
-                  top: "calc(100% + 8px)",
-                  left: 0,
-                  right: 0,
-                  backgroundColor: "#FFFFFF",
-                  border: "1.5px solid #D9D5CF",
-                  borderRadius: "10px",
-                  zIndex: 10,
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-                  maxHeight: "300px",
-                  overflowY: "auto",
+                  fontSize: "18px",
+                  fontWeight: 700,
+                  color: "#1a1a1a",
+                  textAlign: "center",
+                  marginBottom: "12px",
+                  marginTop: "0",
                 }}
               >
-                {countries.map(country => (
-                  <motion.button
-                    key={country.id}
-                    onClick={() => {
-                      handleAnswer(9, country.name_ar);
-                      setSelectedCountry(country);
-                      setIsDropdownOpen(false);
-                    }}
-                    style={{
-                      width: "100%",
-                      padding: "14px 16px",
-                      textAlign: "right",
-                      direction: "rtl",
-                      border: "none",
-                      borderBottom: "1px solid #F0EAE0",
-                      backgroundColor:
-                        answers[9] === country.name_ar ? "#F0EAE0" : "#FFFFFF",
-                      color: "#2D2D2D",
-                      fontSize: "16px",
-                      fontWeight: 500,
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                    whileHover={{ backgroundColor: "#F0EAE0" }}
-                  >
-                    <span>{country.name_ar}</span>
-                  </motion.button>
-                ))}
-              </motion.div>
-            )}
-          </div>
-          <motion.button
-            onClick={handleContinue}
-            disabled={!answers[9]}
-            className="btn btn-dark fw-bold py-3 px-5"
-            style={{
-              borderRadius: "12px",
-              fontSize: "16px",
-              width: "100%",
-              marginTop: "20px",
-              opacity: !answers[9] ? 0.5 : 1,
-              backgroundColor: "#d97a6f",
-              border: "none",
-            }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            متابعة
-          </motion.button>
-          </div>
-        </motion.div>
-      )}
+                🚀 جاهزيتك لإطلاق مشروعك
+              </h2>
 
-      {/* Screen 10: Pricing */}
-      {currentStep === 10 && selectedCountry && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "100vh",
-            padding: "20px",
-          }}
-        >
-          <div
+              {/* Subtitle with emoji */}
+              <h3
+                style={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#d97a6f",
+                  textAlign: "center",
+                  marginBottom: "16px",
+                  marginTop: "0",
+                }}
+              >
+                ✨ جاهزيتك ممتازة
+              </h3>
+
+              {/* Description */}
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#666",
+                  textAlign: "center",
+                  marginBottom: "32px",
+                  marginTop: "0",
+                  lineHeight: "1.6",
+                }}
+              >
+                خليني اشرحلك كيف راح نساعدك لتحويل هذه الجاهزية لمشروع حقيقي.
+              </p>
+
+              {/* Continue Button - Centered */}
+              <motion.button
+                onClick={() => handleContinue()}
+                style={{
+                  padding: "14px 32px",
+                  borderRadius: "12px",
+                  border: "none",
+                  backgroundColor: "#d97a6f",
+                  color: "white",
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  width: "100%",
+                  maxWidth: "280px",
+                  margin: "0 auto",
+                  display: "block",
+                }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                اكتشفي الان{" "}
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Screen 8: Video */}
+        {currentStep === 8 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
             style={{
-              backgroundColor: "rgba(255, 255, 255, 0.70)",
-              borderRadius: "20px",
-              padding: "43px 32px",
-              border: "1px solid rgba(200, 200, 200, 0.3)",
-              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
-              maxWidth: "450px",
+              paddingTop: "0px",
+              paddingBottom: "140px",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              minHeight: "100vh",
               width: "100%",
-              marginBottom: "259px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <h2
-              className="fw-bold text-dark mb-2"
-              style={{
-                fontSize: "24px",
-                fontWeight: 700,
-                textAlign: "right",
-                lineHeight: "1.5",
-              }}
-            >
-              سعر الاشتراك
-            </h2>
-            <p
-              style={{
-                fontSize: "14px",
-                color: "#666",
-                marginBottom: "20px",
-                textAlign: "right",
-              }}
-            >
-              في {selectedCountry?.name_ar}
-            </p>
-
-            {/* Price Display */}
+            {/* Card Container */}
             <div
               style={{
-                backgroundColor: "transparent",
-                padding: "24px 20px",
-                borderRadius: "14px",
-                marginBottom: "20px",
-                border: "2px solid #d97a6f",
+                backgroundColor: "rgba(255, 255, 255, 0.70)",
+                borderRadius: "20px",
+                padding: "48px 32px",
+                border: "1px solid rgba(200, 200, 200, 0.3)",
+                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
+                maxWidth: "450px",
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
                 textAlign: "center",
               }}
             >
+              {/* Subtitle */}
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#666",
+                  marginBottom: "20px",
+                  marginTop: "0",
+                  textAlign: "center",
+                }}
+              >
+                هذا الفيديو بشرح كل تفاصيل التدريب{" "}
+              </p>
+
+              {/* Video Container */}
+              <div
+                style={{
+                  marginBottom: "30px",
+                  borderRadius: "12px",
+                  overflow: "hidden",
+                  width: "100%",
+                }}
+              >
+                <iframe
+                  width="100%"
+                  height="250"
+                  src={`https://www.youtube.com/embed/${selectedBrand ? brandVideos[selectedBrand] || "dJjFfRiy6E4" : "dJjFfRiy6E4"}`}
+                  title="Mknooon Video"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{ borderRadius: "12px" }}
+                />
+              </div>
+
+              {/* Title */}
+              <h3
+                style={{
+                  fontSize: "18px",
+                  fontWeight: 700,
+                  textAlign: "center",
+                  marginBottom: "30px",
+                  marginTop: "0",
+                  color: "#1a1a1a",
+                }}
+              >
+                مستقبلك بعد مشروعك .. أفضل
+              </h3>
+
+              {/* Continue Button */}
+              <motion.button
+                onClick={handleContinue}
+                style={{
+                  padding: "14px 32px",
+                  borderRadius: "12px",
+                  border: "none",
+                  backgroundColor: "#d97a6f",
+                  color: "white",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  width: "100%",
+                  maxWidth: "280px",
+                  margin: "0 auto",
+                  display: "block",
+                }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                تعرفي على تكلفة التدريب 🚀
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Screen 9: Country Selection (Original) */}
+        {currentStep === 9 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-end"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "100vh",
+              padding: "20px",
+            }}
+          >
+            <div
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.70)",
+                borderRadius: "20px",
+                padding: "43px 32px",
+                border: "1px solid rgba(200, 200, 200, 0.3)",
+                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
+                maxWidth: "450px",
+                width: "100%",
+                marginBottom: "259px",
+              }}
+            >
+              <h2
+                className="fw-bold text-dark mb-2"
+                style={{
+                  fontSize: "24px",
+                  fontWeight: 700,
+                  textAlign: "right",
+                  lineHeight: "1.5",
+                }}
+              >
+                حتى نقدر نعطيكي السعر حسب عملتك المحلية...
+              </h2>
               <p
                 style={{
                   fontSize: "12px",
                   color: "#999",
-                  margin: "0 0 12px 0",
-                  fontWeight: 500,
+                  marginBottom: "20px",
+                  textAlign: "right",
                 }}
               >
-                السعر النهائي
+                اختاري دولتك
               </p>
-              {priceData?.price ? (
-                <p
+              <div
+                style={{
+                  position: "relative",
+                  marginBottom: "20px",
+                  width: "100%",
+                }}
+              >
+                <motion.button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   style={{
-                    fontSize: "40px",
-                    fontWeight: 900,
-                    color: "#d97a6f",
-                    margin: "0",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "6px",
-                  }}
-                >
-                  <span>{priceData.price}</span>
-                  <span style={{ fontSize: "22px" }}>
-                    {priceData.currency_symbol}
-                  </span>
-                </p>
-              ) : (
-                <p style={{ color: "#999", fontSize: "14px" }}>جاري التحميل...</p>
-              )}
-            </div>
-
-            <p
-              style={{
-                fontSize: "13px",
-                color: "#666",
-                margin: "0 0 12px 0",
-                textAlign: "right",
-              }}
-            >
-              يشمل 5 دورات:
-            </p>
-
-            {/* Courses Card */}
-            <div
-              style={{
-                backgroundColor: "rgba(217, 122, 111, 0.05)",
-                border: "1px solid rgba(217, 122, 111, 0.2)",
-                borderRadius: "14px",
-                padding: "16px",
-                marginBottom: "20px",
-              }}
-            >
-              {[
-                "الدورة الاحترافية",
-                "تسعير المنتجات",
-                "تصوير بالموبايل",
-                "التسويق الإلكتروني",
-                "إدارة المشاريع",
-              ].map((item, index) => (
-                <div
-                  key={index}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    margin: "10px 0",
-                    fontSize: "14px",
-                    color: "#2D2D2D",
+                    width: "100%",
+                    borderRadius: isDropdownOpen ? "10px 10px 0 0" : "10px",
+                    border: "1.5px solid #D9D5CF",
+                    borderBottom: isDropdownOpen
+                      ? "none"
+                      : "1.5px solid #D9D5CF",
+                    padding: "14px 16px",
+                    fontSize: "16px",
+                    fontWeight: 500,
+                    backgroundColor: "#FFFFFF",
+                    color: answers[9] ? "#2D2D2D" : "#999",
                     direction: "rtl",
+                    textAlign: "right",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                    gap: "8px",
+                    transition: "all 0.2s ease",
+                    boxShadow: isDropdownOpen
+                      ? "0 0 0 3px rgba(124, 110, 91, 0.1)"
+                      : "0 1px 3px rgba(0, 0, 0, 0.05)",
+                    cursor: "pointer",
                   }}
+                  whileHover={{ backgroundColor: "#FAFAF8" }}
                 >
-                  <span
+                  <span>{answers[9] || "اختاري دولة"}</span>
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#7C6E5B"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </motion.button>
+
+                {isDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
                     style={{
-                      color: "#d97a6f",
-                      fontWeight: "bold",
-                      fontSize: "18px",
+                      position: "absolute",
+                      top: "calc(100% + 8px)",
+                      left: 0,
+                      right: 0,
+                      backgroundColor: "#FFFFFF",
+                      border: "1.5px solid #D9D5CF",
+                      borderRadius: "10px",
+                      zIndex: 10,
+                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                      maxHeight: "300px",
+                      overflowY: "auto",
                     }}
                   >
-                    ✓
-                  </span>
-                  <span>{item}</span>
-                </div>
-              ))}
+                    {countries.map(country => (
+                      <motion.button
+                        key={country.id}
+                        onClick={() => {
+                          handleAnswer(9, country.name_ar);
+                          setSelectedCountry(country);
+                          setIsDropdownOpen(false);
+                        }}
+                        style={{
+                          width: "100%",
+                          padding: "14px 16px",
+                          textAlign: "right",
+                          direction: "rtl",
+                          border: "none",
+                          borderBottom: "1px solid #F0EAE0",
+                          backgroundColor:
+                            answers[9] === country.name_ar
+                              ? "#F0EAE0"
+                              : "#FFFFFF",
+                          color: "#2D2D2D",
+                          fontSize: "16px",
+                          fontWeight: 500,
+                          cursor: "pointer",
+                          transition: "all 0.2s ease",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                        whileHover={{ backgroundColor: "#F0EAE0" }}
+                      >
+                        <span>{country.name_ar}</span>
+                      </motion.button>
+                    ))}
+                  </motion.div>
+                )}
+              </div>
+              <motion.button
+                onClick={handleContinue}
+                disabled={!answers[9]}
+                className="btn btn-dark fw-bold py-3 px-5"
+                style={{
+                  borderRadius: "12px",
+                  fontSize: "16px",
+                  width: "100%",
+                  marginTop: "20px",
+                  opacity: !answers[9] ? 0.5 : 1,
+                  backgroundColor: "#d97a6f",
+                  color: "#FFFFFF",
+                  border: "none",
+                }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                متابعة
+              </motion.button>
             </div>
+          </motion.div>
+        )}
 
-            <motion.button
-              onClick={() => setCurrentStep(11)}
-              className="btn fw-bold py-3 px-5"
-              style={{
-                borderRadius: "12px",
-                fontSize: "16px",
-                width: "100%",
-                backgroundColor: "#d97a6f",
-                border: "none",
-                color: "white",
-              }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              اشتري الآن
-            </motion.button>
-          </div>
-        </motion.div>
-      )}
-
-      {/* Screen 11: Decision Screen */}
-      {currentStep === 11 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "100vh",
-            padding: "20px",
-            overflowY: "auto",
-          }}
-        >
-          <div
+        {/* Screen 10: Pricing */}
+        {currentStep === 10 && selectedCountry && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             style={{
-              backgroundColor: "rgba(255, 255, 255, 0.70)",
-              borderRadius: "20px",
-              padding: "40px 32px",
-              border: "1px solid rgba(200, 200, 200, 0.3)",
-              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
-              maxWidth: "450px",
-              width: "100%",
-              marginBottom: "40px",
-              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "100vh",
+              padding: "20px",
             }}
           >
-            {/* Title */}
-            <motion.h2
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="fw-bold text-dark mb-4"
+            <div
               style={{
-                fontSize: "24px",
-                fontWeight: 700,
-                lineHeight: "1.5",
-                textAlign: "right",
-                direction: "rtl",
+                backgroundColor: "rgba(255, 255, 255, 0.70)",
+                borderRadius: "20px",
+                padding: "43px 32px",
+                border: "1px solid rgba(200, 200, 200, 0.3)",
+                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
+                maxWidth: "450px",
+                width: "100%",
+                marginBottom: "259px",
               }}
             >
-              مشروعك أقرب مما تخيلي...
-              <br />
-              خلينا نبدأه صح.
-            </motion.h2>
+              <h2
+                className="fw-bold text-dark mb-2"
+                style={{
+                  fontSize: "24px",
+                  fontWeight: 700,
+                  textAlign: "right",
+                  lineHeight: "1.5",
+                }}
+              >
+                سعر الاشتراك
+              </h2>
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#666",
+                  marginBottom: "20px",
+                  textAlign: "right",
+                }}
+              >
+                في {selectedCountry?.name_ar}
+              </p>
 
-            {/* Checkmark Animation */}
+              {/* Price Display */}
+              <div
+                style={{
+                  backgroundColor: "transparent",
+                  padding: "24px 20px",
+                  borderRadius: "14px",
+                  marginBottom: "20px",
+                  border: "2px solid #d97a6f",
+                  textAlign: "center",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: "12px",
+                    color: "#999",
+                    margin: "0 0 12px 0",
+                    fontWeight: 500,
+                  }}
+                >
+                  السعر النهائي
+                </p>
+                {priceData?.price ? (
+                  <p
+                    style={{
+                      fontSize: "40px",
+                      fontWeight: 900,
+                      color: "#d97a6f",
+                      margin: "0",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "6px",
+                    }}
+                  >
+                    <span>{priceData.price}</span>
+                    <span style={{ fontSize: "22px" }}>
+                      {priceData.currency_symbol}
+                    </span>
+                  </p>
+                ) : (
+                  <p style={{ color: "#999", fontSize: "14px" }}>
+                    جاري التحميل...
+                  </p>
+                )}
+              </div>
+
+              <p
+                style={{
+                  fontSize: "13px",
+                  color: "#666",
+                  margin: "0 0 12px 0",
+                  textAlign: "right",
+                }}
+              >
+                وهذا السعر بشمل التالي:
+              </p>
+
+              {/* Courses Card */}
+              <div
+                style={{
+                  backgroundColor: "rgba(217, 122, 111, 0.05)",
+                  border: "1px solid rgba(217, 122, 111, 0.2)",
+                  borderRadius: "14px",
+                  padding: "16px",
+                  marginBottom: "20px",
+                }}
+              >
+                {[
+                  "الدورة الاحترافية",
+                  "دورة تسعير المنتجات ",
+                  "دورة تصوير المنتجات بالموبايل ",
+                  "دورة التسويق الالكتروني ",
+                  "دورة ادارة المشاريع ",
+                ].map((item, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      margin: "10px 0",
+                      fontSize: "14px",
+                      color: "#2D2D2D",
+                      direction: "rtl",
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "#d97a6f",
+                        fontWeight: "bold",
+                        fontSize: "18px",
+                      }}
+                    >
+                      ✓
+                    </span>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              <motion.button
+                onClick={() => setCurrentStep(12)}
+                className="btn fw-bold py-3 px-5"
+                style={{
+                  borderRadius: "12px",
+                  fontSize: "16px",
+                  width: "100%",
+                  backgroundColor: "#d97a6f",
+                  border: "none",
+                  color: "white",
+                }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                تعرَّفي على طرق الدفع
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Screen 12: Payment Methods */}
+        {currentStep === 12 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "20px",
+              overflowY: "auto",
+            }}
+          >
+            <div
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.70)",
+                borderRadius: "20px",
+                padding: "40px 32px",
+                border: "1px solid rgba(200, 200, 200, 0.3)",
+                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
+                maxWidth: "450px",
+                width: "100%",
+                marginBottom: "40px",
+              }}
+            >
+              {/* Title */}
+              <motion.h2
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+                className="fw-bold text-dark mb-2"
+                style={{
+                  fontSize: "24px",
+                  fontWeight: 700,
+                  textAlign: "right",
+                  direction: "rtl",
+                  lineHeight: "1.5",
+                }}
+              >
+                مشروعك قرّب يصير حقيقة
+              </motion.h2>
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#666",
+                  marginBottom: "24px",
+                  textAlign: "right",
+                  direction: "rtl",
+                }}
+              >
+                اختاري طريقة الدفع الانسب الك
+              </p>
+
+              {loading && (
+                <p
+                  style={{
+                    textAlign: "center",
+                    color: "#666",
+                    padding: "20px",
+                  }}
+                >
+                  جاري التحميل...
+                </p>
+              )}
+
+              {!loading && paymentMethods.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "12px",
+                  }}
+                >
+                  {paymentMethods.map((method, index) => (
+                    <motion.button
+                      key={method.id}
+                      onClick={() => handlePaymentMethodSelect(method)}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
+                      className="btn fw-bold py-3 px-4"
+                      style={{
+                        borderRadius: "12px",
+                        textAlign: "right",
+                        direction: "rtl",
+                        width: "100%",
+                        backgroundColor:
+                          selectedPaymentMethod?.id === method.id
+                            ? "#d97a6f"
+                            : "#F8F7F5",
+                        color:
+                          selectedPaymentMethod?.id === method.id
+                            ? "#fff"
+                            : "#2D2D2D",
+                        border:
+                          selectedPaymentMethod?.id === method.id
+                            ? "2px solid #d97a6f"
+                            : "1.5px solid #E8E4DC",
+                        fontWeight: 600,
+                        fontSize: "16px",
+                        transition: "all 0.3s ease",
+                      }}
+                      whileHover={{
+                        scale: 1.02,
+                        backgroundColor:
+                          selectedPaymentMethod?.id === method.id
+                            ? "#d97a6f"
+                            : "#F0EAE0",
+                      }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      {method.name}
+                    </motion.button>
+                  ))}
+                </motion.div>
+              )}
+
+              {!loading && paymentMethods.length === 0 && (
+                <p
+                  style={{
+                    textAlign: "center",
+                    color: "#999",
+                    padding: "20px",
+                  }}
+                >
+                  لا توجد طرق دفع متاحة
+                </p>
+              )}
+
+              {/* Decision Buttons from Screen 11 */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 0.5 }}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "12px",
+                  width: "100%",
+                  marginTop: "20px",
+                }}
+              >
+                {/* Secondary Button - Question */}
+                <motion.button
+                  onClick={openWhatsApp}
+                  className="btn fw-bold py-2 px-4"
+                  style={{
+                    borderRadius: "8px",
+                    fontSize: "13px",
+                    width: "auto",
+                    display: "block",
+                    margin: "0 auto",
+                    backgroundColor: "transparent",
+                    color: "#d97a6f",
+                    border: "1.5px solid #d97a6f",
+                    fontWeight: 600,
+                  }}
+                  whileHover={{ scale: 1.05, backgroundColor: "rgba(217, 122, 111, 0.05)" }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  عندي سؤال قبل الاشتراك
+                </motion.button>
+
+                {/* Tertiary Button - Not Ready */}
+                <motion.button
+                  onClick={() => setCurrentStep(1)}
+                  className="btn fw-bold py-2 px-3"
+                  style={{
+                    borderRadius: "8px",
+                    fontSize: "12px",
+                    width: "auto",
+                    display: "block",
+                    margin: "0 auto",
+                    backgroundColor: "transparent",
+                    color: "#999",
+                    border: "none",
+                    fontWeight: 500,
+                    textDecoration: "underline",
+                  }}
+                  whileHover={{ scale: 1.05, color: "#666" }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  حاليا غير مستعدة للاشتراك
+                </motion.button>
+              </motion.div>
+
+              {selectedPaymentMethod && (
+                <motion.button
+                  onClick={() => setCurrentStep(13)}
+                  className="btn fw-bold py-3 px-4 w-100 mt-3"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.4 }}
+                  style={{
+                    borderRadius: "12px",
+                    fontSize: "16px",
+                    backgroundColor: "#d97a6f",
+                    color: "#fff",
+                    border: "none",
+                    fontWeight: 600,
+                  }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  متابعة
+                </motion.button>
+              )}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Screen 13: Payment Instructions */}
+        {currentStep === 13 && selectedPaymentMethod && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "20px",
+            }}
+          >
+            <div
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.70)",
+                borderRadius: "20px",
+                padding: "40px 32px",
+                border: "1px solid rgba(200, 200, 200, 0.3)",
+                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
+                maxWidth: "450px",
+                width: "100%",
+                maxHeight: "85vh",
+                overflowY: "auto",
+                textAlign: "right",
+              }}
+            >
+              {selectedPaymentMethod.code === "visa" ||
+              selectedPaymentMethod.code === "mastercard" ? (
+                <>
+                  <h2
+                    className="fw-bold text-dark mb-4"
+                    style={{
+                      fontSize: "24px",
+                      fontWeight: 700,
+                      textAlign: "right",
+                      lineHeight: "1.5",
+                    }}
+                  >
+                    الدفع عبر البطاقة
+                  </h2>
+                  <p
+                    style={{
+                      fontSize: "14px",
+                      color: "#666",
+                      textAlign: "right",
+                      marginBottom: "20px",
+                    }}
+                  >
+                    أدخل تفاصيل بطاقتك الآمنة
+                  </p>
+                  {priceData && selectedCountry ? (
+                    <StripePaymentFormWrapper
+                      amount={priceData.price}
+                      currency={priceData.currency}
+                      brand={selectedBrand || "Mknooon"}
+                      countryCode={selectedCountry.code}
+                      userName={deliveryForm.full_name || "Customer"}
+                      userEmail={deliveryForm.phone || "customer@example.com"}
+                      onSuccess={paymentIntentId => {
+                        setCurrentStep(15);
+                      }}
+                      onError={error => {
+                        console.error("Payment error:", error);
+                      }}
+                    />
+                  ) : (
+                    <p
+                      style={{
+                        textAlign: "center",
+                        color: "#666",
+                        padding: "20px",
+                      }}
+                    >
+                      جاري تحميل تفاصيل الدفع...
+                    </p>
+                  )}
+                </>
+              ) : (
+                <>
+                  <h2
+                    className="fw-bold text-dark mb-4"
+                    style={{
+                      fontSize: "24px",
+                      fontWeight: 700,
+                      textAlign: "right",
+                      lineHeight: "1.5",
+                    }}
+                  >
+                    {paymentInstructions?.title || "تفاصيل الدفع"}
+                  </h2>
+                  {paymentInstructions && (
+                    <div>
+                      {/* Instructions Text */}
+                      {paymentInstructions.instructions && (
+                        <p
+                          style={{
+                            fontSize: "14px",
+                            color: "#2D2D2D",
+                            marginBottom: "20px",
+                            textAlign: "right",
+                            direction: "rtl",
+                            lineHeight: "1.6",
+                          }}
+                        >
+                          {paymentInstructions.instructions}
+                        </p>
+                      )}
+
+                      {/* Fields List */}
+                      {paymentInstructions.fields &&
+                        Object.keys(paymentInstructions.fields).length > 0 && (
+                          <div
+                            style={{
+                              backgroundColor: "#F8F7F5",
+                              padding: "20px",
+                              borderRadius: "12px",
+                              marginBottom: "20px",
+                              textAlign: "right",
+                              direction: "rtl",
+                            }}
+                          >
+                            {Object.entries(paymentInstructions.fields).map(
+                              ([key, value]: [string, any]) => {
+                                const label = key;
+                                const stringValue =
+                                  typeof value === "object"
+                                    ? JSON.stringify(value)
+                                    : String(value);
+                                const isUrl =
+                                  stringValue.startsWith("http://") ||
+                                  stringValue.startsWith("https://");
+
+                                return (
+                                  <div
+                                    key={key}
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "row-reverse",
+                                      justifyContent: "space-between",
+                                      alignItems: "center",
+                                      marginBottom: "12px",
+                                      paddingBottom: "12px",
+                                      borderBottom: "1px solid #ddd",
+                                    }}
+                                  >
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        width: "100%",
+                                        marginBottom: "8px",
+                                      }}
+                                    >
+                                      <strong
+                                        style={{
+                                          fontSize: "13px",
+                                          color: "#2D2D2D",
+                                          marginBottom: "6px",
+                                          textAlign: "right",
+                                        }}
+                                      >
+                                        {label}:
+                                      </strong>
+                                      {isUrl ? (
+                                        <a
+                                          href={stringValue}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          style={{
+                                            color: "#0066cc",
+                                            textDecoration: "underline",
+                                            wordBreak: "break-all",
+                                            padding: "8px 10px",
+                                            backgroundColor: "#fff",
+                                            borderRadius: "4px",
+                                            fontSize: "12px",
+                                            textAlign: "right",
+                                          }}
+                                        >
+                                          {stringValue}
+                                        </a>
+                                      ) : (
+                                        <code
+                                          style={{
+                                            backgroundColor: "#fff",
+                                            padding: "8px 10px",
+                                            borderRadius: "4px",
+                                            fontSize: "12px",
+                                            color: "#2D2D2D",
+                                            wordBreak: "break-all",
+                                            display: "block",
+                                            textAlign: "right",
+                                          }}
+                                        >
+                                          {stringValue}
+                                        </code>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              }
+                            )}
+                          </div>
+                        )}
+                    </div>
+                  )}
+                  {paymentInstructions?.requires_delivery_info && (
+                    <div
+                      style={{
+                        backgroundColor: "#F8F7F5",
+                        padding: "20px",
+                        borderRadius: "12px",
+                        marginBottom: "20px",
+                      }}
+                    >
+                      <h3
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: 700,
+                          textAlign: "right",
+                          marginBottom: "15px",
+                          color: "#2D2D2D",
+                        }}
+                      >
+                        بيانات التوصيل
+                      </h3>
+                      <p
+                        style={{
+                          fontSize: "14px",
+                          color: "#2D2D2D",
+                          marginBottom: "15px",
+                          textAlign: "right",
+                          direction: "rtl",
+                          lineHeight: "1.6",
+                        }}
+                      >
+                        يرجى تعبئة البيانات التاليه
+                      </p>
+
+                      <div style={{ marginBottom: "12px" }}>
+                        <label
+                          style={{
+                            display: "block",
+                            fontSize: "14px",
+                            fontWeight: 600,
+                            marginBottom: "6px",
+                            textAlign: "right",
+                            color: "#2D2D2D",
+                          }}
+                        >
+                          الاسم الكامل *
+                        </label>
+                        <input
+                          type="text"
+                          value={deliveryForm.full_name}
+                          onChange={e =>
+                            setDeliveryForm({
+                              ...deliveryForm,
+                              full_name: e.target.value,
+                            })
+                          }
+                          placeholder="أدخل اسمك الكامل"
+                          style={{
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "6px",
+                            border: "1px solid #ddd",
+                            fontSize: "14px",
+                            textAlign: "right",
+                            direction: "rtl",
+                            boxSizing: "border-box",
+                          }}
+                        />
+                        {deliveryFormErrors.full_name && (
+                          <p
+                            style={{
+                              color: "red",
+                              fontSize: "12px",
+                              marginTop: "4px",
+                              textAlign: "right",
+                            }}
+                          >
+                            {deliveryFormErrors.full_name}
+                          </p>
+                        )}
+                      </div>
+
+                      <div style={{ marginBottom: "12px" }}>
+                        <label
+                          style={{
+                            display: "block",
+                            fontSize: "14px",
+                            fontWeight: 600,
+                            marginBottom: "6px",
+                            textAlign: "right",
+                            color: "#2D2D2D",
+                          }}
+                        >
+                          الموبايل *
+                        </label>
+                        <input
+                          type="tel"
+                          value={deliveryForm.phone}
+                          onChange={e =>
+                            setDeliveryForm({
+                              ...deliveryForm,
+                              phone: e.target.value,
+                            })
+                          }
+                          placeholder="أدخل رقم جوالك"
+                          style={{
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "6px",
+                            border: "1px solid #ddd",
+                            fontSize: "14px",
+                            textAlign: "right",
+                            direction: "rtl",
+                            boxSizing: "border-box",
+                          }}
+                        />
+                        {deliveryFormErrors.phone && (
+                          <p
+                            style={{
+                              color: "red",
+                              fontSize: "12px",
+                              marginTop: "4px",
+                              textAlign: "right",
+                            }}
+                          >
+                            {deliveryFormErrors.phone}
+                          </p>
+                        )}
+                      </div>
+
+                      <div style={{ marginBottom: "12px" }}>
+                        <label
+                          style={{
+                            display: "block",
+                            fontSize: "14px",
+                            fontWeight: 600,
+                            marginBottom: "6px",
+                            textAlign: "right",
+                            color: "#2D2D2D",
+                          }}
+                        >
+                          المدينة *
+                        </label>
+                        <input
+                          type="text"
+                          value={deliveryForm.city}
+                          onChange={e =>
+                            setDeliveryForm({
+                              ...deliveryForm,
+                              city: e.target.value,
+                            })
+                          }
+                          placeholder="أدخل اسم مدينتك"
+                          style={{
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "6px",
+                            border: "1px solid #ddd",
+                            fontSize: "14px",
+                            textAlign: "right",
+                            direction: "rtl",
+                            boxSizing: "border-box",
+                          }}
+                        />
+                        {deliveryFormErrors.city && (
+                          <p
+                            style={{
+                              color: "red",
+                              fontSize: "12px",
+                              marginTop: "4px",
+                              textAlign: "right",
+                            }}
+                          >
+                            {deliveryFormErrors.city}
+                          </p>
+                        )}
+                      </div>
+
+                      <div style={{ marginBottom: "12px" }}>
+                        <label
+                          style={{
+                            display: "block",
+                            fontSize: "14px",
+                            fontWeight: 600,
+                            marginBottom: "6px",
+                            textAlign: "right",
+                            color: "#2D2D2D",
+                          }}
+                        >
+                          العنوان *
+                        </label>
+                        <input
+                          type="text"
+                          value={deliveryForm.address}
+                          onChange={e =>
+                            setDeliveryForm({
+                              ...deliveryForm,
+                              address: e.target.value,
+                            })
+                          }
+                          placeholder="أدخل عنوانك التفصيلي"
+                          style={{
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "6px",
+                            border: "1px solid #ddd",
+                            fontSize: "14px",
+                            textAlign: "right",
+                            direction: "rtl",
+                            boxSizing: "border-box",
+                          }}
+                        />
+                        {deliveryFormErrors.address && (
+                          <p
+                            style={{
+                              color: "red",
+                              fontSize: "12px",
+                              marginTop: "4px",
+                              textAlign: "right",
+                            }}
+                          >
+                            {deliveryFormErrors.address}
+                          </p>
+                        )}
+                      </div>
+
+                      <div style={{ marginBottom: "12px" }}>
+                        <label
+                          style={{
+                            display: "block",
+                            fontSize: "14px",
+                            fontWeight: 600,
+                            marginBottom: "6px",
+                            textAlign: "right",
+                            color: "#2D2D2D",
+                          }}
+                        >
+                          أقرب نقطة دلالة *
+                        </label>
+                        <input
+                          type="text"
+                          value={deliveryForm.nearest_landmark}
+                          onChange={e =>
+                            setDeliveryForm({
+                              ...deliveryForm,
+                              nearest_landmark: e.target.value,
+                            })
+                          }
+                          placeholder="مثال: بجانب الجامع الأزرق"
+                          style={{
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "6px",
+                            border: "1px solid #ddd",
+                            fontSize: "14px",
+                            textAlign: "right",
+                            direction: "rtl",
+                            boxSizing: "border-box",
+                          }}
+                        />
+                        {deliveryFormErrors.nearest_landmark && (
+                          <p
+                            style={{
+                              color: "red",
+                              fontSize: "12px",
+                              marginTop: "4px",
+                              textAlign: "right",
+                            }}
+                          >
+                            {deliveryFormErrors.nearest_landmark}
+                          </p>
+                        )}
+                      </div>
+
+                      <div style={{ marginBottom: "12px" }}>
+                        <label
+                          style={{
+                            display: "block",
+                            fontSize: "14px",
+                            fontWeight: 600,
+                            marginBottom: "6px",
+                            textAlign: "right",
+                            color: "#2D2D2D",
+                          }}
+                        >
+                          ملاحظات إضافية
+                        </label>
+                        <textarea
+                          value={deliveryForm.notes}
+                          onChange={e =>
+                            setDeliveryForm({
+                              ...deliveryForm,
+                              notes: e.target.value,
+                            })
+                          }
+                          placeholder="أي ملاحظات إضافية؟"
+                          style={{
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "6px",
+                            border: "1px solid #ddd",
+                            fontSize: "14px",
+                            textAlign: "right",
+                            direction: "rtl",
+                            minHeight: "80px",
+                            fontFamily: "inherit",
+                            boxSizing: "border-box",
+                          }}
+                        />
+                      </div>
+
+                      <motion.button
+                        onClick={() => {
+                          const errors: Record<string, string> = {};
+                          if (!deliveryForm.full_name)
+                            errors.full_name = "الاسم مطلوب";
+                          if (!deliveryForm.phone)
+                            errors.phone = "الجوال مطلوب";
+                          if (!deliveryForm.city)
+                            errors.city = "المدينة مطلوبة";
+                          if (!deliveryForm.address)
+                            errors.address = "العنوان مطلوب";
+                          if (!deliveryForm.nearest_landmark)
+                            errors.nearest_landmark = "النقطة الدلالة مطلوبة";
+
+                          if (Object.keys(errors).length > 0) {
+                            setDeliveryFormErrors(errors);
+                            return;
+                          }
+
+                          const brandName =
+                            brands.find(
+                              b => b.src === selectedBrand?.toLowerCase()
+                            )?.name || "Mknooon";
+                          const message = `مرحباً، أريد الدفع عند الاستلام.\n\nالمبلغ: ${selectedCountry?.price} ${selectedCountry?.currency_symbol}\nالدولة: ${selectedCountry?.name_ar}\n\nبيانات العميل:\nالاسم: ${deliveryForm.full_name}\nالموبايل: ${deliveryForm.phone}\nالمدينة: ${deliveryForm.city}\nالعنوان: ${deliveryForm.address}\nأقرب نقطة دلالة: ${deliveryForm.nearest_landmark}${deliveryForm.notes ? `\nملاحظات: ${deliveryForm.notes}` : ""}`;
+                          const phone = "905344258184";
+                          window.open(
+                            `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+                            "_blank"
+                          );
+                        }}
+                        className="btn fw-bold mt-4"
+                        style={{
+                          borderRadius: "12px",
+                          padding: "12px 16px",
+                          fontSize: "14px",
+                          backgroundColor: "#d97a6f",
+                          color: "#fff",
+                          border: "none",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "8px",
+                          width: "100%",
+                          boxSizing: "border-box",
+                        }}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        ارسل البيانات
+                      </motion.button>
+                    </div>
+                  )}
+                  {paymentInstructions?.requires_receipt &&
+                    !paymentInstructions?.requires_delivery_info && (
+                      <motion.button
+                        onClick={() => {
+                          let message =
+                            paymentInstructions.receipt_whatsapp.prefill;
+
+                          // Add price information if available with proper RTL formatting
+                          if (priceData && priceData.price) {
+                            const priceWithCurrency = `${priceData.price} ${selectedCountry?.currency_symbol || ""}`;
+                            message += `\n\u200f\nالسعر المدفوع: ${priceWithCurrency}`;
+                          }
+
+                          const phone =
+                            paymentInstructions.receipt_whatsapp.phone.replace(
+                              /[^0-9]/g,
+                              ""
+                            );
+                          window.open(
+                            `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+                            "_blank"
+                          );
+                        }}
+                        className="btn fw-bold mt-4"
+                        style={{
+                          borderRadius: "12px",
+                          padding: "12px 16px",
+                          fontSize: "14px",
+                          backgroundColor: "#d97a6f",
+                          color: "#fff",
+                          border: "none",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "8px",
+                          width: "100%",
+                          boxSizing: "border-box",
+                        }}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        أرسل الإيصال
+                      </motion.button>
+                    )}
+                  <motion.button
+                    onClick={() => setCurrentStep(15)}
+                    className="btn fw-bold mt-4"
+                    style={{
+                      borderRadius: "12px",
+                      padding: "12px 20px",
+                      fontSize: "16px",
+                      width: "100%",
+                      boxSizing: "border-box",
+                      backgroundColor: "transparent",
+                      color: "#d97a6f",
+                      border: "2px solid #d97a6f",
+                      display: "block",
+                    }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    تابعي
+                  </motion.button>
+                </>
+              )}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Screen 14: Delivery Form */}
+        {currentStep === 14 &&
+          selectedPaymentMethod &&
+          paymentInstructions?.requires_delivery_info && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-end"
+              style={{ paddingBottom: "40px" }}
+            >
+              {/* Delivery form content */}
+            </motion.div>
+          )}
+
+        {/* Screen 15: Success / Receipt */}
+        {currentStep === 15 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-end d-flex flex-column justify-content-center align-items-center h-[100svh]"
+            style={{
+              paddingTop: "40px",
+              paddingBottom: "140px",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              minHeight: "100vh",
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {/* Success Icon */}
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -1551,961 +2501,325 @@ export default function Onboarding() {
                 stiffness: 100,
               }}
               style={{
-                width: "60px",
-                height: "60px",
+                width: "50px",
+                height: "80px",
                 borderRadius: "50%",
-                backgroundColor: "#d97a6f",
+                backgroundColor: "#4CAF50",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                margin: "20px auto 30px",
+                margin: "25px auto",
               }}
             >
               <motion.span
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.6, duration: 0.4 }}
-                style={{ fontSize: "32px", color: "#fff", fontWeight: "bold" }}
+                style={{
+                  fontSize: "36px",
+                  color: "#fff",
+                  fontWeight: "bold",
+                  lineHeight: "1.2",
+                }}
               >
                 ✓
               </motion.span>
             </motion.div>
 
-            {/* Buttons Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "12px",
-                width: "100%",
-              }}
-            >
-              {/* Primary Button - Subscribe Now */}
-              <motion.button
-                onClick={() => setCurrentStep(12)}
-                className="btn fw-bold py-3 px-5"
-                style={{
-                  borderRadius: "12px",
-                  fontSize: "16px",
-                  width: "100%",
-                  backgroundColor: "#d97a6f",
-                  color: "#fff",
-                  border: "none",
-                  fontWeight: 600,
-                }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                اشتركي الآن
-              </motion.button>
-
-              {/* Secondary Button - Question */}
-              <motion.button
-                onClick={openWhatsApp}
-                className="btn fw-bold py-3 px-5"
-                style={{
-                  borderRadius: "12px",
-                  fontSize: "16px",
-                  width: "100%",
-                  backgroundColor: "transparent",
-                  color: "#2D2D2D",
-                  border: "1.5px solid #d97a6f",
-                  fontWeight: 600,
-                }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                عندي سؤال قبل الاشتراك
-              </motion.button>
-
-              {/* Tertiary Button - Not Ready */}
-              <motion.button
-                onClick={() => setCurrentStep(1)}
-                className="btn fw-bold py-3 px-5"
-                style={{
-                  borderRadius: "12px",
-                  fontSize: "14px",
-                  width: "100%",
-                  backgroundColor: "transparent",
-                  color: "#999",
-                  border: "none",
-                  fontWeight: 600,
-                  textDecoration: "underline",
-                }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                ما أنا مستعدة حالياً
-              </motion.button>
-            </motion.div>
-          </div>
-        </motion.div>
-      )}
-
-
-
-      {/* Screen 12: Payment Methods */}
-      {currentStep === 12 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "20px",
-            overflowY: "auto",
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "rgba(255, 255, 255, 0.70)",
-              borderRadius: "20px",
-              padding: "40px 32px",
-              border: "1px solid rgba(200, 200, 200, 0.3)",
-              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
-              maxWidth: "450px",
-              width: "100%",
-              marginBottom: "40px",
-            }}
-          >
             {/* Title */}
-            <motion.h2
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="fw-bold text-dark mb-2"
+            <h2
               style={{
                 fontSize: "24px",
                 fontWeight: 700,
-                textAlign: "right",
-                direction: "rtl",
-                lineHeight: "1.5",
+                color: "#1a1a1a",
+                textAlign: "center",
+                marginBottom: "8px",
+                marginTop: "0",
+                lineHeight: "1.4",
               }}
             >
-              اختاري طريقة الدفع
-            </motion.h2>
+              شكراً لك!
+            </h2>
             <p
               style={{
-                fontSize: "14px",
+                fontSize: "16px",
                 color: "#666",
+                textAlign: "center",
                 marginBottom: "24px",
-                textAlign: "right",
-                direction: "rtl",
+                marginTop: "0",
               }}
             >
-              اختاري الطريقة المناسبة لك
+              تم استلام طلبك
             </p>
 
-            {loading && (
-              <p style={{ textAlign: "center", color: "#666", padding: "20px" }}>
-                جاري التحميل...
-              </p>
-            )}
-
-            {!loading && paymentMethods.length > 0 && (
+            {/* Receipt Card for Stripe */}
+            {selectedPaymentMethod?.code === "visa" && (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "12px",
+                  backgroundColor: "#f9f9f9",
+                  border: "1px solid #e0e0e0",
+                  borderRadius: "12px",
+                  padding: "20px",
+                  maxWidth: "100%",
+                  width: "100%",
+                  marginBottom: "24px",
+                  textAlign: "right",
+                  direction: "rtl",
                 }}
               >
-                {paymentMethods.map((method, index) => (
-                  <motion.button
-                    key={method.id}
-                    onClick={() => handlePaymentMethodSelect(method)}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
-                    className="btn fw-bold py-3 px-4"
+                <h3
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: 700,
+                    marginBottom: "16px",
+                    color: "#2D2D2D",
+                    textAlign: "center",
+                  }}
+                >
+                  إيصال الدفع
+                </h3>
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "12px",
+                    textAlign: "right",
+                  }}
+                >
+                  <div
                     style={{
-                      borderRadius: "12px",
-                      textAlign: "right",
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
                       direction: "rtl",
-                      width: "100%",
-                      backgroundColor:
-                        selectedPaymentMethod?.id === method.id
-                          ? "#d97a6f"
-                          : "#F8F7F5",
-                      color:
-                        selectedPaymentMethod?.id === method.id
-                          ? "#fff"
-                          : "#2D2D2D",
-                      border:
-                        selectedPaymentMethod?.id === method.id
-                          ? "2px solid #d97a6f"
-                          : "1.5px solid #E8E4DC",
-                      fontWeight: 600,
-                      fontSize: "16px",
-                      transition: "all 0.3s ease",
                     }}
-                    whileHover={{
-                      scale: 1.02,
-                      backgroundColor:
-                        selectedPaymentMethod?.id === method.id
-                          ? "#d97a6f"
-                          : "#F0EAE0",
-                    }}
-                    whileTap={{ scale: 0.98 }}
                   >
-                    {method.name}
-                  </motion.button>
-                ))}
+                    <span
+                      style={{
+                        color: "#666",
+                        fontSize: "14px",
+                        marginLeft: "auto",
+                      }}
+                    >
+                      المبلغ:
+                    </span>
+                    <span
+                      style={{
+                        fontWeight: 600,
+                        color: "#2D2D2D",
+                        fontSize: "14px",
+                        marginRight: "12px",
+                      }}
+                    >
+                      {priceData?.price} {priceData?.currency}
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      direction: "rtl",
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "#666",
+                        fontSize: "14px",
+                        marginLeft: "auto",
+                      }}
+                    >
+                      الدولة:
+                    </span>
+                    <span
+                      style={{
+                        fontWeight: 600,
+                        color: "#2D2D2D",
+                        fontSize: "14px",
+                        marginRight: "12px",
+                      }}
+                    >
+                      {selectedCountry?.name}
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      direction: "rtl",
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "#666",
+                        fontSize: "14px",
+                        marginLeft: "auto",
+                      }}
+                    >
+                      الخطة:
+                    </span>
+                    <span
+                      style={{
+                        fontWeight: 600,
+                        color: "#2D2D2D",
+                        fontSize: "14px",
+                        marginRight: "12px",
+                      }}
+                    >
+                      {selectedBrand}
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      direction: "rtl",
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "#666",
+                        fontSize: "14px",
+                        marginLeft: "auto",
+                      }}
+                    >
+                      طريقة الدفع:
+                    </span>
+                    <span
+                      style={{
+                        fontWeight: 600,
+                        color: "#2D2D2D",
+                        fontSize: "14px",
+                        marginRight: "12px",
+                      }}
+                    >
+                      Visa / Mastercard
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      borderTop: "1px solid #ddd",
+                      paddingTop: "12px",
+                      marginTop: "12px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        marginBottom: "8px",
+                        direction: "rtl",
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: "#666",
+                          fontSize: "12px",
+                          marginLeft: "auto",
+                        }}
+                      >
+                        التاريخ:
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          color: "#999",
+                          marginRight: "12px",
+                        }}
+                      >
+                        {new Date().toLocaleDateString("ar-SA")}
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        direction: "rtl",
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: "#666",
+                          fontSize: "12px",
+                          marginLeft: "auto",
+                        }}
+                      >
+                        الحالة:
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          color: "#4CAF50",
+                          fontWeight: 600,
+                          marginRight: "12px",
+                        }}
+                      >
+                        ✓ مكتمل
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Download Button */}
+                <motion.button
+                  onClick={() => {
+                    const invoiceText = `\nإيصال الدفع\n================\nالمبلغ: ${priceData?.price} ${priceData?.currency}\nالدولة: ${selectedCountry?.name}\nالخطة: ${selectedBrand}\nطريقة الدفع: Visa / Mastercard\nالتاريخ: ${new Date().toLocaleDateString("ar-SA")}\nالحالة: مكتمل\n================\nشكراً لك على شرائك`;
+                    const element = document.createElement("a");
+                    const file = new Blob([invoiceText], {
+                      type: "text/plain",
+                    });
+                    element.href = URL.createObjectURL(file);
+                    element.download = `invoice-${new Date().getTime()}.txt`;
+                    document.body.appendChild(element);
+                    element.click();
+                    document.body.removeChild(element);
+                  }}
+                  style={{
+                    width: "100%",
+                    padding: "12px 20px",
+                    borderRadius: "12px",
+                    border: "1px solid #d97a6f",
+                    backgroundColor: "transparent",
+                    color: "#d97a6f",
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    marginTop: "16px",
+                  }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  تحميل الإيصال
+                </motion.button>
               </motion.div>
             )}
 
-            {!loading && paymentMethods.length === 0 && (
-              <p style={{ textAlign: "center", color: "#999", padding: "20px" }}>
-                لا توجد طرق دفع متاحة
-              </p>
-            )}
+            <p style={{ fontSize: "14px", color: "#666", textAlign: "center" }}>
+              سيتم التواصل معك قريباً
+            </p>
+          </motion.div>
+        )}
 
-            {selectedPaymentMethod && (
-              <motion.button
-                onClick={() => setCurrentStep(13)}
-                className="btn fw-bold py-3 px-4 w-100 mt-3"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.4 }}
-                style={{
-                  borderRadius: "12px",
-                  fontSize: "16px",
-                  backgroundColor: "#d97a6f",
-                  color: "#fff",
-                  border: "none",
-                  fontWeight: 600,
-                }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                متابعة
-              </motion.button>
-            )}
-          </div>
-        </motion.div>
-      )}
-
-      {/* Screen 13: Payment Instructions */}
-      {currentStep === 13 && selectedPaymentMethod && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "20px",
-          }}
-        >
+        {/* Navigation Buttons */}
+        {currentStep > 1 && currentStep < 12 && currentStep !== 13 && (
           <div
             style={{
-              backgroundColor: "rgba(255, 255, 255, 0.70)",
-              borderRadius: "20px",
-              padding: "40px 32px",
-              border: "1px solid rgba(200, 200, 200, 0.3)",
-              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
-              maxWidth: "450px",
-              width: "100%",
-              maxHeight: "85vh",
-              overflowY: "auto",
-              textAlign: "right",
-            }}
-          >
-            {selectedPaymentMethod.code === "visa" || selectedPaymentMethod.code === "mastercard" ? (
-              <>
-              <h2
-                className="fw-bold text-dark mb-4"
-                style={{
-                  fontSize: "24px",
-                  fontWeight: 700,
-                  textAlign: "right",
-                  lineHeight: "1.5",
-                }}
-              >
-                الدفع عبر البطاقة
-              </h2>
-              <p
-                style={{
-                  fontSize: "14px",
-                  color: "#666",
-                  textAlign: "right",
-                  marginBottom: "20px",
-                }}
-              >
-                أدخل تفاصيل بطاقتك الآمنة
-              </p>
-              {priceData && selectedCountry ? (
-                <StripePaymentFormWrapper
-                  amount={priceData.price}
-                  currency={priceData.currency}
-                  brand={selectedBrand || "Mknooon"}
-                  countryCode={selectedCountry.code}
-                  userName={deliveryForm.full_name || "Customer"}
-                  userEmail={deliveryForm.phone || "customer@example.com"}
-                  onSuccess={(paymentIntentId) => {
-                    setCurrentStep(15);
-                  }}
-                  onError={(error) => {
-                    console.error("Payment error:", error);
-                  }}
-                />
-              ) : (
-                <p style={{ textAlign: "center", color: "#666", padding: "20px" }}>
-                  جاري تحميل تفاصيل الدفع...
-                </p>
-              )}
-            </>
-          ) : (
-            <>
-              <h2
-                className="fw-bold text-dark mb-4"
-                style={{
-                  fontSize: "24px",
-                  fontWeight: 700,
-                  textAlign: "right",
-                  lineHeight: "1.5",
-                }}
-              >
-                {paymentInstructions?.title || "تفاصيل الدفع"}
-              </h2>
-              {paymentInstructions && (
-                <div>
-                  {/* Instructions Text */}
-                  {paymentInstructions.instructions && (
-                    <p
-                      style={{
-                        fontSize: "14px",
-                        color: "#2D2D2D",
-                        marginBottom: "20px",
-                        textAlign: "right",
-                        direction: "rtl",
-                        lineHeight: "1.6",
-                      }}
-                    >
-                      {paymentInstructions.instructions}
-                    </p>
-                  )}
-
-                  {/* Fields List */}
-                  {paymentInstructions.fields &&
-                    Object.keys(paymentInstructions.fields).length > 0 && (
-                      <div
-                        style={{
-                          backgroundColor: "#F8F7F5",
-                          padding: "20px",
-                          borderRadius: "12px",
-                          marginBottom: "20px",
-                          textAlign: "right",
-                          direction: "rtl",
-                        }}
-                      >
-                        {Object.entries(paymentInstructions.fields).map(
-                          ([key, value]: [string, any]) => {
-                            const label = key;
-                            const stringValue =
-                              typeof value === "object"
-                                ? JSON.stringify(value)
-                                : String(value);
-                            const isUrl =
-                              stringValue.startsWith("http://") ||
-                              stringValue.startsWith("https://");
-
-                            return (
-                              <div
-                                key={key}
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "row-reverse",
-                                  justifyContent: "space-between",
-                                  alignItems: "center",
-                                  marginBottom: "12px",
-                                  paddingBottom: "12px",
-                                  borderBottom: "1px solid #ddd",
-                                }}
-                              >
-                                <div style={{ display: "flex", flexDirection: "column", width: "100%", marginBottom: "8px" }}>
-                                  <strong
-                                    style={{
-                                      fontSize: "13px",
-                                      color: "#2D2D2D",
-                                      marginBottom: "6px",
-                                      textAlign: "right",
-                                    }}
-                                  >
-                                    {label}:
-                                  </strong>
-                                  {isUrl ? (
-                                    <a
-                                      href={stringValue}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      style={{
-                                        color: "#0066cc",
-                                        textDecoration: "underline",
-                                        wordBreak: "break-all",
-                                        padding: "8px 10px",
-                                        backgroundColor: "#fff",
-                                        borderRadius: "4px",
-                                        fontSize: "12px",
-                                        textAlign: "right",
-                                      }}
-                                    >
-                                      {stringValue}
-                                    </a>
-                                  ) : (
-                                    <code
-                                      style={{
-                                        backgroundColor: "#fff",
-                                        padding: "8px 10px",
-                                        borderRadius: "4px",
-                                        fontSize: "12px",
-                                        color: "#2D2D2D",
-                                        wordBreak: "break-all",
-                                        display: "block",
-                                        textAlign: "right",
-                                      }}
-                                    >
-                                      {stringValue}
-                                    </code>
-                                  )}
-                                </div>
-                              </div>
-                            );
-                          }
-                        )}
-                      </div>
-                    )}
-                </div>
-              )}
-              {paymentInstructions?.requires_delivery_info && (
-                <div
-                  style={{
-                    backgroundColor: "#F8F7F5",
-                    padding: "20px",
-                    borderRadius: "12px",
-                    marginBottom: "20px",
-                  }}
-                >
-                  <h3
-                    style={{
-                      fontSize: "16px",
-                      fontWeight: 700,
-                      textAlign: "right",
-                      marginBottom: "15px",
-                      color: "#2D2D2D",
-                    }}
-                  >
-                    بيانات التوصيل
-                  </h3>
-                  <p
-                    style={{
-                      fontSize: "14px",
-                      color: "#2D2D2D",
-                      marginBottom: "15px",
-                      textAlign: "right",
-                      direction: "rtl",
-                      lineHeight: "1.6",
-                    }}
-                  >
-                    يرجى تعبئة البيانات التاليه
-                  </p>
-
-                  <div style={{ marginBottom: "12px" }}>
-                    <label
-                      style={{
-                        display: "block",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        marginBottom: "6px",
-                        textAlign: "right",
-                        color: "#2D2D2D",
-                      }}
-                    >
-                      الاسم الكامل *
-                    </label>
-                    <input
-                      type="text"
-                      value={deliveryForm.full_name}
-                      onChange={e =>
-                        setDeliveryForm({
-                          ...deliveryForm,
-                          full_name: e.target.value,
-                        })
-                      }
-                      placeholder="أدخل اسمك الكامل"
-                      style={{
-                        width: "100%",
-                        padding: "10px",
-                        borderRadius: "6px",
-                        border: "1px solid #ddd",
-                        fontSize: "14px",
-                        textAlign: "right",
-                        direction: "rtl",
-                        boxSizing: "border-box",
-                      }}
-                    />
-                    {deliveryFormErrors.full_name && (
-                      <p
-                        style={{
-                          color: "red",
-                          fontSize: "12px",
-                          marginTop: "4px",
-                          textAlign: "right",
-                        }}
-                      >
-                        {deliveryFormErrors.full_name}
-                      </p>
-                    )}
-                  </div>
-
-                  <div style={{ marginBottom: "12px" }}>
-                    <label
-                      style={{
-                        display: "block",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        marginBottom: "6px",
-                        textAlign: "right",
-                        color: "#2D2D2D",
-                      }}
-                    >
-                      الموبايل *
-                    </label>
-                    <input
-                      type="tel"
-                      value={deliveryForm.phone}
-                      onChange={e =>
-                        setDeliveryForm({
-                          ...deliveryForm,
-                          phone: e.target.value,
-                        })
-                      }
-                      placeholder="أدخل رقم جوالك"
-                      style={{
-                        width: "100%",
-                        padding: "10px",
-                        borderRadius: "6px",
-                        border: "1px solid #ddd",
-                        fontSize: "14px",
-                        textAlign: "right",
-                        direction: "rtl",
-                        boxSizing: "border-box",
-                      }}
-                    />
-                    {deliveryFormErrors.phone && (
-                      <p
-                        style={{
-                          color: "red",
-                          fontSize: "12px",
-                          marginTop: "4px",
-                          textAlign: "right",
-                        }}
-                      >
-                        {deliveryFormErrors.phone}
-                      </p>
-                    )}
-                  </div>
-
-                  <div style={{ marginBottom: "12px" }}>
-                    <label
-                      style={{
-                        display: "block",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        marginBottom: "6px",
-                        textAlign: "right",
-                        color: "#2D2D2D",
-                      }}
-                    >
-                      المدينة *
-                    </label>
-                    <input
-                      type="text"
-                      value={deliveryForm.city}
-                      onChange={e =>
-                        setDeliveryForm({
-                          ...deliveryForm,
-                          city: e.target.value,
-                        })
-                      }
-                      placeholder="أدخل اسم مدينتك"
-                      style={{
-                        width: "100%",
-                        padding: "10px",
-                        borderRadius: "6px",
-                        border: "1px solid #ddd",
-                        fontSize: "14px",
-                        textAlign: "right",
-                        direction: "rtl",
-                        boxSizing: "border-box",
-                      }}
-                    />
-                    {deliveryFormErrors.city && (
-                      <p
-                        style={{
-                          color: "red",
-                          fontSize: "12px",
-                          marginTop: "4px",
-                          textAlign: "right",
-                        }}
-                      >
-                        {deliveryFormErrors.city}
-                      </p>
-                    )}
-                  </div>
-
-                  <div style={{ marginBottom: "12px" }}>
-                    <label
-                      style={{
-                        display: "block",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        marginBottom: "6px",
-                        textAlign: "right",
-                        color: "#2D2D2D",
-                      }}
-                    >
-                      العنوان *
-                    </label>
-                    <input
-                      type="text"
-                      value={deliveryForm.address}
-                      onChange={e =>
-                        setDeliveryForm({
-                          ...deliveryForm,
-                          address: e.target.value,
-                        })
-                      }
-                      placeholder="أدخل عنوانك التفصيلي"
-                      style={{
-                        width: "100%",
-                        padding: "10px",
-                        borderRadius: "6px",
-                        border: "1px solid #ddd",
-                        fontSize: "14px",
-                        textAlign: "right",
-                        direction: "rtl",
-                        boxSizing: "border-box",
-                      }}
-                    />
-                    {deliveryFormErrors.address && (
-                      <p
-                        style={{
-                          color: "red",
-                          fontSize: "12px",
-                          marginTop: "4px",
-                          textAlign: "right",
-                        }}
-                      >
-                        {deliveryFormErrors.address}
-                      </p>
-                    )}
-                  </div>
-
-                  <div style={{ marginBottom: "12px" }}>
-                    <label
-                      style={{
-                        display: "block",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        marginBottom: "6px",
-                        textAlign: "right",
-                        color: "#2D2D2D",
-                      }}
-                    >
-                      أقرب نقطة دلالة *
-                    </label>
-                    <input
-                      type="text"
-                      value={deliveryForm.nearest_landmark}
-                      onChange={e =>
-                        setDeliveryForm({
-                          ...deliveryForm,
-                          nearest_landmark: e.target.value,
-                        })
-                      }
-                      placeholder="مثال: بجانب الجامع الأزرق"
-                      style={{
-                        width: "100%",
-                        padding: "10px",
-                        borderRadius: "6px",
-                        border: "1px solid #ddd",
-                        fontSize: "14px",
-                        textAlign: "right",
-                        direction: "rtl",
-                        boxSizing: "border-box",
-                      }}
-                    />
-                    {deliveryFormErrors.nearest_landmark && (
-                      <p
-                        style={{
-                          color: "red",
-                          fontSize: "12px",
-                          marginTop: "4px",
-                          textAlign: "right",
-                        }}
-                      >
-                        {deliveryFormErrors.nearest_landmark}
-                      </p>
-                    )}
-                  </div>
-
-                  <div style={{ marginBottom: "12px" }}>
-                    <label
-                      style={{
-                        display: "block",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        marginBottom: "6px",
-                        textAlign: "right",
-                        color: "#2D2D2D",
-                      }}
-                    >
-                      ملاحظات إضافية
-                    </label>
-                    <textarea
-                      value={deliveryForm.notes}
-                      onChange={e =>
-                        setDeliveryForm({
-                          ...deliveryForm,
-                          notes: e.target.value,
-                        })
-                      }
-                      placeholder="أي ملاحظات إضافية؟"
-                      style={{
-                        width: "100%",
-                        padding: "10px",
-                        borderRadius: "6px",
-                        border: "1px solid #ddd",
-                        fontSize: "14px",
-                        textAlign: "right",
-                        direction: "rtl",
-                        minHeight: "80px",
-                        fontFamily: "inherit",
-                        boxSizing: "border-box",
-                      }}
-                    />
-                  </div>
-
-                  <motion.button
-                    onClick={() => {
-                      const errors: Record<string, string> = {};
-                      if (!deliveryForm.full_name)
-                        errors.full_name = "الاسم مطلوب";
-                      if (!deliveryForm.phone) errors.phone = "الجوال مطلوب";
-                      if (!deliveryForm.city) errors.city = "المدينة مطلوبة";
-                      if (!deliveryForm.address)
-                        errors.address = "العنوان مطلوب";
-                      if (!deliveryForm.nearest_landmark)
-                        errors.nearest_landmark = "النقطة الدلالة مطلوبة";
-
-                      if (Object.keys(errors).length > 0) {
-                        setDeliveryFormErrors(errors);
-                        return;
-                      }
-
-                      const brandName =
-                        brands.find(b => b.src === selectedBrand?.toLowerCase())
-                          ?.name || "Mknooon";
-                      const message = `مرحباً، أريد الدفع عند الاستلام.\n\nالمبلغ: ${selectedCountry?.price} ${selectedCountry?.currency_symbol}\nالدولة: ${selectedCountry?.name_ar}\n\nبيانات العميل:\nالاسم: ${deliveryForm.full_name}\nالموبايل: ${deliveryForm.phone}\nالمدينة: ${deliveryForm.city}\nالعنوان: ${deliveryForm.address}\nأقرب نقطة دلالة: ${deliveryForm.nearest_landmark}${deliveryForm.notes ? `\nملاحظات: ${deliveryForm.notes}` : ""}`;
-                      const phone = "905344258184";
-                      window.open(
-                        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
-                        "_blank"
-                      );
-                    }}
-                    className="btn fw-bold mt-4"
-                    style={{
-                      borderRadius: "12px",
-                      padding: "12px 16px",
-                      fontSize: "14px",
-                      backgroundColor: "#d97a6f",
-                      color: "#fff",
-                      border: "none",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "8px",
-                      width: "100%",
-                      boxSizing: "border-box",
-                    }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    ارسل البيانات
-                  </motion.button>
-                </div>
-              )}
-              {paymentInstructions?.requires_receipt &&
-                !paymentInstructions?.requires_delivery_info && (
-                  <motion.button
-                    onClick={() => {
-                      let message =
-                        paymentInstructions.receipt_whatsapp.prefill;
-                      
-                      // Add price information if available with proper RTL formatting
-                      if (priceData && priceData.price) {
-                        const priceWithCurrency = `${priceData.price} ${selectedCountry?.currency_symbol || ""}`;
-                        message += `\n\u200f\nالسعر المدفوع: ${priceWithCurrency}`;
-                      }
-                      
-                      const phone =
-                        paymentInstructions.receipt_whatsapp.phone.replace(
-                          /[^0-9]/g,
-                          ""
-                        );
-                      window.open(
-                        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
-                        "_blank"
-                      );
-                    }}
-                    className="btn fw-bold mt-4"
-                    style={{
-                      borderRadius: "12px",
-                      padding: "12px 16px",
-                      fontSize: "14px",
-                      backgroundColor: "#d97a6f",
-                      color: "#fff",
-                      border: "none",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "8px",
-                      width: "100%",
-                      boxSizing: "border-box",
-                    }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    أرسل الإيصال
-                  </motion.button>
-                )}
-              <motion.button
-                onClick={() => setCurrentStep(15)}
-                className="btn fw-bold mt-4"
-                style={{
-                  borderRadius: "12px",
-                  padding: "12px 20px",
-                  fontSize: "16px",
-                  width: "100%",
-                  boxSizing: "border-box",
-                  backgroundColor: "transparent",
-                  color: "#d97a6f",
-                  border: "2px solid #d97a6f",
-                  display: "block",
-                }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                تابعي
-              </motion.button>
-            </>
-          )}
-          </div>
-        </motion.div>
-      )}
-
-      {/* Screen 14: Delivery Form */}
-      {currentStep === 14 && selectedPaymentMethod && paymentInstructions?.requires_delivery_info && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-end"
-          style={{ paddingBottom: "40px" }}
-        >
-          {/* Delivery form content */}
-        </motion.div>
-      )}
-
-      {/* Screen 15: Success */}
-      {currentStep === 15 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center d-flex flex-column h-[100svh]"
-          style={{
-            paddingTop: "60px",
-            paddingBottom: "60px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{
-              delay: 0.3,
-              duration: 0.6,
-              type: "spring",
-              stiffness: 100,
-            }}
-            style={{
-              width: "100px",
-              height: "100px",
-              borderRadius: "50%",
-              backgroundColor: "#7C6E5B",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginBottom: "30px",
+              gap: "10px",
+              marginTop: "20px",
+              paddingBottom: "40px",
             }}
-          >
-            <motion.span
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.6, duration: 0.4 }}
-              style={{ fontSize: "50px", color: "#fff", fontWeight: "bold" }}
-            >
-              ✓
-            </motion.span>
-          </motion.div>
-
-          <h2
-            className="fw-bold text-dark mb-4"
-            style={{ fontSize: "32px", fontWeight: 700, lineHeight: "1.4" }}
-          >
-            شكراً لك!
-            <br />
-            تم استلام طلبك
-          </h2>
-
-          <p style={{ fontSize: "16px", color: "#666", marginBottom: "30px" }}>
-            سيتم التواصل معك قريباً
-          </p>
-        </motion.div>
-      )}
-
-      {/* Navigation Buttons */}
-      {currentStep > 1 && currentStep < 12 && currentStep !== 13 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-            marginTop: "20px",
-            paddingBottom: "40px",
-          }}
-        >
-          <motion.button
-            onClick={handleBack}
-            className="btn btn-outline-dark fw-bold py-2 px-4"
-            style={{ borderRadius: "12px", flex: 1, display: "none" }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            رجوع
-          </motion.button>
-        </div>
-      )}
-    </div>
+          ></div>
+        )}
+      </div>
     </>
   );
 }

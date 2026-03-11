@@ -50,6 +50,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
 
   // Phone country code mapping
   const countryCodeMap: Record<string, string> = {
+    "1": "US",
     "90": "TR",
     "20": "EG",
     "966": "SA",
