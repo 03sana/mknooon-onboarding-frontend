@@ -240,7 +240,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
       </div>
 
       {/* Name Field */}
-      <div style={{ marginBottom: "16px" }}>
+      <div style={{ marginBottom: "20px" }}>
         <label
           style={{
             display: "block",
@@ -258,7 +258,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
           name="name"
           value={formData.name}
           onChange={handleInputChange}
-          disabled
+          placeholder="أدخل اسمك الكامل"
           style={{
             width: "100%",
             padding: "12px",
@@ -266,49 +266,15 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
             borderRadius: "8px",
             fontSize: "14px",
             fontFamily: "Cairo, sans-serif",
-            backgroundColor: "#f9f9f9",
             color: "#2D2D2D",
             boxSizing: "border-box",
-          }}
-        />
-      </div>
-
-      {/* Email Field */}
-      <div style={{ marginBottom: "16px" }}>
-        <label
-          style={{
-            display: "block",
-            fontSize: "14px",
-            fontWeight: 600,
-            marginBottom: "8px",
-            textAlign: "right",
-            color: "#2D2D2D",
-          }}
-        >
-          البريد الإلكتروني
-        </label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          disabled
-          style={{
-            width: "100%",
-            padding: "12px",
-            border: "1px solid #ddd",
-            borderRadius: "8px",
-            fontSize: "14px",
-            fontFamily: "Cairo, sans-serif",
-            backgroundColor: "#f9f9f9",
-            color: "#2D2D2D",
-            boxSizing: "border-box",
+            direction: "rtl",
           }}
         />
       </div>
 
       {/* Phone Field */}
-      <div style={{ marginBottom: "20px" }}>
+      <div style={{ marginBottom: "24px" }}>
         <label
           style={{
             display: "block",
