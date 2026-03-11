@@ -1,17 +1,73 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+
+interface PaymentDetails {
+  id: string;
+  stripe_payment_intent_id: string;
+  amount: number;
+  currency: string;
+  user_name: string;
+  user_email: string;
+  user_phone: string;
+  country_code: string;
+  created_at: string;
+  status: string;
+}
+
 export const PaymentSuccess: React.FC = () => {
   const [paymentIntentId, setPaymentIntentId] = useState<string | null>(null);
+  const [paymentDetails, setPaymentDetails] = useState<PaymentDetails | null>(
+    null
+  );
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const intentId = params.get("payment_intent_id");
     setPaymentIntentId(intentId);
+
+    if (intentId) {
+      fetchPaymentDetails(intentId);
+    }
   }, []);
+
+  const fetchPaymentDetails = async (intentId: string) => {
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/stripe/payment-status?payment_intent_id=${intentId}`
+      );
+      const data = await response.json();
+      if (data.success && data.payment) {
+        setPaymentDetails(data.payment);
+      }
+    } catch (error) {
+      console.error("Error fetching payment details:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleGoHome = () => {
     window.location.href = "/";
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("ar-EG", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  const formatAmount = (amount: number, currency: string) => {
+    return new Intl.NumberFormat("ar-EG", {
+      style: "currency",
+      currency: currency,
+    }).format(amount / 100);
   };
 
   return (
@@ -33,8 +89,8 @@ export const PaymentSuccess: React.FC = () => {
           backgroundColor: "#fff",
           borderRadius: "12px",
           padding: "40px",
-          textAlign: "center",
-          maxWidth: "500px",
+          maxWidth: "600px",
+          width: "100%",
           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
         }}
         initial={{ scale: 0.9, y: 20 }}
@@ -68,6 +124,7 @@ export const PaymentSuccess: React.FC = () => {
             color: "#2D2D2D",
             marginBottom: "12px",
             fontFamily: "Cairo, sans-serif",
+            textAlign: "center",
           }}
         >
           تم الدفع بنجاح
@@ -79,6 +136,7 @@ export const PaymentSuccess: React.FC = () => {
             color: "#666",
             marginBottom: "8px",
             fontFamily: "Cairo, sans-serif",
+            textAlign: "center",
           }}
         >
           شكراً لك على الدفع
@@ -88,29 +146,241 @@ export const PaymentSuccess: React.FC = () => {
           style={{
             fontSize: "14px",
             color: "#999",
-            marginBottom: "24px",
+            marginBottom: "32px",
             fontFamily: "Cairo, sans-serif",
+            textAlign: "center",
           }}
         >
           تم استلام طلبك وسيتم معالجته قريباً
         </p>
 
-        {paymentIntentId && (
+        {/* Invoice Section */}
+        {loading ? (
           <div
             style={{
-              backgroundColor: "#f9f9f9",
-              padding: "12px",
-              borderRadius: "8px",
-              marginBottom: "24px",
-              fontSize: "12px",
-              color: "#666",
-              fontFamily: "monospace",
-              wordBreak: "break-all",
+              textAlign: "center",
+              padding: "20px",
+              color: "#999",
+              fontFamily: "Cairo, sans-serif",
             }}
           >
-            Payment ID: {paymentIntentId}
+            جاري تحميل التفاصيل...
           </div>
-        )}
+        ) : paymentDetails ? (
+          <motion.div
+            style={{
+              backgroundColor: "#f9f9f9",
+              padding: "24px",
+              borderRadius: "8px",
+              marginBottom: "24px",
+              border: "1px solid #e0e0e0",
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.3 }}
+          >
+            {/* Invoice Header */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "20px",
+                paddingBottom: "20px",
+                borderBottom: "1px solid #e0e0e0",
+              }}
+            >
+              <h2
+                style={{
+                  fontSize: "18px",
+                  fontWeight: 700,
+                  color: "#2D2D2D",
+                  fontFamily: "Cairo, sans-serif",
+                  margin: 0,
+                }}
+              >
+                فاتورة الدفع
+              </h2>
+              <span
+                style={{
+                  fontSize: "12px",
+                  color: "#999",
+                  fontFamily: "monospace",
+                }}
+              >
+                #{paymentDetails.id.substring(0, 8)}
+              </span>
+            </div>
+
+            {/* Customer Details */}
+            <div style={{ marginBottom: "20px" }}>
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "#999",
+                  fontFamily: "Cairo, sans-serif",
+                  margin: "0 0 4px 0",
+                }}
+              >
+                العميل
+              </p>
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#2D2D2D",
+                  fontFamily: "Cairo, sans-serif",
+                  margin: 0,
+                  fontWeight: 600,
+                }}
+              >
+                {paymentDetails.user_name}
+              </p>
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "#666",
+                  fontFamily: "Cairo, sans-serif",
+                  margin: "4px 0 0 0",
+                }}
+              >
+                {paymentDetails.user_email}
+              </p>
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "#666",
+                  fontFamily: "Cairo, sans-serif",
+                  margin: "2px 0 0 0",
+                }}
+              >
+                {paymentDetails.user_phone}
+              </p>
+            </div>
+
+            {/* Payment Details */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "16px",
+                marginBottom: "20px",
+                paddingBottom: "20px",
+                borderBottom: "1px solid #e0e0e0",
+              }}
+            >
+              <div>
+                <p
+                  style={{
+                    fontSize: "12px",
+                    color: "#999",
+                    fontFamily: "Cairo, sans-serif",
+                    margin: "0 0 4px 0",
+                  }}
+                >
+                  التاريخ
+                </p>
+                <p
+                  style={{
+                    fontSize: "14px",
+                    color: "#2D2D2D",
+                    fontFamily: "Cairo, sans-serif",
+                    margin: 0,
+                    fontWeight: 600,
+                  }}
+                >
+                  {formatDate(paymentDetails.created_at)}
+                </p>
+              </div>
+              <div>
+                <p
+                  style={{
+                    fontSize: "12px",
+                    color: "#999",
+                    fontFamily: "Cairo, sans-serif",
+                    margin: "0 0 4px 0",
+                  }}
+                >
+                  الحالة
+                </p>
+                <p
+                  style={{
+                    fontSize: "14px",
+                    color: "#4CAF50",
+                    fontFamily: "Cairo, sans-serif",
+                    margin: 0,
+                    fontWeight: 600,
+                  }}
+                >
+                  {paymentDetails.status === "succeeded" ? "مكتمل" : "قيد المعالجة"}
+                </p>
+              </div>
+            </div>
+
+            {/* Amount Section */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "20px",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#666",
+                  fontFamily: "Cairo, sans-serif",
+                  margin: 0,
+                }}
+              >
+                المبلغ المدفوع
+              </p>
+              <p
+                style={{
+                  fontSize: "20px",
+                  color: "#d97a6f",
+                  fontFamily: "Cairo, sans-serif",
+                  margin: 0,
+                  fontWeight: 700,
+                }}
+              >
+                {formatAmount(paymentDetails.amount, paymentDetails.currency)}
+              </p>
+            </div>
+
+            {/* Payment Intent ID */}
+            <div
+              style={{
+                backgroundColor: "#fff",
+                padding: "12px",
+                borderRadius: "4px",
+                marginBottom: "16px",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "11px",
+                  color: "#999",
+                  fontFamily: "Cairo, sans-serif",
+                  margin: "0 0 4px 0",
+                }}
+              >
+                معرف المعاملة
+              </p>
+              <p
+                style={{
+                  fontSize: "11px",
+                  color: "#666",
+                  fontFamily: "monospace",
+                  margin: 0,
+                  wordBreak: "break-all",
+                }}
+              >
+                {paymentDetails.stripe_payment_intent_id}
+              </p>
+            </div>
+          </motion.div>
+        ) : null}
 
         <motion.button
           onClick={handleGoHome}
