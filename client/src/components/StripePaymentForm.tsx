@@ -144,6 +144,11 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         fields: {
           billingDetails: "never", // Hide all billing details
         },
+        defaultValues: {
+          billingDetails: {
+            name: formData.name,
+          },
+        },
       });
 
       paymentElementInstance.mount("#payment-element");
