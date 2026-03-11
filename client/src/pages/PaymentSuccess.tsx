@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useRouter } from "wouter";
 import { motion } from "framer-motion";
 
 export const PaymentSuccess: React.FC = () => {
-  const [, navigate] = useRouter();
   const [paymentIntentId, setPaymentIntentId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -11,6 +9,10 @@ export const PaymentSuccess: React.FC = () => {
     const intentId = params.get("payment_intent_id");
     setPaymentIntentId(intentId);
   }, []);
+
+  const handleGoHome = () => {
+    window.location.href = "/";
+  };
 
   return (
     <motion.div
@@ -111,7 +113,7 @@ export const PaymentSuccess: React.FC = () => {
         )}
 
         <motion.button
-          onClick={() => navigate("/", { replace: true })}
+          onClick={handleGoHome}
           style={{
             width: "100%",
             padding: "12px 20px",
