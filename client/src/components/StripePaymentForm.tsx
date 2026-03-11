@@ -202,6 +202,22 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     setError(null);
 
     try {
+      // Update payment intent metadata with current name before confirming
+      try {
+        await fetch(`${API_BASE_URL}/stripe/update-payment-intent`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            payment_intent_id: paymentIntentId,
+            user_name: name,
+            user_phone: phone,
+          }),
+        });
+      } catch (updateErr) {
+        console.warn("Could not update payment intent metadata", updateErr);
+        // Continue anyway - this is just metadata
+      }
+
       // Submit the payment element form
       const { error: submitError } = await elements.submit();
 
@@ -212,7 +228,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         return;
       }
 
-      // Confirm payment
+      // Confirm payment with billing details including current name
       const { error: confirmError } = await stripe.confirmPayment({
         elements,
         clientSecret,
@@ -220,6 +236,8 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
           return_url: `${window.location.origin}/payment-success?payment_intent_id=${paymentIntentId}`,
           payment_method_data: {
             billing_details: {
+              name: name,
+              phone: phone,
               address: {
                 country: detectedCountryCode,
               },
