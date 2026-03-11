@@ -208,7 +208,7 @@ export const PaymentSuccess: React.FC = () => {
                   fontFamily: "monospace",
                 }}
               >
-                #{paymentDetails.id.substring(0, 8)}
+                #{paymentDetails.stripe_payment_intent_id?.substring(0, 8) || "N/A"}
               </span>
             </div>
 
