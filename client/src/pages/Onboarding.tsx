@@ -22,31 +22,9 @@ const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:8000/api";
 
 export default function Onboarding() {
-  // Hide Link authentication section
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.textContent = `
-      [data-testid="LinkOptional"],
-      .LinkOptional,
-      .LinkOptionalSection,
-      .StripeElement__optional,
-      .StripeElement__linkAuthenticationSection,
-      [data-testid="LinkAuthenticationSection"],
-      [class*="LinkAuthentication"],
-      .Link__button,
-      .StripeElement__header {
-        display: none !important;
-      }
-    `;
-    document.head.appendChild(style);
-    return () => {
-      if (document.head.contains(style)) {
-        document.head.removeChild(style);
-      }
-    };
-  }, []);
-
   const [currentStep, setCurrentStep] = useState(1);
+  const [phoneCountryCode, setPhoneCountryCode] = useState<string>("");
+  const [phoneCountryError, setPhoneCountryError] = useState<string>("");
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [countries, setCountries] = useState<Country[]>([]);

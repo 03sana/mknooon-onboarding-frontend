@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const API_BASE_URL =
@@ -45,6 +45,64 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     email: userEmail,
     phone: "",
   });
+  const [phoneCountryCode, setPhoneCountryCode] = useState<string>("");
+  const [phoneError, setPhoneError] = useState<string>("");
+
+  // Phone country code mapping
+  const countryCodeMap: Record<string, string> = {
+    "90": "TR",
+    "20": "EG",
+    "966": "SA",
+    "971": "AE",
+    "212": "MA",
+    "216": "TN",
+    "213": "DZ",
+    "218": "LY",
+    "970": "PS",
+    "962": "JO",
+    "963": "SY",
+    "961": "LB",
+    "968": "OM",
+    "974": "QA",
+    "973": "BH",
+    "965": "KW",
+    "92": "PK",
+    "880": "BD",
+    "91": "IN",
+  };
+
+  const verifyPhoneCountryCode = (phone: string) => {
+    if (!phone) {
+      setPhoneCountryCode("");
+      setPhoneError("");
+      return;
+    }
+
+    const cleanPhone = phone.replace(/[^0-9+]/g, "");
+    const phoneWithoutPlus = cleanPhone.replace("+", "");
+
+    let foundCode = "";
+    for (const code of Object.keys(countryCodeMap).sort((a, b) => b.length - a.length)) {
+      if (phoneWithoutPlus.startsWith(code)) {
+        foundCode = code;
+        break;
+      }
+    }
+
+    if (foundCode) {
+      const detectedCountry = countryCodeMap[foundCode];
+      setPhoneCountryCode(detectedCountry);
+      
+      if (detectedCountry !== countryCode) {
+        setPhoneError(`⚠️ Country mismatch: detected ${detectedCountry}, but selected ${countryCode}`);
+      } else {
+        setPhoneError("");
+      }
+    } else {
+      setPhoneCountryCode("");
+      setPhoneError("⚠️ Country code not recognized");
+    }
+  };
 
   // Initialize Stripe
   useEffect(() => {
@@ -100,15 +158,16 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         const { client_secret, payment_intent_id } =
           await intentResponse.json();
 
-        if (!isMounted) return;
-
-        setClientSecret(client_secret);
-        setPaymentIntentId(payment_intent_id);
-      } catch (err) {
         if (isMounted) {
-          const errorMessage =
-            err instanceof Error ? err.message : "Failed to initialize payment";
+          setClientSecret(client_secret);
+          setPaymentIntentId(payment_intent_id);
+        }
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Failed to create payment intent";
+        if (isMounted) {
           setError(errorMessage);
+          onError(errorMessage);
         }
       }
     };
@@ -118,47 +177,56 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     return () => {
       isMounted = false;
     };
-  }, [stripe, amount, currency, brand, countryCode]);
+  }, [stripe, formData.name, formData.email, formData.phone]);
 
-  // Create Payment Element once clientSecret is available
+  // Mount Payment Element
   useEffect(() => {
     if (!stripe || !clientSecret) return;
 
-    try {
-      // Unmount previous payment element if it exists
-      if (paymentElement) {
-        paymentElement.unmount();
-      }
+    let isMounted = true;
 
-      // Create elements with clientSecret
-      const elementsInstance = stripe.elements({
-        clientSecret: clientSecret,
-      });
+    const mountPaymentElement = async () => {
+      try {
+        const elementsInstance = stripe.elements({
+          clientSecret: clientSecret,
+        });
 
-      const paymentElementInstance = elementsInstance.create("payment", {
-        layout: "tabs",
-        wallets: {
-          applePay: "auto",
-          googlePay: "auto",
-        },
-        fields: {
-          billingDetails: "never", // Hide all billing details
-        },
-        defaultValues: {
-          billingDetails: {
-            name: formData.name,
+        const paymentElementInstance = elementsInstance.create("payment", {
+          layout: "tabs",
+          wallets: {
+            applePay: "auto",
+            googlePay: "auto",
           },
-        },
-      });
+          fields: {
+            billingDetails: "never", // Hide all billing details
+          },
+          defaultValues: {
+            billingDetails: {
+              name: formData.name,
+            },
+          },
+        });
 
-      paymentElementInstance.mount("#payment-element");
-      setPaymentElement(paymentElementInstance);
-      setElements(elementsInstance);
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Failed to mount payment element";
-      setError(errorMessage);
-    }
+        paymentElementInstance.mount("#payment-element");
+        if (isMounted) {
+          setPaymentElement(paymentElementInstance);
+          setElements(elementsInstance);
+          setError(null);
+        }
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Failed to mount payment element";
+        if (isMounted) {
+          setError(errorMessage);
+        }
+      }
+    };
+
+    mountPaymentElement();
+
+    return () => {
+      isMounted = false;
+    };
   }, [stripe, clientSecret]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -167,12 +235,16 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
       ...prev,
       [name]: value,
     }));
+
+    if (name === "phone") {
+      verifyPhoneCountryCode(value);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!stripe || !clientSecret || !paymentIntentId) {
-      setError("Payment form not ready. Please wait...");
+      setError("Payment system not ready");
       return;
     }
 
@@ -180,22 +252,19 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     setError(null);
 
     try {
-      // Confirm payment with Stripe
-      const { error: confirmError, paymentIntent } =
-        await stripe.confirmPayment({
-          elements: paymentElement ? paymentElement.parent : undefined,
-          clientSecret,
-          redirect: "if_required",
-        });
+      const { error: submitError } = await stripe.confirmPayment({
+        elements,
+        clientSecret,
+        confirmParams: {
+          return_url: `${window.location.origin}/payment-success?payment_intent_id=${paymentIntentId}`,
+        },
+      });
 
-      if (confirmError) {
-        setError(confirmError.message);
-        onError(confirmError.message);
-      } else if (paymentIntent.status === "succeeded") {
-        onSuccess(paymentIntentId);
+      if (submitError) {
+        setError(submitError.message || "Payment failed");
+        onError(submitError.message || "Payment failed");
       } else {
-        setError(`Payment status: ${paymentIntent.status}`);
-        onError(`Payment status: ${paymentIntent.status}`);
+        onSuccess(paymentIntentId);
       }
     } catch (err) {
       const errorMessage =
@@ -210,15 +279,21 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
   return (
     <motion.form
       onSubmit={handleSubmit}
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      style={{ width: "100%" }}
+      style={{
+        maxWidth: "500px",
+        margin: "0 auto",
+        padding: "24px",
+        backgroundColor: "#fff",
+        borderRadius: "12px",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+      }}
     >
-      {/* Stripe Logo */}
+      {/* Stripe Branding */}
       <div
         style={{
-          textAlign: "center",
           marginBottom: "24px",
           display: "flex",
           alignItems: "center",
@@ -281,7 +356,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         />
       </div>
 
-      {/* Phone Field */}
+      {/* Phone Field with Country Code Verification */}
       <div style={{ marginBottom: "24px" }}>
         <label
           style={{
@@ -295,24 +370,54 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
         >
           رقم الهاتف (اختياري)
         </label>
-        <input
-          type="tel"
-          name="phone"
-          value={formData.phone}
-          onChange={handleInputChange}
-          placeholder="أدخل رقم هاتفك"
-          style={{
-            width: "100%",
-            padding: "12px",
-            border: "1px solid #ddd",
-            borderRadius: "8px",
-            fontSize: "14px",
-            fontFamily: "Cairo, sans-serif",
-            color: "#2D2D2D",
-            boxSizing: "border-box",
-            direction: "rtl",
-          }}
-        />
+        <div style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
+          <input
+            type="tel"
+            name="phone"
+            value={formData.phone}
+            onChange={handleInputChange}
+            placeholder="أدخل رقم هاتفك"
+            style={{
+              flex: 1,
+              padding: "12px",
+              border: phoneError ? "2px solid #ff6b6b" : "1px solid #ddd",
+              borderRadius: "8px",
+              fontSize: "14px",
+              fontFamily: "Cairo, sans-serif",
+              color: "#2D2D2D",
+              boxSizing: "border-box",
+              direction: "rtl",
+            }}
+          />
+          {phoneCountryCode && (
+            <div
+              style={{
+                padding: "12px 16px",
+                backgroundColor: phoneError ? "#ffe0e0" : "#e8f5e9",
+                borderRadius: "8px",
+                fontSize: "12px",
+                fontWeight: 600,
+                color: phoneError ? "#d32f2f" : "#2e7d32",
+                whiteSpace: "nowrap",
+                border: phoneError ? "1px solid #ff6b6b" : "1px solid #4caf50",
+              }}
+            >
+              {phoneCountryCode}
+            </div>
+          )}
+        </div>
+        {phoneError && (
+          <div
+            style={{
+              marginTop: "8px",
+              fontSize: "12px",
+              color: "#d32f2f",
+              textAlign: "right",
+            }}
+          >
+            {phoneError}
+          </div>
+        )}
       </div>
 
       {/* Payment Element */}
@@ -328,9 +433,8 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
           style={{
             padding: "12px",
             backgroundColor: "#ffebee",
-            border: "1px solid #ef5350",
-            borderRadius: "8px",
             color: "#c62828",
+            borderRadius: "8px",
             fontSize: "14px",
             marginBottom: "16px",
             textAlign: "right",
@@ -343,39 +447,25 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
       {/* Submit Button */}
       <motion.button
         type="submit"
-        disabled={loading || !clientSecret || !paymentElement}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        disabled={loading || !stripe || !clientSecret}
+        whileHover={{ scale: loading ? 1 : 1.02 }}
+        whileTap={{ scale: loading ? 1 : 0.98 }}
         style={{
           width: "100%",
           padding: "14px",
-          backgroundColor: loading ? "#ccc" : "#e74c3c",
-          color: "white",
+          backgroundColor: loading ? "#ccc" : "#d97a6f",
+          color: "#fff",
           border: "none",
           borderRadius: "8px",
           fontSize: "16px",
           fontWeight: 600,
-          fontFamily: "Cairo, sans-serif",
           cursor: loading ? "not-allowed" : "pointer",
-          opacity: loading ? 0.7 : 1,
+          fontFamily: "Cairo, sans-serif",
+          transition: "all 0.3s ease",
         }}
       >
-        {loading ? "جاري معالجة الدفع..." : `ادفع ${amount} ${currency.toUpperCase()}`}
+        {loading ? "جاري المعالجة..." : `ادفع ${amount} ${currency.toUpperCase()}`}
       </motion.button>
-
-      {/* Stripe Branding */}
-      <div
-        style={{
-          textAlign: "center",
-          marginTop: "16px",
-          fontSize: "12px",
-          color: "#999",
-        }}
-      >
-        Powered by Stripe
-      </div>
     </motion.form>
   );
 };
-
-export default StripePaymentFormWrapper;
