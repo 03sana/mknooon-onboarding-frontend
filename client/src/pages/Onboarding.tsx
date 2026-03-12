@@ -2447,69 +2447,71 @@ export default function Onboarding() {
                   )}
                   {paymentInstructions?.requires_receipt &&
                     !paymentInstructions?.requires_delivery_info && (
-                      <motion.button
-                        onClick={() => {
-                          let message =
-                            paymentInstructions.receipt_whatsapp.prefill;
+                      <>
+                        <motion.div
+                          style={{
+                            marginTop: "16px",
+                            padding: "12px",
+                            backgroundColor: "#f5f5f5",
+                            borderRadius: "12px",
+                            textAlign: "center",
+                          }}
+                        >
+                          <p
+                            style={{
+                              fontSize: "14px",
+                              color: "#2D2D2D",
+                              fontFamily: "Cairo, sans-serif",
+                              margin: 0,
+                              lineHeight: "1.6",
+                            }}
+                          >
+                            الرجاء أخذ لقطة شاشة للوصل وإرسالها إلينا
+                          </p>
+                        </motion.div>
+                        <motion.button
+                          onClick={() => {
+                            let message =
+                              paymentInstructions.receipt_whatsapp.prefill;
 
-                          // Add price information if available with proper RTL formatting
-                          if (priceData && priceData.price) {
-                            const priceWithCurrency = `${priceData.price} ${selectedCountry?.currency_symbol || ""}`;
-                            message += `\n\u200f\nالسعر المدفوع: ${priceWithCurrency}`;
-                          }
+                            // Add price information if available with proper RTL formatting
+                            if (priceData && priceData.price) {
+                              const priceWithCurrency = `${priceData.price} ${selectedCountry?.currency_symbol || ""}`;
+                              message += `\n‏\nالسعر المدفوع: ${priceWithCurrency}`;
+                            }
 
-                          const phone =
-                            paymentInstructions.receipt_whatsapp.phone.replace(
-                              /[^0-9]/g,
-                              ""
+                            const phone =
+                              paymentInstructions.receipt_whatsapp.phone.replace(
+                                /[^0-9]/g,
+                                ""
+                              );
+                            window.open(
+                              `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+                              "_blank"
                             );
-                          window.open(
-                            `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
-                            "_blank"
-                          );
-                        }}
-                        className="btn fw-bold mt-4"
-                        style={{
-                          borderRadius: "12px",
-                          padding: "12px 16px",
-                          fontSize: "14px",
-                          backgroundColor: "#d97a6f",
-                          color: "#fff",
-                          border: "none",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "8px",
-                          width: "100%",
-                          boxSizing: "border-box",
-                        }}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        أرسل الإيصال
-                      </motion.button>
+                          }}
+                          className="btn fw-bold mt-4"
+                          style={{
+                            borderRadius: "12px",
+                            padding: "12px 16px",
+                            fontSize: "14px",
+                            backgroundColor: "#d97a6f",
+                            color: "#fff",
+                            border: "none",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: "8px",
+                            width: "100%",
+                            boxSizing: "border-box",
+                          }}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          أرسل الإيصال
+                        </motion.button>
+                      </>
                     )}
-                  <motion.div
-                    style={{
-                      marginTop: "24px",
-                      padding: "16px",
-                      backgroundColor: "#f5f5f5",
-                      borderRadius: "12px",
-                      textAlign: "center",
-                    }}
-                  >
-                    <p
-                      style={{
-                        fontSize: "14px",
-                        color: "#2D2D2D",
-                        fontFamily: "Cairo, sans-serif",
-                        margin: 0,
-                        lineHeight: "1.6",
-                      }}
-                    >
-                      الرجاء أخذ لقطة شاشة للوصل وإرسالها إلينا
-                    </p>
-                  </motion.div>
                 </>
               )}
             </div>
