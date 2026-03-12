@@ -616,7 +616,7 @@ export const PaymentSuccess: React.FC = () => {
                     const paymentMethod = "Stripe";
                     const formattedAmount = (paymentDetails?.amount || 0).toFixed(2);
                     const countryName = countryCodeToName[paymentDetails?.country_code || ''] || paymentDetails?.country_code || 'غير محدد';
-                    const message = `مرحبا، دفعت اشتراك كورس ${paymentDetails?.brand || 'دورة'} من ${countryName} عبر ${paymentMethod}. هذه صورة إشعار الدفع.\n\nالسعر المدفوع: ${formattedAmount} ${paymentDetails?.currency || ''}`;
+                    const message = `مرحبا، دفعت اشتراك كورس ${paymentDetails?.brand || 'الدورة التدريبية'} من ${countryName} عبر ${paymentMethod}. هذه صورة إشعار الدفع.\n\nالسعر المدفوع: ${formattedAmount} ${paymentDetails?.currency || ''}`;
                     const phone = "905344258184";
                     window.open(
                       `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
