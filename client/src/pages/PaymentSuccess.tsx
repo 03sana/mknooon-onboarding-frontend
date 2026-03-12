@@ -155,7 +155,7 @@ export const PaymentSuccess: React.FC = () => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: currency,
-    }).format(amount / 100);
+    }).format(amount);
   };
 
   return (
@@ -614,7 +614,7 @@ export const PaymentSuccess: React.FC = () => {
                 <motion.button
                   onClick={() => {
                     const paymentMethod = "Stripe";
-                    const formattedAmount = ((paymentDetails?.amount || 0) / 100).toFixed(2);
+                    const formattedAmount = (paymentDetails?.amount || 0).toFixed(2);
                     const countryName = countryCodeToName[paymentDetails?.country_code || ''] || paymentDetails?.country_code || 'غير محدد';
                     const message = `مرحبا، دفعت اشتراك كورس ${paymentDetails?.brand || 'دورة'} من ${countryName} عبر ${paymentMethod}. هذه صورة إشعار الدفع.\n\nالسعر المدفوع: ${formattedAmount} ${paymentDetails?.currency || ''}`;
                     const phone = "905344258184";
