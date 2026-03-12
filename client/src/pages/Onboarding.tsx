@@ -2471,14 +2471,14 @@ export default function Onboarding() {
                         </motion.div>
                         <motion.button
                           onClick={() => {
-                            let message =
-                              paymentInstructions.receipt_whatsapp.prefill;
-
-                            // Add price information if available with proper RTL formatting
-                            if (priceData && priceData.price) {
-                              const priceWithCurrency = `${priceData.price} ${selectedCountry?.currency_symbol || ""}`;
-                              message += `\n‏\nالسعر المدفوع: ${priceWithCurrency}`;
-                            }
+                            // Build message in the same format as Stripe
+                            const courseName = courseData?.name || selectedBrand || 'الدورة التدريبية';
+                            const countryName = selectedCountry?.name_ar || 'غير محدد';
+                            const paymentMethod = selectedPaymentMethod?.name || 'غير محدد';
+                            const amount = (selectedCountry?.price || 0).toFixed(2);
+                            const currency = selectedCountry?.currency_symbol || '';
+                            
+                            const message = `مرحبا، دفعت اشتراك كورس ${courseName} من ${countryName} عبر ${paymentMethod}. هذه صورة إشعار الدفع.\n\nالسعر المدفوع: ${amount} ${currency}`;
 
                             const phone =
                               paymentInstructions.receipt_whatsapp.phone.replace(
