@@ -5,6 +5,63 @@ import html2canvas from "html2canvas";
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:8000/api";
 
+const countryCodeToName: Record<string, string> = {
+  AE: "الإمارات العربية المتحدة",
+  SA: "المملكة العربية السعودية",
+  EG: "مصر",
+  KW: "الكويت",
+  QA: "قطر",
+  BH: "البحرين",
+  OM: "عمان",
+  JO: "الأردن",
+  LB: "لبنان",
+  PS: "فلسطين",
+  SY: "سوريا",
+  IQ: "العراق",
+  YE: "اليمن",
+  TN: "تونس",
+  DZ: "الجزائر",
+  MA: "المغرب",
+  LY: "ليبيا",
+  SD: "السودان",
+  US: "الولايات المتحدة",
+  GB: "المملكة المتحدة",
+  CA: "كندا",
+  AU: "أستراليا",
+  FR: "فرنسا",
+  DE: "ألمانيا",
+  IT: "إيطاليا",
+  ES: "إسبانيا",
+  NL: "هولندا",
+  SE: "السويد",
+  NO: "النرويج",
+  DK: "الدنمارك",
+  FI: "فنلندا",
+  PL: "بولندا",
+  RU: "روسيا",
+  IN: "الهند",
+  PK: "باكستان",
+  BD: "بنجلاديش",
+  CN: "الصين",
+  JP: "اليابان",
+  KR: "كوريا الجنوبية",
+  TH: "تايلاند",
+  MY: "ماليزيا",
+  SG: "سنغافورة",
+  ID: "إندونيسيا",
+  PH: "الفلبين",
+  VN: "فيتنام",
+  BR: "البرازيل",
+  MX: "المكسيك",
+  AR: "الأرجنتين",
+  CL: "تشيلي",
+  CO: "كولومبيا",
+  ZA: "جنوب أفريقيا",
+  NG: "نيجيريا",
+  KE: "كينيا",
+  ET: "إثيوبيا",
+};
+
 // Function to capture invoice and show in modal for screenshot
 const captureInvoiceImage = async (
   invoiceElementId: string,
@@ -558,7 +615,8 @@ export const PaymentSuccess: React.FC = () => {
                   onClick={() => {
                     const paymentMethod = "Stripe";
                     const formattedAmount = ((paymentDetails?.amount || 0) / 100).toFixed(2);
-                    const message = `مرحبا، دفعت اشتراك كورس ${paymentDetails?.brand || 'دورة'} من ${paymentDetails?.country_code || 'غير محدد'} عبر ${paymentMethod}. هذه صورة إشعار الدفع.\n\nالسعر المدفوع: ${formattedAmount} ${paymentDetails?.currency || ''}`;
+                    const countryName = countryCodeToName[paymentDetails?.country_code || ''] || paymentDetails?.country_code || 'غير محدد';
+                    const message = `مرحبا، دفعت اشتراك كورس ${paymentDetails?.brand || 'دورة'} من ${countryName} عبر ${paymentMethod}. هذه صورة إشعار الدفع.\n\nالسعر المدفوع: ${formattedAmount} ${paymentDetails?.currency || ''}`;
                     const phone = "905344258184";
                     window.open(
                       `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
