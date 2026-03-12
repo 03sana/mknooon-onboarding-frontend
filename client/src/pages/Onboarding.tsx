@@ -2966,7 +2966,7 @@ export default function Onboarding() {
                 <motion.button
                   onClick={() => {
                     const paymentMethod = selectedPaymentMethod?.name || 'طريقة دفع';
-                    const message = `مرحبا، دفعت اشتراك ${courseData?.name || selectedBrand || 'دورة'} من ${selectedCountry?.name_ar || 'غير محدد'} عبر ${paymentMethod}. هذه صورة إشعار الدفع.\n\nالسعر المدفوع: ${selectedCountry?.price || 0} ${selectedCountry?.currency_symbol || ''}\n\nالرجاء الانتظار قليلاً لمعالجة الطلب.`;
+                    const message = `مرحبا، دفعت اشتراك كورس ${courseData?.name || selectedBrand || 'دورة'} من ${selectedCountry?.name_ar || 'غير محدد'} عبر ${paymentMethod}. هذه صورة إشعار الدفع.\n\nالسعر المدفوع: ${selectedCountry?.price || 0} ${selectedCountry?.currency_symbol || ''}`;
                     const phone = "905344258184";
                     window.open(
                       `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,

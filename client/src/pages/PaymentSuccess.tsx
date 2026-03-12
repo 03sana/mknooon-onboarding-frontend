@@ -557,7 +557,7 @@ export const PaymentSuccess: React.FC = () => {
                 <motion.button
                   onClick={() => {
                     const paymentMethod = "Stripe";
-                    const message = `مرحبا، دفعت اشتراك ${paymentDetails?.brand || 'دورة'} من ${paymentDetails?.country_code || 'غير محدد'} عبر ${paymentMethod}. هذه صورة إشعار الدفع.\n\nالسعر المدفوع: ${(paymentDetails?.amount || 0) / 100} ${paymentDetails?.currency || ''}\n\nالرجاء الانتظار قليلاً لمعالجة الطلب.`;
+                    const message = `مرحبا، دفعت اشتراك كورس ${paymentDetails?.brand || 'دورة'} من ${paymentDetails?.country_code || 'غير محدد'} عبر ${paymentMethod}. هذه صورة إشعار الدفع.\n\nالسعر المدفوع: ${(paymentDetails?.amount || 0) / 100} ${paymentDetails?.currency || ''}`;
                     const phone = "905344258184";
                     window.open(
                       `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
