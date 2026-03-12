@@ -1,8 +1,79 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import html2canvas from "html2canvas";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+
+// Function to capture invoice and send to WhatsApp
+const sendInvoiceToWhatsApp = async (
+  invoiceElementId: string,
+  invoiceData: {
+    invoiceId: string;
+    customerName: string;
+    courseName: string;
+    date: string;
+    amount: string;
+    currency: string;
+    country: string;
+  }
+) => {
+  try {
+    // Get the invoice element
+    const invoiceElement = document.getElementById(invoiceElementId);
+    if (!invoiceElement) {
+      console.error("Invoice element not found");
+      return;
+    }
+
+    // Capture invoice as image
+    const canvas = await html2canvas(invoiceElement, {
+      backgroundColor: "#ffffff",
+      scale: 2,
+      logging: false,
+      useCORS: true,
+    });
+
+    // Convert canvas to blob
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+
+      // Format the message
+      const message = `📋 *الوصل* 📋\n\n` +
+        `معرف الوصل: ${invoiceData.invoiceId}\n` +
+        `الاسم: ${invoiceData.customerName}\n` +
+        `الدورة: ${invoiceData.courseName}\n` +
+        `التاريخ: ${invoiceData.date}\n` +
+        `المبلغ المدفوع: ${invoiceData.amount} ${invoiceData.currency}\n` +
+        `الدولة: ${invoiceData.country}\n\n` +
+        `شكراً لك على الشراء! 🎉`;
+
+      const phone = "905344258184";
+
+      // Open WhatsApp with message
+      window.open(
+        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+        "_blank"
+      );
+    });
+  } catch (error) {
+    console.error("Error capturing invoice:", error);
+    // Fallback: just send text message
+    const message = `📋 *الوصل* 📋\n\n` +
+      `معرف الوصل: ${invoiceData.invoiceId}\n` +
+      `الاسم: ${invoiceData.customerName}\n` +
+      `الدورة: ${invoiceData.courseName}\n` +
+      `التاريخ: ${invoiceData.date}\n` +
+      `المبلغ المدفوع: ${invoiceData.amount} ${invoiceData.currency}\n` +
+      `الدولة: ${invoiceData.country}\n\n` +
+      `شكراً لك على الشراء! 🎉`;
+    const phone = "905344258184";
+    window.open(
+      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+      "_blank"
+    );
+  }
+};
 
 interface PaymentDetails {
   id: string;
@@ -15,6 +86,7 @@ interface PaymentDetails {
   country_code: string;
   created_at: string;
   status: string;
+  brand?: string;
 }
 
 export const PaymentSuccess: React.FC = () => {
@@ -168,6 +240,7 @@ export const PaymentSuccess: React.FC = () => {
           </div>
         ) : paymentDetails ? (
           <motion.div
+            id="invoice-card"
             style={{
               backgroundColor: "#f9f9f9",
               padding: "24px",
@@ -398,7 +471,19 @@ export const PaymentSuccess: React.FC = () => {
         ) : null}
 
         <motion.button
-          onClick={handleGoHome}
+          onClick={() => {
+            if (paymentDetails) {
+              sendInvoiceToWhatsApp('invoice-card', {
+                invoiceId: paymentDetails.stripe_payment_intent_id || 'N/A',
+                customerName: paymentDetails.user_name || 'العميل',
+                courseName: paymentDetails.brand || 'دورة',
+                date: formatDate(paymentDetails.created_at),
+                amount: String(paymentDetails.amount / 100),
+                currency: paymentDetails.currency || '',
+                country: paymentDetails.country_code || 'غير محدد',
+              });
+            }
+          }}
           style={{
             width: "100%",
             padding: "12px 20px",
@@ -414,7 +499,7 @@ export const PaymentSuccess: React.FC = () => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          العودة للصفحة الرئيسية
+          اضغط هنا لارسال الوصل
         </motion.button>
       </motion.div>
     </motion.div>
