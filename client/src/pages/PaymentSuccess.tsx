@@ -5,28 +5,18 @@ import html2canvas from "html2canvas";
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:8000/api";
 
-// Function to capture invoice and send to WhatsApp
-const sendInvoiceToWhatsApp = async (
+// Function to capture invoice and show in modal for screenshot
+const captureInvoiceImage = async (
   invoiceElementId: string,
-  invoiceData: {
-    invoiceId: string;
-    customerName: string;
-    courseName: string;
-    date: string;
-    amount: string;
-    currency: string;
-    country: string;
-  }
+  onImageReady: (imageUrl: string) => void
 ) => {
   try {
-    // Get the invoice element
     const invoiceElement = document.getElementById(invoiceElementId);
     if (!invoiceElement) {
       console.error("Invoice element not found");
       return;
     }
 
-    // Capture invoice as image
     const canvas = await html2canvas(invoiceElement, {
       backgroundColor: "#ffffff",
       scale: 2,
@@ -34,44 +24,11 @@ const sendInvoiceToWhatsApp = async (
       useCORS: true,
     });
 
-    // Convert canvas to blob
-    canvas.toBlob((blob) => {
-      if (!blob) return;
-
-      // Format the message
-      const message = `📋 *الوصل* 📋\n\n` +
-        `معرف الوصل: ${invoiceData.invoiceId}\n` +
-        `الاسم: ${invoiceData.customerName}\n` +
-        `الدورة: ${invoiceData.courseName}\n` +
-        `التاريخ: ${invoiceData.date}\n` +
-        `المبلغ المدفوع: ${invoiceData.amount} ${invoiceData.currency}\n` +
-        `الدولة: ${invoiceData.country}\n\n` +
-        `شكراً لك على الشراء! 🎉`;
-
-      const phone = "905344258184";
-
-      // Open WhatsApp with message
-      window.open(
-        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
-        "_blank"
-      );
-    });
+    const imageUrl = canvas.toDataURL("image/png");
+    onImageReady(imageUrl);
   } catch (error) {
     console.error("Error capturing invoice:", error);
-    // Fallback: just send text message
-    const message = `📋 *الوصل* 📋\n\n` +
-      `معرف الوصل: ${invoiceData.invoiceId}\n` +
-      `الاسم: ${invoiceData.customerName}\n` +
-      `الدورة: ${invoiceData.courseName}\n` +
-      `التاريخ: ${invoiceData.date}\n` +
-      `المبلغ المدفوع: ${invoiceData.amount} ${invoiceData.currency}\n` +
-      `الدولة: ${invoiceData.country}\n\n` +
-      `شكراً لك على الشراء! 🎉`;
-    const phone = "905344258184";
-    window.open(
-      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
-      "_blank"
-    );
+    alert("حدث خطأ في التقاط الصورة. يرجى المحاولة مرة أخرى.");
   }
 };
 
@@ -95,6 +52,8 @@ export const PaymentSuccess: React.FC = () => {
     null
   );
   const [loading, setLoading] = useState(true);
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false);
+  const [invoiceImageUrl, setInvoiceImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -473,14 +432,9 @@ export const PaymentSuccess: React.FC = () => {
         <motion.button
           onClick={() => {
             if (paymentDetails) {
-              sendInvoiceToWhatsApp('invoice-card', {
-                invoiceId: paymentDetails.stripe_payment_intent_id || 'N/A',
-                customerName: paymentDetails.user_name || 'العميل',
-                courseName: paymentDetails.brand || 'دورة',
-                date: formatDate(paymentDetails.created_at),
-                amount: String(paymentDetails.amount / 100),
-                currency: paymentDetails.currency || '',
-                country: paymentDetails.country_code || 'غير محدد',
+              captureInvoiceImage("invoice-card", (imageUrl) => {
+                setInvoiceImageUrl(imageUrl);
+                setShowInvoiceModal(true);
               });
             }
           }}
@@ -501,6 +455,135 @@ export const PaymentSuccess: React.FC = () => {
         >
           اضغط هنا لارسال الوصل
         </motion.button>
+
+        {/* Invoice Image Modal */}
+        {showInvoiceModal && invoiceImageUrl && (
+          <motion.div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(0, 0, 0, 0.7)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 9999,
+              padding: "20px",
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowInvoiceModal(false)}
+          >
+            <motion.div
+              style={{
+                backgroundColor: "#fff",
+                borderRadius: "12px",
+                padding: "20px",
+                maxWidth: "90vw",
+                maxHeight: "90vh",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                overflow: "auto",
+              }}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h3
+                style={{
+                  fontSize: "18px",
+                  fontWeight: 700,
+                  color: "#2D2D2D",
+                  fontFamily: "Cairo, sans-serif",
+                  marginBottom: "16px",
+                  textAlign: "center",
+                }}
+              >
+                الوصل - خذ لقطة شاشة وأرسلها
+              </h3>
+              <img
+                src={invoiceImageUrl}
+                alt="Invoice"
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "60vh",
+                  borderRadius: "8px",
+                  marginBottom: "16px",
+                }}
+              />
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#666",
+                  fontFamily: "Cairo, sans-serif",
+                  textAlign: "center",
+                  marginBottom: "16px",
+                }}
+              >
+                الرجاء أخذ لقطة شاشة للوصل وأرسلها عبر واتس اب
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "12px",
+                  width: "100%",
+                }}
+              >
+                <motion.button
+                  onClick={() => setShowInvoiceModal(false)}
+                  style={{
+                    flex: 1,
+                    padding: "12px 16px",
+                    borderRadius: "8px",
+                    border: "1px solid #d97a6f",
+                    backgroundColor: "transparent",
+                    color: "#d97a6f",
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    fontFamily: "Cairo, sans-serif",
+                  }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  إغلاق
+                </motion.button>
+                <motion.button
+                  onClick={() => {
+                    const message = `📋 *الوصل* 📋\n\nرجاء عرض الصورة المرفقة`;
+                    const phone = "905344258184";
+                    window.open(
+                      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+                      "_blank"
+                    );
+                  }}
+                  style={{
+                    flex: 1,
+                    padding: "12px 16px",
+                    borderRadius: "8px",
+                    border: "none",
+                    backgroundColor: "#25D366",
+                    color: "#fff",
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    fontFamily: "Cairo, sans-serif",
+                  }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  فتح واتس
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
       </motion.div>
     </motion.div>
   );
