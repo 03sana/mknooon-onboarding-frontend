@@ -12,6 +12,7 @@ interface StripePaymentFormProps {
   userName: string;
   userEmail: string;
   userPhone?: string;
+  courseId?: number;
   onSuccess: (paymentIntentId: string) => void;
   onError: (error: string) => void;
   isLoading?: boolean;
@@ -31,6 +32,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
   userName,
   userEmail,
   userPhone = "",
+  courseId,
   onSuccess,
   onError,
   isLoading = false,
@@ -51,6 +53,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
   // Phone country code mapping
   const countryCodeMap: Record<string, string> = {
     "1": "US",
+    "44": "GB",
     "90": "TR",
     "20": "EG",
     "966": "SA",
@@ -70,6 +73,27 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
     "92": "PK",
     "880": "BD",
     "91": "IN",
+    "61": "AU",
+    "33": "FR",
+    "49": "DE",
+    "39": "IT",
+    "34": "ES",
+    "31": "NL",
+    "32": "BE",
+    "41": "CH",
+    "43": "AT",
+    "45": "DK",
+    "46": "SE",
+    "47": "NO",
+    "48": "PL",
+    "60": "MY",
+    "65": "SG",
+    "66": "TH",
+    "62": "ID",
+    "63": "PH",
+    "81": "JP",
+    "86": "CN",
+    "852": "HK",
   };
 
   const verifyPhoneCountryCode = (phoneNumber: string) => {
@@ -141,6 +165,7 @@ export const StripePaymentFormWrapper: React.FC<StripePaymentFormProps> = ({
             amount,
             currency: currency.toUpperCase(),
             brand,
+            course_id: courseId,
             country_code: detectedCountryCode,
             user_name: name,
             user_email: userEmail,

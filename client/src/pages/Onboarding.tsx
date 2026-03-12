@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { StripePaymentFormWrapper } from "../components/StripePaymentForm";
+import html2canvas from "html2canvas";
 
 interface Country {
   id: number;
@@ -20,6 +21,88 @@ interface PaymentMethod {
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+
+// Function to capture invoice and send to WhatsApp
+const sendInvoiceToWhatsApp = async (
+  invoiceElementId: string,
+  invoiceData: {
+    invoiceId: string;
+    customerName: string;
+    courseName: string;
+    date: string;
+    amount: string;
+    currency: string;
+    country: string;
+  }
+) => {
+  try {
+    // Get the invoice element
+    const invoiceElement = document.getElementById(invoiceElementId);
+    if (!invoiceElement) {
+      console.error("Invoice element not found");
+      return;
+    }
+
+    // Capture invoice as image
+    const canvas = await html2canvas(invoiceElement, {
+      backgroundColor: "#ffffff",
+      scale: 2,
+      logging: false,
+      useCORS: true,
+    });
+
+    // Convert canvas to blob
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+
+      // Create a file from the blob
+      const file = new File([blob], "invoice.png", { type: "image/png" });
+
+      // Format the message
+      const message = `📋 *الوصل* 📋\n\n` +
+        `معرف الوصل: ${invoiceData.invoiceId}\n` +
+        `الاسم: ${invoiceData.customerName}\n` +
+        `الدورة: ${invoiceData.courseName}\n` +
+        `التاريخ: ${invoiceData.date}\n` +
+        `المبلغ المدفوع: ${invoiceData.amount} ${invoiceData.currency}\n` +
+        `الدولة: ${invoiceData.country}\n\n` +
+        `شكراً لك على الشراء! 🎉`;
+
+      const phone = "905344258184";
+
+      // Open WhatsApp with message
+      // Note: WhatsApp Web doesn't support direct image upload via URL,
+      // so we'll open WhatsApp and user can attach the image manually
+      window.open(
+        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+        "_blank"
+      );
+
+      // Alternatively, if you want to download the image for user to send:
+      // const url = canvas.toDataURL('image/png');
+      // const link = document.createElement('a');
+      // link.href = url;
+      // link.download = 'invoice.png';
+      // link.click();
+    });
+  } catch (error) {
+    console.error("Error capturing invoice:", error);
+    // Fallback: just send text message
+    const message = `📋 *الوصل* 📋\n\n` +
+      `معرف الوصل: ${invoiceData.invoiceId}\n` +
+      `الاسم: ${invoiceData.customerName}\n` +
+      `الدورة: ${invoiceData.courseName}\n` +
+      `التاريخ: ${invoiceData.date}\n` +
+      `المبلغ المدفوع: ${invoiceData.amount} ${invoiceData.currency}\n` +
+      `الدولة: ${invoiceData.country}\n\n` +
+      `شكراً لك على الشراء! 🎉`;
+    const phone = "905344258184";
+    window.open(
+      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+      "_blank"
+    );
+  }
+};
 
 export default function Onboarding() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -46,6 +129,7 @@ export default function Onboarding() {
     Record<string, string>
   >({});
   const [priceData, setPriceData] = useState<any>(null);
+  const [courseData, setCourseData] = useState<any>(null);
   const brandColors: Record<string, string> = {
     chocodar: "#6B3F2A",
     sapooon: "#4A7C59",
@@ -95,20 +179,32 @@ export default function Onboarding() {
             `${API_BASE_URL}/course?src=${selectedBrand}&t=${new Date().getTime()}`
           );
           const data = await response.json();
-          if (data.data && data.data.prices) {
-            // Extract unique countries from prices
-            const countriesMap = new Map();
-            data.data.prices.forEach((price: any) => {
-              if (!countriesMap.has(price.country_code)) {
-                countriesMap.set(price.country_code, {
-                  code: price.country_code,
-                  name: price.country_name,
-                  currency: price.currency,
-                  currency_symbol: price.currency_symbol,
-                });
-              }
-            });
-            setCountries(Array.from(countriesMap.values()));
+          if (data.data) {
+            // Store full course data
+            setCourseData(data.data);
+            
+            if (data.data.prices) {
+              // Extract unique countries from prices array
+              const countriesMap = new Map();
+              data.data.prices.forEach((price: any, idx: number) => {
+                if (!countriesMap.has(price.country_code)) {
+                  countriesMap.set(price.country_code, {
+                    id: idx,
+                    code: price.country_code,
+                    name: price.country_name,
+                    name_ar: price.country_name_ar || price.country_name,
+                    currency: price.currency,
+                    currency_symbol: price.currency_symbol,
+                    price: parseFloat(price.price),
+                  });
+                }
+              });
+              // Sort countries alphabetically by Arabic name
+              const sortedCountries = Array.from(countriesMap.values()).sort((a, b) =>
+                a.name_ar.localeCompare(b.name_ar, 'ar')
+              );
+              setCountries(sortedCountries);
+            }
           }
         } else {
           // Fallback to countries list if no course selected
@@ -1886,11 +1982,12 @@ export default function Onboarding() {
                     <StripePaymentFormWrapper
                       amount={priceData.price}
                       currency={priceData.currency}
-                      brand={selectedBrand || "Mknooon"}
+                      brand={courseData?.name || selectedBrand || "Mknooon"}
                       countryCode={selectedCountry.code}
                       userName={deliveryForm.full_name || "Customer"}
                       userEmail={deliveryForm.phone ? `${deliveryForm.phone.replace(/\D/g, '')}@mknooon.local` : "customer@mknooon.local"}
                       userPhone={deliveryForm.phone}
+                      courseId={courseData?.id}
                       onSuccess={paymentIntentId => {
                         setCurrentStep(15);
                       }}
@@ -2446,7 +2543,20 @@ export default function Onboarding() {
                       </motion.button>
                     )}
                   <motion.button
-                    onClick={() => setCurrentStep(15)}
+                    onClick={() => {
+                      const params = new URLSearchParams(window.location.search);
+                      const paymentIntentId = params.get('payment_intent') || 'N/A';
+                      
+                      sendInvoiceToWhatsApp('invoice-card', {
+                        invoiceId: paymentIntentId,
+                        customerName: deliveryForm.full_name || 'العميل',
+                        courseName: courseData?.name || selectedBrand || 'دورة',
+                        date: new Date().toLocaleDateString('ar-SA'),
+                        amount: String(selectedCountry?.price || 0),
+                        currency: selectedCountry?.currency_symbol || '',
+                        country: selectedCountry?.name_ar || 'غير محدد',
+                      });
+                    }}
                     className="btn fw-bold mt-4"
                     style={{
                       borderRadius: "12px",
@@ -2454,15 +2564,15 @@ export default function Onboarding() {
                       fontSize: "16px",
                       width: "100%",
                       boxSizing: "border-box",
-                      backgroundColor: "transparent",
-                      color: "#d97a6f",
-                      border: "2px solid #d97a6f",
+                      backgroundColor: "#d97a6f",
+                      color: "#fff",
+                      border: "none",
                       display: "block",
                     }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    تابعي
+                    اضغط هنا لارسال الوصل
                   </motion.button>
                 </>
               )}
@@ -2568,6 +2678,7 @@ export default function Onboarding() {
             {/* Receipt Card for Stripe */}
             {selectedPaymentMethod?.code === "visa" && (
               <motion.div
+                id="invoice-card"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
@@ -2781,27 +2892,29 @@ export default function Onboarding() {
                   </div>
                 </div>
 
-                {/* Download Button */}
+                {/* Send to WhatsApp Button */}
                 <motion.button
                   onClick={() => {
-                    const invoiceText = `\nإيصال الدفع\n================\nالمبلغ: ${priceData?.price} ${priceData?.currency}\nالدولة: ${selectedCountry?.name}\nالخطة: ${selectedBrand}\nطريقة الدفع: Visa / Mastercard\nالتاريخ: ${new Date().toLocaleDateString("ar-SA")}\nالحالة: مكتمل\n================\nشكراً لك على شرائك`;
-                    const element = document.createElement("a");
-                    const file = new Blob([invoiceText], {
-                      type: "text/plain",
+                    const params = new URLSearchParams(window.location.search);
+                    const paymentIntentId = params.get('payment_intent') || 'N/A';
+                    
+                    sendInvoiceToWhatsApp('invoice-card', {
+                      invoiceId: paymentIntentId,
+                      customerName: deliveryForm.full_name || 'العميل',
+                      courseName: courseData?.name || selectedBrand || 'دورة',
+                      date: new Date().toLocaleDateString('ar-SA'),
+                      amount: String(priceData?.price || 0),
+                      currency: priceData?.currency || '',
+                      country: selectedCountry?.name_ar || 'غير محدد',
                     });
-                    element.href = URL.createObjectURL(file);
-                    element.download = `invoice-${new Date().getTime()}.txt`;
-                    document.body.appendChild(element);
-                    element.click();
-                    document.body.removeChild(element);
                   }}
                   style={{
                     width: "100%",
                     padding: "12px 20px",
                     borderRadius: "12px",
-                    border: "1px solid #d97a6f",
-                    backgroundColor: "transparent",
-                    color: "#d97a6f",
+                    border: "none",
+                    backgroundColor: "#d97a6f",
+                    color: "#fff",
                     fontSize: "14px",
                     fontWeight: 600,
                     cursor: "pointer",
@@ -2810,7 +2923,7 @@ export default function Onboarding() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  تحميل الإيصال
+                  اضغط هنا لارسال الوصل
                 </motion.button>
               </motion.div>
             )}
