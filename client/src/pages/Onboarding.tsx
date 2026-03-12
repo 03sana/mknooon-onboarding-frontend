@@ -2489,30 +2489,27 @@ export default function Onboarding() {
                         أرسل الإيصال
                       </motion.button>
                     )}
-                  <motion.button
-                    onClick={() => {
-                      captureInvoiceImage('invoice-card', (imageUrl) => {
-                        setInvoiceImageUrl(imageUrl);
-                        setShowInvoiceModal(true);
-                      });
-                    }}
-                    className="btn fw-bold mt-4"
+                  <motion.div
                     style={{
+                      marginTop: "24px",
+                      padding: "16px",
+                      backgroundColor: "#f5f5f5",
                       borderRadius: "12px",
-                      padding: "12px 20px",
-                      fontSize: "16px",
-                      width: "100%",
-                      boxSizing: "border-box",
-                      backgroundColor: "#d97a6f",
-                      color: "#fff",
-                      border: "none",
-                      display: "block",
+                      textAlign: "center",
                     }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
                   >
-                    اضغط هنا لارسال الوصل
-                  </motion.button>
+                    <p
+                      style={{
+                        fontSize: "14px",
+                        color: "#2D2D2D",
+                        fontFamily: "Cairo, sans-serif",
+                        margin: 0,
+                        lineHeight: "1.6",
+                      }}
+                    >
+                      الرجاء أخذ لقطة شاشة للوصل وإرسالها إلينا
+                    </p>
+                  </motion.div>
                 </>
               )}
             </div>
