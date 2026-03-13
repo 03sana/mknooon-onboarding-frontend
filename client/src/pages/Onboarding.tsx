@@ -129,7 +129,7 @@ export default function Onboarding() {
           if (data.data) {
             // Store full course data
             setCourseData(data.data);
-            
+
             if (data.data.prices) {
               // Extract unique countries from prices array
               const countriesMap = new Map();
@@ -147,8 +147,8 @@ export default function Onboarding() {
                 }
               });
               // Sort countries alphabetically by Arabic name
-              const sortedCountries = Array.from(countriesMap.values()).sort((a, b) =>
-                a.name_ar.localeCompare(b.name_ar, 'ar')
+              const sortedCountries = Array.from(countriesMap.values()).sort(
+                (a, b) => a.name_ar.localeCompare(b.name_ar, "ar")
               );
               setCountries(sortedCountries);
             }
@@ -1359,7 +1359,8 @@ export default function Onboarding() {
               <p
                 style={{
                   fontSize: "12px",
-                  color: "#999",
+                  fontWeight: "500",
+                  color: "#16191d",
                   marginBottom: "20px",
                   textAlign: "right",
                 }}
@@ -1821,7 +1822,10 @@ export default function Onboarding() {
                     border: "1.5px solid #d97a6f",
                     fontWeight: 600,
                   }}
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(217, 122, 111, 0.05)" }}
+                  whileHover={{
+                    scale: 1.05,
+                    backgroundColor: "rgba(217, 122, 111, 0.05)",
+                  }}
                   whileTap={{ scale: 0.98 }}
                 >
                   عندي سؤال قبل الاشتراك
@@ -1932,7 +1936,11 @@ export default function Onboarding() {
                       brand={courseData?.name || selectedBrand || "Mknooon"}
                       countryCode={selectedCountry.code}
                       userName={deliveryForm.full_name || "Customer"}
-                      userEmail={deliveryForm.phone ? `${deliveryForm.phone.replace(/\D/g, '')}@mknooon.local` : "customer@mknooon.local"}
+                      userEmail={
+                        deliveryForm.phone
+                          ? `${deliveryForm.phone.replace(/\D/g, "")}@mknooon.local`
+                          : "customer@mknooon.local"
+                      }
                       userPhone={deliveryForm.phone}
                       courseId={courseData?.id}
                       onSuccess={paymentIntentId => {
@@ -2472,12 +2480,20 @@ export default function Onboarding() {
                         <motion.button
                           onClick={() => {
                             // Build message in the same format as Stripe
-                            const courseName = courseData?.name || selectedBrand || 'الدورة التدريبية';
-                            const countryName = selectedCountry?.name_ar || 'غير محدد';
-                            const paymentMethod = selectedPaymentMethod?.name || 'غير محدد';
-                            const amount = (selectedCountry?.price || 0).toFixed(2);
-                            const currency = selectedCountry?.currency_symbol || '';
-                            
+                            const courseName =
+                              courseData?.name ||
+                              selectedBrand ||
+                              "الدورة التدريبية";
+                            const countryName =
+                              selectedCountry?.name_ar || "غير محدد";
+                            const paymentMethod =
+                              selectedPaymentMethod?.name || "غير محدد";
+                            const amount = (
+                              selectedCountry?.price || 0
+                            ).toFixed(2);
+                            const currency =
+                              selectedCountry?.currency_symbol || "";
+
                             const message = `مرحبا، دفعت اشتراك كورس ${courseName} من ${countryName} عبر ${paymentMethod}. هذه صورة إشعار الدفع.\n\nالسعر المدفوع: ${amount} ${currency}`;
 
                             const phone =
@@ -2832,8 +2848,8 @@ export default function Onboarding() {
 
                 {/* Send to WhatsApp Button */}
                 <motion.button
-                    onClick={() => {
-                    captureInvoiceImage('invoice-card', (imageUrl) => {
+                  onClick={() => {
+                    captureInvoiceImage("invoice-card", imageUrl => {
                       setInvoiceImageUrl(imageUrl);
                       setShowInvoiceModal(true);
                     });
@@ -2901,7 +2917,7 @@ export default function Onboarding() {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
+              onClick={e => e.stopPropagation()}
             >
               <h3
                 style={{
@@ -2964,8 +2980,9 @@ export default function Onboarding() {
                 </motion.button>
                 <motion.button
                   onClick={() => {
-                    const paymentMethod = selectedPaymentMethod?.name || 'طريقة دفع';
-                    const message = `مرحبا، دفعت اشتراك كورس ${courseData?.name || selectedBrand || 'الدورة التدريبية'} من ${selectedCountry?.name_ar || 'غير محدد'} عبر ${paymentMethod}. هذه صورة إشعار الدفع.\n\nالسعر المدفوع: ${(selectedCountry?.price || 0).toFixed(2)} ${selectedCountry?.currency_symbol || ''}`;
+                    const paymentMethod =
+                      selectedPaymentMethod?.name || "طريقة دفع";
+                    const message = `مرحبا، دفعت اشتراك كورس ${courseData?.name || selectedBrand || "الدورة التدريبية"} من ${selectedCountry?.name_ar || "غير محدد"} عبر ${paymentMethod}. هذه صورة إشعار الدفع.\n\nالسعر المدفوع: ${(selectedCountry?.price || 0).toFixed(2)} ${selectedCountry?.currency_symbol || ""}`;
                     const phone = "905344258184";
                     window.open(
                       `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
