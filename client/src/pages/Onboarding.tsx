@@ -1576,7 +1576,7 @@ export default function Onboarding() {
                       gap: "6px",
                     }}
                   >
-                    <span>{priceData.price}</span>
+                    <span>{Math.round(priceData.price)}</span>
                     <span style={{ fontSize: "22px" }}>
                       {priceData.currency_symbol}
                     </span>
