@@ -2591,6 +2591,67 @@ export default function Onboarding() {
                     )}
                 </>
               )}
+              
+              {/* WhatsApp Help Button - Inside Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.4 }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "10px",
+                  marginTop: "20px",
+                  paddingTop: "20px",
+                  borderTop: "1px solid rgba(217, 122, 111, 0.2)",
+                }}
+              >
+                <motion.button
+                  onClick={() => {
+                    const message = "مرحبا، أحتاج إلى مساعدة";
+                    const phone = "905344258184";
+                    window.open(
+                      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+                      "_blank"
+                    );
+                  }}
+                  style={{
+                    width: "45px",
+                    height: "45px",
+                    borderRadius: "50%",
+                    backgroundColor: "#25D366",
+                    border: "none",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: "0 4px 12px rgba(37, 211, 102, 0.3)",
+                    padding: 0,
+                  }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  title="اضغط للحصول على المساعدة"
+                >
+                  <img
+                    src="/whatsapp-icon.png"
+                    alt="WhatsApp"
+                    style={{
+                      width: "24px",
+                      height: "24px",
+                    }}
+                  />
+                </motion.button>
+                <span
+                  style={{
+                    fontSize: "13px",
+                    color: "#666",
+                    fontWeight: 500,
+                  }}
+                >
+                  أحتاج إلى مساعدة؟
+                </span>
+              </motion.div>
             </div>
           </motion.div>
         )}
