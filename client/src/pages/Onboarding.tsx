@@ -3034,46 +3034,48 @@ export default function Onboarding() {
               alignItems: "center",
               gap: "0",
               zIndex: 1000,
+              flexDirection: "row-reverse",
             }}
           >
             <motion.button
-            onClick={() => {
-              const message = "مرحبا، أحتاج إلى مساعدة";
-              const phone = "905344258184";
-              window.open(
-                `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
-                "_blank"
-              );
-            }}
-            style={{
-              position: "relative",
-              width: "60px",
-              height: "60px",
-              borderRadius: "50%",
-              backgroundColor: "#25D366",
-              border: "none",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              zIndex: 1000,
-              boxShadow: "0 4px 12px rgba(37, 211, 102, 0.4)",
-            }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            title="اضغط للحصول على المساعدة"
-          >
-            <img
-              src="/whatsapp-icon.png"
-              alt="WhatsApp"
-              style={{
-                width: "36px",
-                height: "36px",
+              onClick={() => {
+                const message = "مرحبا، أحتاج إلى مساعدة";
+                const phone = "905344258184";
+                window.open(
+                  `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+                  "_blank"
+                );
               }}
-            />
-          </motion.button>
+              style={{
+                position: "relative",
+                width: "60px",
+                height: "60px",
+                borderRadius: "50%",
+                backgroundColor: "#25D366",
+                border: "none",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex: 1000,
+                boxShadow: "0 4px 12px rgba(37, 211, 102, 0.4)",
+                flexShrink: 0,
+              }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              title="اضغط للحصول على المساعدة"
+            >
+              <img
+                src="/whatsapp-icon.png"
+                alt="WhatsApp"
+                style={{
+                  width: "36px",
+                  height: "36px",
+                }}
+              />
+            </motion.button>
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
               style={{
@@ -3085,7 +3087,7 @@ export default function Onboarding() {
                 fontWeight: 600,
                 color: "#333",
                 whiteSpace: "nowrap",
-                marginLeft: "-8px",
+                marginRight: "-8px",
                 position: "relative",
                 zIndex: 999,
               }}
@@ -3093,12 +3095,12 @@ export default function Onboarding() {
               <div
                 style={{
                   position: "absolute",
-                  left: "-6px",
+                  right: "-6px",
                   top: "50%",
                   transform: "translateY(-50%)",
                   width: "0",
                   height: "0",
-                  borderRight: "8px solid white",
+                  borderLeft: "8px solid white",
                   borderTop: "6px solid transparent",
                   borderBottom: "6px solid transparent",
                 }}
