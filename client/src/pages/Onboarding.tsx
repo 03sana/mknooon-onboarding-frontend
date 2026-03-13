@@ -3036,39 +3036,6 @@ export default function Onboarding() {
               zIndex: 1000,
             }}
           >
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              style={{
-                backgroundColor: "white",
-                padding: "10px 14px",
-                borderRadius: "12px",
-                boxShadow: "0 2px 12px rgba(0, 0, 0, 0.15)",
-                fontSize: "13px",
-                fontWeight: 600,
-                color: "#333",
-                whiteSpace: "nowrap",
-                marginRight: "-8px",
-                position: "relative",
-                zIndex: 999,
-              }}
-            >
-              أحتاج إلى مساعدة
-              <div
-                style={{
-                  position: "absolute",
-                  right: "-6px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  width: "0",
-                  height: "0",
-                  borderLeft: "8px solid white",
-                  borderTop: "6px solid transparent",
-                  borderBottom: "6px solid transparent",
-                }}
-              />
-            </motion.div>
             <motion.button
             onClick={() => {
               const message = "مرحبا، أحتاج إلى مساعدة";
@@ -3105,6 +3072,39 @@ export default function Onboarding() {
               }}
             />
           </motion.button>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              style={{
+                backgroundColor: "white",
+                padding: "10px 14px",
+                borderRadius: "12px",
+                boxShadow: "0 2px 12px rgba(0, 0, 0, 0.15)",
+                fontSize: "13px",
+                fontWeight: 600,
+                color: "#333",
+                whiteSpace: "nowrap",
+                marginLeft: "-8px",
+                position: "relative",
+                zIndex: 999,
+              }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  left: "-6px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  width: "0",
+                  height: "0",
+                  borderRight: "8px solid white",
+                  borderTop: "6px solid transparent",
+                  borderBottom: "6px solid transparent",
+                }}
+              />
+              أحتاج إلى مساعدة
+            </motion.div>
           </div>
         )}
       </div>
