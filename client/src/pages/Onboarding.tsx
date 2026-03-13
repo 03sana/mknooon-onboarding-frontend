@@ -3031,28 +3031,43 @@ export default function Onboarding() {
               bottom: "30px",
               left: "30px",
               display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              gap: "8px",
+              alignItems: "center",
+              gap: "0",
               zIndex: 1000,
             }}
           >
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
               style={{
                 backgroundColor: "white",
-                padding: "6px 10px",
-                borderRadius: "6px",
-                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-                fontSize: "12px",
+                padding: "10px 14px",
+                borderRadius: "12px",
+                boxShadow: "0 2px 12px rgba(0, 0, 0, 0.15)",
+                fontSize: "13px",
                 fontWeight: 600,
                 color: "#333",
                 whiteSpace: "nowrap",
+                marginRight: "-8px",
+                position: "relative",
+                zIndex: 999,
               }}
             >
               أحتاج إلى مساعدة
+              <div
+                style={{
+                  position: "absolute",
+                  right: "-6px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  width: "0",
+                  height: "0",
+                  borderLeft: "8px solid white",
+                  borderTop: "6px solid transparent",
+                  borderBottom: "6px solid transparent",
+                }}
+              />
             </motion.div>
             <motion.button
             onClick={() => {
@@ -3064,9 +3079,7 @@ export default function Onboarding() {
               );
             }}
             style={{
-              position: "fixed",
-              bottom: "30px",
-              left: "30px",
+              position: "relative",
               width: "60px",
               height: "60px",
               borderRadius: "50%",
