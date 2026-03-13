@@ -3095,12 +3095,12 @@ export default function Onboarding() {
               <div
                 style={{
                   position: "absolute",
-                  right: "-6px",
+                  left: "-8px",
                   top: "50%",
                   transform: "translateY(-50%)",
                   width: "0",
                   height: "0",
-                  borderLeft: "8px solid white",
+                  borderRight: "8px solid white",
                   borderTop: "6px solid transparent",
                   borderBottom: "6px solid transparent",
                 }}
