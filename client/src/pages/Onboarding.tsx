@@ -3025,7 +3025,35 @@ export default function Onboarding() {
 
         {/* WhatsApp Floating Button - From Screen 12 onwards */}
         {currentStep >= 12 && (
-          <motion.button
+          <div
+            style={{
+              position: "fixed",
+              bottom: "30px",
+              left: "30px",
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+              zIndex: 1000,
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              style={{
+                backgroundColor: "white",
+                padding: "8px 12px",
+                borderRadius: "8px",
+                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+                fontSize: "13px",
+                fontWeight: 600,
+                color: "#333",
+                whiteSpace: "nowrap",
+              }}
+            >
+              أحتاج إلى مساعدة
+            </motion.div>
+            <motion.button
             onClick={() => {
               const message = "مرحبا، أحتاج إلى مساعدة";
               const phone = "905344258184";
@@ -3063,6 +3091,7 @@ export default function Onboarding() {
               }}
             />
           </motion.button>
+          </div>
         )}
       </div>
     </>
