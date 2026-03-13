@@ -1875,6 +1875,67 @@ export default function Onboarding() {
                   متابعة
                 </motion.button>
               )}
+
+              {/* WhatsApp Help Button - Inside Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.4 }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "10px",
+                  marginTop: "20px",
+                  paddingTop: "20px",
+                  borderTop: "1px solid rgba(217, 122, 111, 0.2)",
+                }}
+              >
+                <motion.button
+                  onClick={() => {
+                    const message = "مرحبا، أحتاج إلى مساعدة";
+                    const phone = "905344258184";
+                    window.open(
+                      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+                      "_blank"
+                    );
+                  }}
+                  style={{
+                    width: "45px",
+                    height: "45px",
+                    borderRadius: "50%",
+                    backgroundColor: "#25D366",
+                    border: "none",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: "0 4px 12px rgba(37, 211, 102, 0.3)",
+                    padding: 0,
+                  }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  title="اضغط للحصول على المساعدة"
+                >
+                  <img
+                    src="/whatsapp-icon.png"
+                    alt="WhatsApp"
+                    style={{
+                      width: "24px",
+                      height: "24px",
+                    }}
+                  />
+                </motion.button>
+                <span
+                  style={{
+                    fontSize: "13px",
+                    color: "#666",
+                    fontWeight: 500,
+                  }}
+                >
+                  أحتاج إلى مساعدة؟
+                </span>
+              </motion.div>
             </div>
           </motion.div>
         )}
@@ -3023,92 +3084,7 @@ export default function Onboarding() {
           ></div>
         )}
 
-        {/* WhatsApp Floating Button - From Screen 12 onwards */}
-        {currentStep >= 12 && (
-          <div
-            style={{
-              position: "fixed",
-              bottom: "30px",
-              left: "30px",
-              display: "flex",
-              alignItems: "center",
-              gap: "0",
-              zIndex: 1000,
-              flexDirection: "row-reverse",
-            }}
-          >
-            <motion.button
-              onClick={() => {
-                const message = "مرحبا، أحتاج إلى مساعدة";
-                const phone = "905344258184";
-                window.open(
-                  `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
-                  "_blank"
-                );
-              }}
-              style={{
-                position: "relative",
-                width: "60px",
-                height: "60px",
-                borderRadius: "50%",
-                backgroundColor: "#25D366",
-                border: "none",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                zIndex: 1000,
-                boxShadow: "0 4px 12px rgba(37, 211, 102, 0.4)",
-                flexShrink: 0,
-              }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              title="اضغط للحصول على المساعدة"
-            >
-              <img
-                src="/whatsapp-icon.png"
-                alt="WhatsApp"
-                style={{
-                  width: "36px",
-                  height: "36px",
-                }}
-              />
-            </motion.button>
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              style={{
-                backgroundColor: "white",
-                padding: "10px 14px",
-                borderRadius: "12px",
-                boxShadow: "0 2px 12px rgba(0, 0, 0, 0.15)",
-                fontSize: "13px",
-                fontWeight: 600,
-                color: "#333",
-                whiteSpace: "nowrap",
-                marginRight: "-8px",
-                position: "relative",
-                zIndex: 999,
-              }}
-            >
-              <div
-                style={{
-                  position: "absolute",
-                  left: "-8px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  width: "0",
-                  height: "0",
-                  borderRight: "8px solid white",
-                  borderTop: "6px solid transparent",
-                  borderBottom: "6px solid transparent",
-                }}
-              />
-              أحتاج إلى مساعدة
-            </motion.div>
-          </div>
-        )}
+
       </div>
     </>
   );
