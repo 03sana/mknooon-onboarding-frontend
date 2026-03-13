@@ -490,7 +490,7 @@ export const PaymentSuccess: React.FC = () => {
             padding: "12px 20px",
             borderRadius: "8px",
             border: "none",
-            backgroundColor: "#25D366",
+            backgroundColor: "#d97a6f",
             color: "#fff",
             fontSize: "16px",
             fontWeight: 600,
@@ -504,7 +504,6 @@ export const PaymentSuccess: React.FC = () => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <span>📱</span>
           ارسل من هنا
         </motion.button>
 
