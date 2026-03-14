@@ -1270,7 +1270,7 @@ export default function Onboarding() {
                 <iframe
                   width="100%"
                   height="250"
-                  src={`https://www.youtube.com/embed/${courseData?.brand?.video_url || (selectedBrand && brandVideos[selectedBrand]) || "dJjFfRiy6E4"}`}
+                  src={courseData?.brand?.video_url || (selectedBrand && `https://www.youtube.com/embed/${brandVideos[selectedBrand]}`) || `https://www.youtube.com/embed/dJjFfRiy6E4`}
                   title="Mknooon Video"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
